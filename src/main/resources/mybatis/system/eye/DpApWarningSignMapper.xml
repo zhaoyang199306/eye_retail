@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skyon.project.system.mapper.eye.DpApWarningSignMapper">
+
+
+    <resultMap id="DpApWarningSignResult" type="com.skyon.project.system.domain.eye.DpApWarningSign">
+
+        <result property="taskInfoNo" column="task_info_no"/>
+        <result property="taskNum" column="task_num"/>
+        <result property="nowDealRole" column="now_deal_role"/>
+        <result property="singleName" column="single_name"/>
+        <result property="singleLevel" column="single_level"/>
+        <result property="warmResson" column="warm_resson"/>
+        <result property="touchDate" column="touch_date"/>
+        <result property="comfStatus" column="comf_status"/>
+        <result property="devolutionDate" column="devolution_date"/>
+
+    </resultMap>
+
+	<select id="selectDpApWarningSign" parameterType="String"
+            resultType="DpApWarningSign" resultMap="DpApWarningSignResult">
+        select * from DP_AP_WARNING_SIGN
+        where task_info_no = #{taskInfoNo}
+    </select>
+
+    <update id="updateDpApWarningSign" parameterType="com.skyon.project.system.domain.eye.DpApWarningSign">
+        <foreach collection="list" item="item"  open="begin" separator=";" close=";end;">
+                update DP_AP_WARNING_SIGN set
+                comf_status = #{item.comfStatus}
+                where task_info_no = #{item.taskInfoNo} and task_num = #{item.taskNum}
+        </foreach>
+
+    </update>
+
+
+
+
+</mapper>
