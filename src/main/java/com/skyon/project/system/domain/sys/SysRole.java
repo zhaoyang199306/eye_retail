@@ -32,7 +32,7 @@ public class SysRole extends BaseEntity
 
     /** 角色排序 */
     @Excel(name = "角色排序")
-    private String  roleSort;
+    private int  roleSort;
 
     /** 数据范围（1：所有数据权限；2：自定义数据权限；3：本部门数据权限；4：本部门及以下数据权限） */
     @Excel(name = "数据范围", readConverterExp = "1=所有数据权限,2=自定义数据权限,3=本部门数据权限,4=本部门及以下数据权限")
@@ -107,15 +107,7 @@ public class SysRole extends BaseEntity
         this.roleKey = roleKey;
     }
 
-    public String getRoleSort()
-    {
-        return roleSort;
-    }
 
-    public void setRoleSort(String roleSort)
-    {
-        this.roleSort = roleSort;
-    }
 
     public String getDataScope()
     {
@@ -176,13 +168,20 @@ public class SysRole extends BaseEntity
     {
         this.deptIds = deptIds;
     }
-    
+
+    public int getRoleSort() {
+        return roleSort;
+    }
+
+    public void setRoleSort(int roleSort) {
+        this.roleSort = roleSort;
+    }
+
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
             .append("roleId", getRoleId())
             .append("roleName", getRoleName())
             .append("roleKey", getRoleKey())
-            .append("roleSort", getRoleSort())
             .append("dataScope", getDataScope())
             .append("status", getStatus())
             .append("delFlag", getDelFlag())

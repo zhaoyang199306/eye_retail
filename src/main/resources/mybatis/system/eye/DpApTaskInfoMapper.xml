@@ -139,9 +139,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <insert id="insertWTaskInfo" parameterType="DpApTaskInfo" >
-        <selectKey  keyColumn="TASK_INFO_NO" keyProperty="taskInfoNo" resultType="long" order="BEFORE">
-            select DP_AP_task_info_sequence.nextval from dual
-        </selectKey>
         insert into DP_AP_task_info (TASK_INFO_NO,cust_Name,cust_No,branch,cust_Manager,is_manual_input)
         values (DP_AP_task_info_sequence.nextval,#{custName},#{custNo},#{branch},#{custManager},#{isManualInput})
     </insert>

@@ -3,6 +3,7 @@ package com.skyon.project.system.mapper.sys;
 import java.util.List;
 
 import com.skyon.project.system.domain.sys.SysRole;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 角色表 数据层
@@ -88,7 +89,7 @@ public interface SysRoleMapper
      * @param role 角色信息
      * @return 结果
      */
-    public int insertRole(SysRole role);
+    public int insertRole(@Param("role") SysRole role);
 
     /**
      * 通过角色ID删除角色

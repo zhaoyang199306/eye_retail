@@ -87,27 +87,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 where r.role_key=#{roleKey}
 	</select>
 	
- 	<insert id="insertRole" parameterType="SysRole" useGeneratedKeys="true" keyProperty="roleId">
+ 	<insert id="insertRole" parameterType="SysRole" >
+		<selectKey  keyProperty="role.roleId" resultType="long" order="BEFORE">
+			select SYS_ROLE_SEQUENCE.nextval as roleId from dual
+		</selectKey>
  		insert into sys_role(
- 			<if test="roleId != null and roleId != 0">role_id,</if>
- 			<if test="roleName != null and roleName != ''">role_name,</if>
- 			<if test="roleKey != null and roleKey != ''">role_key,</if>
- 			<if test="roleSort != null and roleSort != ''">role_sort,</if>
- 			<if test="dataScope != null and dataScope != ''">data_scope,</if>
- 			<if test="status != null and status != ''">status,</if>
- 			<if test="remark != null and remark != ''">remark,</if>
- 			<if test="createBy != null and createBy != ''">create_by,</if>
- 			create_time
+			role_id,
+ 			<if test="role.roleName != null and role.roleName != ''">role_name,</if>
+ 			<if test="role.roleKey != null and role.roleKey != ''">role_key,</if>
+ 			<if test="role.roleSort != null and role.roleSort != ''">role_sort,</if>
+ 			<if test="role.dataScope != null and role.dataScope != ''">data_scope,</if>
+ 			<if test="role.status != null and role.status != ''">status,</if>
+ 			<if test="role.remark != null and role.remark != ''">remark,</if>
+ 			<if test="role.createBy != null and role.createBy != ''">create_by,</if>
+ 			create_time,del_flag
  		)values(
- 			<if test="roleId != null and roleId != 0">#{roleId},</if>
- 			<if test="roleName != null and roleName != ''">#{roleName},</if>
- 			<if test="roleKey != null and roleKey != ''">#{roleKey},</if>
- 			<if test="roleSort != null and roleSort != ''">#{roleSort},</if>
- 			<if test="dataScope != null and dataScope != ''">#{dataScope},</if>
- 			<if test="status != null and status != ''">#{status},</if>
- 			<if test="remark != null and remark != ''">#{remark},</if>
- 			<if test="createBy != null and createBy != ''">#{createBy},</if>
- 			sysdate()
+			#{role.roleId},
+ 			<if test="role.roleName != null and role.roleName != ''">#{role.roleName},</if>
+ 			<if test="role.roleKey != null and role.roleKey != ''">#{role.roleKey},</if>
+ 			<if test="role.roleSort != null and role.roleSort != ''">#{role.roleSort},</if>
+ 			<if test="role.dataScope != null and role.dataScope != ''">#{role.dataScope},</if>
+ 			<if test="role.status != null and role.status != ''">#{role.status},</if>
+ 			<if test="role.remark != null and role.remark != ''">#{role.remark},</if>
+ 			<if test="role.createBy != null and role.createBy != ''">#{role.createBy},</if>
+			sysdate,0
  		)
 	</insert>
 	

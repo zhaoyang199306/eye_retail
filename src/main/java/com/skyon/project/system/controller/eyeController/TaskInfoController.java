@@ -54,6 +54,12 @@ public class TaskInfoController extends BaseController {
     @Autowired
     private TWarnSignalService warnSignalService;
 
+    /**
+     * 根据角色查询  预警业务列表
+     *      如果角色是客户经理，则根据客户经理名称查询
+     * @param object
+     * @return
+     */
     @GetMapping("/list")
     @Transactional
     public AjaxResult getSignalManualList(Object object) {
@@ -63,10 +69,9 @@ public class TaskInfoController extends BaseController {
         SysUser user = loginUser.getUser();
         List<SysRole> roles = user.getRoles();
 
-        if (RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) { // 后续 需把 角色  循环
+        if (RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) { // 后续 传页面展示的角色
             // 查询 客户经理 预警认定  初始时 的 列表。
             list = taskInfoService.getWTaskInfoListByRole(EARLY_WARN_COGNIZANCE);
-
         } else {
             // 根据用户id查询代办任务
             Map mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
@@ -142,6 +147,11 @@ public class TaskInfoController extends BaseController {
 
         TaskSubmitService service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
         service.taskSubmitMethod(pojo);
+
+        new ArrayList<>();
+
+        LinkedList<String> linkedList = new LinkedList<>();
+        linkedList.add("ss");
 
         if (RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) {
 

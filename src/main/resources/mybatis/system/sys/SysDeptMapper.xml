@@ -78,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <insert id="insertDept" parameterType="SysDept">
  		insert into sys_dept(
- 			<if test="deptId != null and deptId != 0">dept_id,</if>
+			dept_id,
  			<if test="parentId != null and parentId != 0">parent_id,</if>
  			<if test="deptName != null and deptName != ''">dept_name,</if>
  			<if test="ancestors != null and ancestors != ''">ancestors,</if>
@@ -88,9 +88,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="email != null and email != ''">email,</if>
  			<if test="status != null">status,</if>
  			<if test="createBy != null and createBy != ''">create_by,</if>
- 			create_time
+ 			create_time,del_flag
  		)values(
- 			<if test="deptId != null and deptId != 0">#{deptId},</if>
+			SYS_DEPT_SEQUENCE.nextval,
  			<if test="parentId != null and parentId != 0">#{parentId},</if>
  			<if test="deptName != null and deptName != ''">#{deptName},</if>
  			<if test="ancestors != null and ancestors != ''">#{ancestors},</if>
@@ -100,7 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="email != null and email != ''">#{email},</if>
  			<if test="status != null">#{status},</if>
  			<if test="createBy != null and createBy != ''">#{createBy},</if>
- 			sysdate()
+ 			sysdate,0
  		)
 	</insert>
 	
