@@ -1,5 +1,6 @@
 package com.skyon.project.system.service.eye.impl;
 
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.eye.TBondInfo;
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
 import com.skyon.project.system.mapper.eye.TBondInfoMapper;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -30,9 +32,14 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
     }
 
 
+    /**
+     * 根据业务人员编号 查询代办事项
+     * @param userPost  业务人员编号
+     * @return
+     */
     @Override
-    public List<DpApTaskInfo> getWTaskInfoListByRole(String role) {
-        return taskInfoMapper.getWTaskInfoListByRole(role);
+    public List<Map> getWTaskInfoListByRole(String userPost) {
+        return taskInfoMapper.getWTaskInfoListByRole(userPost);
     }
 
     @Override

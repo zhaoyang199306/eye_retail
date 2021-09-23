@@ -11,6 +11,7 @@ import com.skyon.framework.security.LoginUser;
 import com.skyon.framework.security.service.TokenService;
 import com.skyon.framework.web.controller.BaseController;
 import com.skyon.framework.web.domain.AjaxResult;
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.sys.SysRole;
 import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.domain.eye.DpApWarningSign;
@@ -34,9 +35,9 @@ import java.util.*;
 @RequestMapping("/taskInfo")
 public class TaskInfoController extends BaseController {
 
-    public static final String SUBMIT_BUTTON = "提交";
+    private static final String SUBMIT_BUTTON = "提交";
 
-    public static final String EARLY_WARN_COGNIZANCE = "预警认定";
+    private static final String EARLY_WARN_COGNIZANCE = "预警认定";
 
     @Autowired
     private SignalManualSevice signalManualSevice;
@@ -51,8 +52,7 @@ public class TaskInfoController extends BaseController {
 
     @Autowired
     private WTaskInfoService taskInfoService;
-    @Autowired
-    private TWarnSignalService warnSignalService;
+
 
     /**
      * 根据角色查询  预警业务列表
@@ -63,38 +63,39 @@ public class TaskInfoController extends BaseController {
     @GetMapping("/list")
     @Transactional
     public AjaxResult getSignalManualList(Object object) {
-        List<DpApTaskInfo> list = new ArrayList<>();
+        List<Map> list = new ArrayList<>();
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
         List<SysRole> roles = user.getRoles();
 
         if (RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) { // 后续 传页面展示的角色
-            // 查询 客户经理 预警认定  初始时 的 列表。
-            list = taskInfoService.getWTaskInfoListByRole(EARLY_WARN_COGNIZANCE);
-        } else {
-            // 根据用户id查询代办任务
-            Map mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
-            Set<String> set = new HashSet<>();
-            // 只计算在里面的
-            List listAll = taskInfoService.selectAllTaskInfoNo();
-            Set<Map.Entry<String, String>> entries = mapTask.entrySet();
-            Iterator<Map.Entry<String, String>> iterator = entries.iterator();
-            while (iterator.hasNext()) {
-                Map.Entry<String, String> next = iterator.next();
-                String key = next.getKey();
-                String value = next.getValue();
-
-                if (listAll.contains(key)) {
-
-                    if (WFLink.WFLINK1.contains(value))
-                        set.add(key);
-                }
-            }
-
-            // 查询待办箱
-            if (set.size() > 0) list = taskInfoService.getWTaskInfoByList1(set);
+            // 查询 客户经理 初始时 的 列表。
+            list = taskInfoService.getWTaskInfoListByRole(String.valueOf(user.getUserId()));
         }
+//        else {
+//            // 根据用户id查询代办任务
+//            Map mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
+//            Set<String> set = new HashSet<>();
+//            // 只计算在里面的
+//            List listAll = taskInfoService.selectAllTaskInfoNo();
+//            Set<Map.Entry<String, String>> entries = mapTask.entrySet();
+//            Iterator<Map.Entry<String, String>> iterator = entries.iterator();
+//            while (iterator.hasNext()) {
+//                Map.Entry<String, String> next = iterator.next();
+//                String key = next.getKey();
+//                String value = next.getValue();
+//
+//                if (listAll.contains(key)) {
+//
+//                    if (WFLink.WFLINK1.contains(value))
+//                        set.add(key);
+//                }
+//            }
+//
+//            // 查询待办箱
+//            if (set.size() > 0) list = taskInfoService.getWTaskInfoByList1(set);
+//        }
 
 
         return AjaxResult.success(list);

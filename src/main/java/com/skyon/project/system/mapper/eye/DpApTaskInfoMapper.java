@@ -1,8 +1,10 @@
 package com.skyon.project.system.mapper.eye;
 
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface DpApTaskInfoMapper {
@@ -10,8 +12,12 @@ public interface DpApTaskInfoMapper {
     // 根据待办箱的任务编号查询任务详情
     public List<DpApTaskInfo> getWTaskInfoByList1(Set set);
 
-    // 查询预警认定角色的任务详细
-    public List<DpApTaskInfo> getWTaskInfoListByRole(String role);
+    /**
+     * 根据业务人员编号 查询代办事项
+     * @param userPost  业务人员编号
+     * @return
+     */
+    public List<Map> getWTaskInfoListByRole(String userPost);
 
 
     /**

@@ -7,6 +7,7 @@ import com.skyon.framework.security.LoginUser;
 import com.skyon.framework.security.service.TokenService;
 import com.skyon.framework.web.controller.BaseController;
 import com.skyon.framework.web.domain.AjaxResult;
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.sys.SysRole;
 import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
@@ -68,8 +69,8 @@ public class WorkbenchController extends BaseController {
 
         // 预警认定初始单独计算
         if (RoleName.ACCOUNT_MANAGER.getInfo().equals((roles.get(0).getRoleName()))) {
-            List<DpApTaskInfo> dpApTaskInfoListByRole1 = taskInfoService.getWTaskInfoListByRole(EARLY_WARN_COGNIZANCE);
-            taskInfoSelfCountNum = taskInfoSelfCountNum + dpApTaskInfoListByRole1.size();
+            List<Map> listMap = taskInfoService.getWTaskInfoListByRole(String.valueOf(user.getUserId()));
+            taskInfoSelfCountNum = taskInfoSelfCountNum + listMap.size();
         }
 
         // 只计算在里面的

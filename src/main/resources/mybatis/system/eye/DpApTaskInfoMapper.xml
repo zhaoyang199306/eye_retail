@@ -75,15 +75,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="getWTaskInfoListByRole" resultType="map">
-        SELECT info.task_info_no as taskInfoNo,info.cust_no as custNo,cust.cust_name as custName,cust.branch,cust.next_Branch as nextBranch
-        ,COUNT(CASE WHEN SINGLE_LEVEL = '一级预警' THEN 1 ELSE NULL END) AS oneLevelCount
-        ,COUNT(CASE WHEN SINGLE_LEVEL = '二级预警' THEN 1 ELSE NULL END) AS twoLevelCount
-        ,COUNT(CASE WHEN SINGLE_LEVEL = '三级预警' THEN 1 ELSE NULL END) AS threeLevelCount
-        FROM DP_AP_TASK_INFO info
-        LEFT JOIN DP_AP_CUST_INFO cust ON info.CUST_NO = cust.CUST_NO
-        LEFT JOIN DP_AP_WARNING_SIGN w ON info.TASK_INFO_NO = w.TASK_INFO_NO
-        where role = #{role} and run_status = '01' and is_Proprietary = '0'
-        GROUP BY info.task_info_no,info.cust_no,cust.cust_name,cust.branch,cust.next_Branch
+    select i.task_no,i.warning_object_name,i.warning_object_category,i.task_status,
+        i.sys_risk_level,
+        COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
+        COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
+        COUNT(CASE WHEN warning_level = '03' THEN 1 ELSE NULL END) AS threeLevelCount,
+        o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,o.warning_object_category
+    from SE_WF_TASK_INFO i
+    left join SE_WF_WARNING_OBJECT o on i.warning_object_id = o.warning_object_id
+    left join Se_Wf_Warning_Signs s on i.task_id = s.task_id
+    where i.task_handle_post = #{userPost}
+    group by i.task_no,i.warning_object_name,i.warning_object_category,i.task_status,i.sys_risk_level,
+    o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,o.warning_object_category
     </select>
 
     <select id="selectDpApTaskInfoByTaskInfoNo" resultMap="DpApTaskInfoResult"
