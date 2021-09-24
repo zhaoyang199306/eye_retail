@@ -12,9 +12,9 @@ public class SeWfTaskInfo extends BasePojo{
 
     private String taskId; // 任务ID 主键   not null
     private String taskNo; // 任务编号 not null
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date taskStartTime; // 任务开始日期
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date taskDeadline; // 任务完成截止日
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date taskEndTime; // 任务实际完成日期
