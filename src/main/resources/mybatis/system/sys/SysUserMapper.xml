@@ -110,8 +110,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where r.role_name = #{role}
 	</select>
 	
-	<insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
- 		insert into sys_user(
+	<insert id="insertUser" parameterType="SysUser">
+		<selectKey  keyProperty="userId" resultType="long" order="BEFORE">
+			select SYS_USER_SEQUENCE.nextval as userId from dual
+		</selectKey>
+		insert into sys_user(
  			<if test="userId != null and userId != 0">user_id,</if>
  			<if test="deptId != null and deptId != 0">dept_id,</if>
  			<if test="userName != null and userName != ''">user_name,</if>
@@ -124,7 +127,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="status != null and status != ''">status,</if>
  			<if test="createBy != null and createBy != ''">create_by,</if>
  			<if test="remark != null and remark != ''">remark,</if>
- 			create_time
+ 			create_time,del_flag
  		)values(
  			<if test="userId != null and userId != ''">#{userId},</if>
  			<if test="deptId != null and deptId != ''">#{deptId},</if>
@@ -138,7 +141,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="status != null and status != ''">#{status},</if>
  			<if test="createBy != null and createBy != ''">#{createBy},</if>
  			<if test="remark != null and remark != ''">#{remark},</if>
- 			sysdate()
+ 			sysdate,0
  		)
 	</insert>
 	
