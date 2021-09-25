@@ -7,10 +7,9 @@ import com.skyon.framework.security.LoginUser;
 import com.skyon.framework.security.service.TokenService;
 import com.skyon.framework.web.controller.BaseController;
 import com.skyon.framework.web.domain.AjaxResult;
-import com.skyon.project.system.domain.eye.SeWfTaskInfo;
+import com.skyon.project.system.domain.vo.WarningTaskListVo;
 import com.skyon.project.system.domain.sys.SysRole;
 import com.skyon.project.system.domain.sys.SysUser;
-import com.skyon.project.system.domain.eye.DpApTaskInfo;
 import com.skyon.project.system.service.eye.WTaskInfoService;
 import com.skyon.project.system.service.eye.WorkbenchService;
 import com.skyon.project.system.service.activiti.TaskWFService;
@@ -69,7 +68,9 @@ public class WorkbenchController extends BaseController {
 
         // 预警认定初始单独计算
         if (RoleName.ACCOUNT_MANAGER.getInfo().equals((roles.get(0).getRoleName()))) {
-            List<Map> listMap = taskInfoService.getWTaskInfoListByRole(String.valueOf(user.getUserId()));
+            WarningTaskListVo warningTaskListVo = new WarningTaskListVo();
+            warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
+            List<Map> listMap = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
             taskInfoSelfCountNum = taskInfoSelfCountNum + listMap.size();
         }
 

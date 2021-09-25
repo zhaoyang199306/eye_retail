@@ -1,7 +1,7 @@
 package com.skyon.project.system.mapper.eye;
 
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
-import com.skyon.project.system.domain.eye.SeWfTaskInfo;
+import com.skyon.project.system.domain.vo.WarningTaskListVo;
 
 import java.util.List;
 import java.util.Map;
@@ -14,10 +14,10 @@ public interface DpApTaskInfoMapper {
 
     /**
      * 根据业务人员编号 查询代办事项
-     * @param userPost  业务人员编号
+     * @param warningTaskListVo
      * @return
      */
-    public List<Map> getWTaskInfoListByRole(String userPost);
+    public List<Map> getWTaskInfoListByRole(WarningTaskListVo warningTaskListVo);
 
 
     /**

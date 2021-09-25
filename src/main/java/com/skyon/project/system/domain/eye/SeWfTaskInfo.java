@@ -12,11 +12,11 @@ public class SeWfTaskInfo extends BasePojo{
 
     private String taskId; // 任务ID 主键   not null
     private String taskNo; // 任务编号 not null
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date taskStartTime; // 任务开始日期
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date taskDeadline; // 任务完成截止日
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date taskEndTime; // 任务实际完成日期
     private String warningObjectId; // 预警对象ID not null
     private String warningObjectCategory; // 预警对象类别
@@ -24,7 +24,9 @@ public class SeWfTaskInfo extends BasePojo{
     private String warningObjectName; // 预警对象名称
     private String warningObjectType; //监测对象类型
 
-    private String taskStatus; // not null 任务状态 预警认定(信号核实、认定反馈、风险认定、签收)/处置跟踪/已归档
+    private String taskStatus; // not null 任务状态（待处理、处理中）
+
+    private String taskType;// not null 任务类型（预警任务、处置跟踪）
 
     private String taskHandler; // 任务经办人
 
@@ -89,6 +91,7 @@ public class SeWfTaskInfo extends BasePojo{
                 ", warningObjectName='" + warningObjectName + '\'' +
                 ", warningObjectType='" + warningObjectType + '\'' +
                 ", taskStatus='" + taskStatus + '\'' +
+                ", taskType='" + taskType + '\'' +
                 ", taskHandler='" + taskHandler + '\'' +
                 ", taskHandlePost='" + taskHandlePost + '\'' +
                 ", sysRiskLevel='" + sysRiskLevel + '\'' +
@@ -204,6 +207,14 @@ public class SeWfTaskInfo extends BasePojo{
 
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
+    }
+
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
     }
 
     public String getTaskHandler() {

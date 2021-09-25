@@ -1,8 +1,8 @@
 package com.skyon.project.system.service.eye.impl;
 
-import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.eye.TBondInfo;
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
+import com.skyon.project.system.domain.vo.WarningTaskListVo;
 import com.skyon.project.system.mapper.eye.TBondInfoMapper;
 import com.skyon.project.system.mapper.eye.DpApTaskInfoMapper;
 import com.skyon.project.system.service.eye.WTaskInfoService;
@@ -34,12 +34,12 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
 
     /**
      * 根据业务人员编号 查询代办事项
-     * @param userPost  业务人员编号
+     * @param warningTaskListVo
      * @return
      */
     @Override
-    public List<Map> getWTaskInfoListByRole(String userPost) {
-        return taskInfoMapper.getWTaskInfoListByRole(userPost);
+    public List<Map> getWTaskInfoListByRole(WarningTaskListVo warningTaskListVo) {
+        return taskInfoMapper.getWTaskInfoListByRole(warningTaskListVo);
     }
 
     @Override

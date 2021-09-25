@@ -11,16 +11,13 @@ import com.skyon.framework.security.LoginUser;
 import com.skyon.framework.security.service.TokenService;
 import com.skyon.framework.web.controller.BaseController;
 import com.skyon.framework.web.domain.AjaxResult;
-import com.skyon.project.system.domain.eye.SeWfTaskInfo;
+import com.skyon.project.system.domain.eye.*;
 import com.skyon.project.system.domain.sys.SysRole;
 import com.skyon.project.system.domain.sys.SysUser;
-import com.skyon.project.system.domain.eye.DpApWarningSign;
-import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
-import com.skyon.project.system.domain.eye.DpApTaskInfo;
+import com.skyon.project.system.domain.vo.WarningTaskListVo;
 import com.skyon.project.system.service.activiti.RunWFService;
 import com.skyon.project.system.service.activiti.TaskWFService;
 import com.skyon.project.system.service.eye.SignalManualSevice;
-import com.skyon.project.system.service.eye.TWarnSignalService;
 import com.skyon.project.system.service.eye.WLinkLogService;
 import com.skyon.project.system.service.eye.WTaskInfoService;
 import com.skyon.project.system.service.wf.TaskSubmitService;
@@ -57,12 +54,12 @@ public class TaskInfoController extends BaseController {
     /**
      * 根据角色查询  预警业务列表
      *      如果角色是客户经理，则根据客户经理名称查询
-     * @param object
+     * @param warningTaskListVo
      * @return
      */
     @GetMapping("/list")
     @Transactional
-    public AjaxResult getSignalManualList(Object object) {
+    public AjaxResult getSignalManualList(WarningTaskListVo warningTaskListVo) {
         List<Map> list = new ArrayList<>();
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
@@ -71,7 +68,8 @@ public class TaskInfoController extends BaseController {
 
         if (RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) { // 后续 传页面展示的角色
             // 查询 客户经理 初始时 的 列表。
-            list = taskInfoService.getWTaskInfoListByRole(String.valueOf(user.getUserId()));
+            warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
+            list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
         }
 //        else {
 //            // 根据用户id查询代办任务

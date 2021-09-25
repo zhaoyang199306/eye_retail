@@ -85,7 +85,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
  	
  	<insert id="insertDictType" parameterType="SysDictType">
+		<selectKey  keyProperty="dictId" resultType="long" order="BEFORE">
+			select SYS_DICT_TYPE_SEQUENCE.nextval as dictId from dual
+		</selectKey>
  		insert into sys_dict_type(
+			<if test="dictId != null and dictId != ''">dict_id,</if>
  			<if test="dictName != null and dictName != ''">dict_name,</if>
  			<if test="dictType != null and dictType != ''">dict_type,</if>
  			<if test="status != null">status,</if>
@@ -93,12 +97,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="createBy != null and createBy != ''">create_by,</if>
  			create_time
  		)values(
+			<if test="dictId != null and dictId != ''">#{dictId},</if>
  			<if test="dictName != null and dictName != ''">#{dictName},</if>
  			<if test="dictType != null and dictType != ''">#{dictType},</if>
  			<if test="status != null">#{status},</if>
  			<if test="remark != null and remark != ''">#{remark},</if>
  			<if test="createBy != null and createBy != ''">#{createBy},</if>
- 			sysdate()
+ 			sysdate
  		)
 	</insert>
 	

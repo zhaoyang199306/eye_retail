@@ -74,8 +74,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         and role = '预警认定'
     </select>
 
-    <select id="getWTaskInfoListByRole" resultType="map">
-    select i.task_no,i.warning_object_name,i.warning_object_category,i.task_status,
+    <select id="getWTaskInfoListByRole" parameterType="WarningTaskListVo" resultType="map">
+    select i.task_no,i.warning_object_name,i.warning_object_category,i.task_status,i.task_type,
         i.sys_risk_level,
         COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
         COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
@@ -83,9 +83,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,o.warning_object_category
     from SE_WF_TASK_INFO i
     left join SE_WF_WARNING_OBJECT o on i.warning_object_id = o.warning_object_id
-    left join Se_Wf_Warning_Signs s on i.task_id = s.task_id
-    where i.task_handler = #{userPost}
-    group by i.task_no,i.warning_object_name,i.warning_object_category,i.task_status,i.sys_risk_level,
+    left join Se_Wf_Warning_Signs s on i.task_id = s.task_id where
+        <if test="taskHandler != null and taskHandler != ''">
+            i.task_handler = #{taskHandler}
+        </if>
+        <if test="taskNo != null and taskNo != ''">
+            AND i.task_no = #{taskNo}
+        </if>
+        <if test="warningObjectName != null and warningObjectName != ''">
+            AND o.warning_object_name = #{warningObjectName}
+        </if>
+        <if test="adBra != null and adBra != ''">
+            AND o.ad_bra = #{adBra}
+        </if>
+        <if test="adSubBra != null and adSubBra != ''">
+            AND o.ad_sub_bra = #{adSubBra}
+        </if>
+        <if test="taskType != null and taskType != ''">
+            AND i.task_type = #{taskType}
+        </if>
+        <if test="taskStatus != null and taskStatus != ''">
+            AND i.task_status = #{taskStatus}
+        </if>
+    group by i.task_no,i.warning_object_name,i.warning_object_category,i.task_status,i.task_type,i.sys_risk_level,
     o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,o.warning_object_category
     </select>
 
