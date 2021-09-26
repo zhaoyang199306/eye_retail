@@ -116,83 +116,15 @@ public class TaskInfoController extends BaseController {
     @Transactional
     public AjaxResult submitTask(@RequestBody TaskInfoSubmitPojo pojo) throws IOException {
 
-        List<DpApWarningSign> warnSignalList = pojo.getWarnSignalList();
-        String checkResult = pojo.getCheckResult();
-        String examinValue = pojo.getExaminValue();
-        String personalRiskLevel = pojo.getPersonalRiskLevel();
-        String riskControlMeasures = JSON.toJSONString(pojo.getRiskControlMeasures());
-        String taskInfoNo = pojo.getTaskInfoNo();
-        Object radio = pojo.getRadio();
-
-        logger.info("----submitTask----: 任务编号：{}，审核意见：{}", taskInfoNo, examinValue);
+        logger.info("----submitTask----: 任务编号：{}，审核意见：{}", pojo.getTaskInfoNo(),pojo.getCheckResult());
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
         List<SysRole> roles = user.getRoles();
 
-        // 反馈员
-        Map<String, Object> map = new HashMap<>();
-        int i = 0;
-
-        /**
-         * if(客户经理){
-         *      流程
-         * } eles if(市场零售部门主管审核){
-         *      流程
-         * } else{
-         *
-         * }
-         */
-
+        // 任务提交
         TaskSubmitService service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
         service.taskSubmitMethod(pojo);
-
-        new ArrayList<>();
-
-        LinkedList<String> linkedList = new LinkedList<>();
-        linkedList.add("ss");
-
-        if (RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) {
-
-        } else if (RoleName.RETAIL_DEPARTMENT_AUDIT.getInfo().equals(roles.get(0).getRoleName())) {
-
-        } else if (RoleName.RISK_DETECTION_POST_AUDIT.getInfo().equals(roles.get(0).getRoleName())) {
-            // 执行预警认定审批任务
-            map.put(WFRole.WFROLE104.getCode(), "9"); // 分行监测审核岗审核 组
-            String taskName = taskWFService.exeTaskByTaskInfoNo(taskInfoNo, String.valueOf(user.getUserId()), map);
-
-            logger.info("----taskName----: {}", taskName);
-
-            // insert环节流转
-            if (WFLink.WFLINK103.getInfo().equals(taskName)) {
-                linkLogService.insertWLinkLog(taskInfoNo, DealType.RD.getCode(), WFLink.WFLINK103.getInfo(), user.getUserName(),
-                        SUBMIT_BUTTON, riskControlMeasures, examinValue);
-            }
-        } else if (RoleName.MONITORING_AUDIT_POST_AUDIT.getInfo().equals(roles.get(0).getRoleName())) {
-            map.put(WFRole.WFROLE105.getCode(), "10"); // 分行检测主管审核 组
-            // 执行预警认定审批任务
-            String taskName = taskWFService.exeTaskByTaskInfoNo(taskInfoNo, String.valueOf(user.getUserId()), map);
-
-            logger.info("----taskName----: {}", taskName);
-
-            // insert环节流转
-            if (WFLink.WFLINK104.getInfo().equals(taskName)) {
-                linkLogService.insertWLinkLog(taskInfoNo, DealType.RD.getCode(), WFLink.WFLINK104.getInfo(), user.getUserName(),
-                        SUBMIT_BUTTON, riskControlMeasures, examinValue);
-            }
-        } else if (RoleName.INSPECTION_SUPERVISOR_AUDIT.getInfo().equals(roles.get(0).getRoleName())) {
-            map.put(WFRole.WFROLE201.getCode(), "6"); // 客户经理处置跟踪 组
-            // 执行预警认定审批任务
-            String taskName = taskWFService.exeTaskByTaskInfoNo(taskInfoNo, String.valueOf(user.getUserId()), map);
-
-            logger.info("----taskName----: {}", taskName);
-
-            // insert环节流转
-            if (WFLink.WFLINK105.getInfo().equals(taskName)) {
-                linkLogService.insertWLinkLog(taskInfoNo, DealType.RD.getCode(), WFLink.WFLINK105.getInfo(), user.getUserName(),
-                        SUBMIT_BUTTON, riskControlMeasures, examinValue);
-            }
-        }
 
         return AjaxResult.success("成功提交");
     }

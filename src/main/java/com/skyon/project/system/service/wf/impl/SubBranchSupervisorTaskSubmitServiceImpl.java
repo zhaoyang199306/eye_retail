@@ -1,6 +1,7 @@
 package com.skyon.project.system.service.wf.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.skyon.common.constant.ProjectContants;
 import com.skyon.common.enums.DealType;
 import com.skyon.common.enums.RoleName;
 import com.skyon.common.enums.WFLink;
@@ -24,15 +25,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 市场零售部门主管
+ * 支行主管处理
  * 任务的流转 -- 提交
  */
-@Service(value = "retailDepartmentTaskSubmitServiceImpl")
-public class RetailDepartmentTaskSubmitServiceImpl implements TaskSubmitService, InitializingBean {
+@Service(value = "subBranchSupervisorTaskSubmitServiceImpl")
+public class SubBranchSupervisorTaskSubmitServiceImpl implements TaskSubmitService, InitializingBean {
 
-    private static final Logger logger =  LoggerFactory.getLogger(ManagerTaskSubmitServiceImpl.class);
-
-    public static final String SUBMIT_BUTTON = "提交";
+    private static final Logger logger = LoggerFactory.getLogger(SubBranchSupervisorTaskSubmitServiceImpl.class);
 
     @Autowired
     private TaskWFService taskWFService;
@@ -43,38 +42,38 @@ public class RetailDepartmentTaskSubmitServiceImpl implements TaskSubmitService,
 
     @Override
     public void taskSubmitMethod(TaskInfoSubmitPojo task) {
-        Map<String, Object> map = new HashMap<>();
-        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        SysUser user = loginUser.getUser();
+        SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
 
-        // 执行预警认定审批任务
-        map.put(WFRole.WFROLE104.getCode(), "9"); // 分行监测审核岗审核 组
+        Map<String, Object> map = new HashMap<>();
+        // 执行分行风险检测岗审核
+        map.put(WFRole.WFROLE301.getCode(), 53); // 下个任务  分行风险监测岗 组ID
 
         // 根据任务编号 - taskInfoNo 执行任务
         String taskName = taskWFService.exeTaskByTaskInfoNo(task.getTaskInfoNo(),
                 String.valueOf(user.getUserId()), map);
 
-        logger.info("----taskName----: {}", taskName);
+        logger.info("----taskNO:{}----taskName----: {}",task.getTaskInfoNo(), taskName);
 
         // insert环节流转
-        if (WFLink.WFLINK103.getInfo().equals(taskName)) {
+        if (WFRole.WFROLE201.getInfo().equals(taskName)) {
             linkLogService.insertWLinkLog(task.getTaskInfoNo(),
                     DealType.RD.getCode(),
-                    WFLink.WFLINK103.getInfo(),
+                    WFRole.WFROLE201.getInfo(),
                     user.getUserName(),
-                    SUBMIT_BUTTON,
+                    ProjectContants.SUBMIT_BUTTON,
                     JSON.toJSONString(task.getRiskControlMeasures()),
                     task.getExaminValue());
         }
-        logger.info("市场零售部门主管 提交");
+        logger.info("支行主管处理:{} 提交----{}",user.getUserId(),task.getTaskInfoNo());
     }
 
     /**
      * Bean 初始化时，把该Bean注册进   流程的工厂类 - WfDealRoleRegisterFactory
+     *
      * @throws Exception
      */
     @Override
     public void afterPropertiesSet() throws Exception {
-        WfDealRoleRegisterFactory.register(RoleName.RETAIL_DEPARTMENT_AUDIT.getInfo(),this);
+        WfDealRoleRegisterFactory.register(RoleName.SUB_BRANCH_SUPERVISOR.getInfo(), this);
     }
 }

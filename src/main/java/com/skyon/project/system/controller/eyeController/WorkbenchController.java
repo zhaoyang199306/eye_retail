@@ -86,13 +86,13 @@ public class WorkbenchController extends BaseController {
 
 
             if (list.contains(key)) {
-                if (WFLink.WFLINK1.contains(value)) {
-                    taskInfoSelfCountNum++;
-                } else if (WFLink.WFLINK2.contains(value)) {
-                    disposalTrackSelfCountNum++;
-                } else if (WFLink.WFLINK3.contains(value)) {
-                    removeRiskSelfCountNum++;
-                }
+                taskInfoSelfCountNum++;
+//                if (WFLink.WFLINK1.contains(value)) {
+//                } else if (WFLink.WFLINK2.contains(value)) {
+//                    disposalTrackSelfCountNum++;
+//                } else if (WFLink.WFLINK3.contains(value)) {
+//                    removeRiskSelfCountNum++;
+//                }
             }
         }
 

@@ -5,23 +5,21 @@ package com.skyon.common.enums;
  */
 public enum WFRole {
 
-    WFROLE101("WF_ROLE_101","客户经理预警认定角色"),
-    WFROLE102("WF_ROLE_102","市场零售部门主管审核_预警认定角色"),
-    WFROLE103("WF_ROLE_103","分行风险检测岗审核_预警认定角色"),
-    WFROLE104("WF_ROLE_104","分行监测审核岗审核_预警认定角色"),
-    WFROLE105("WF_ROLE_105","分行检测主管审核_预警认定角色"),
+    WFROLE101("WF_ROLE_101","客户经理处理"),
 
-    WFROLE201("WF_ROLE_201","客户经理处置跟踪角色"),
-    WFROLE202("WF_ROLE_202","市场零售部门主管审核_处置跟踪角色"),
-    WFROLE203("WF_ROLE_203","分行风险检测岗审核_处置跟踪角色"),
-    WFROLE204("WF_ROLE_204","分行监测审核岗审核_处置跟踪角色"),
-    WFROLE205("WF_ROLE_205","分行检测主管审核_处置跟踪角色"),
+    WFROLE201("WF_ROLE_201","支行主管处理"),
 
-    WFROLE301("WF_ROLE_301","客户经理预警解除角色"),
-    WFROLE302("WF_ROLE_302","市场零售部门主管审核_预警解除角色"),
-    WFROLE303("WF_ROLE_303","分行风险检测岗审核_预警解除角色"),
-    WFROLE304("WF_ROLE_304","分行监测审核岗审核_预警解除角色"),
-    WFROLE305("WF_ROLE_305","分行检测主管审核_预警解除角色");
+    WFROLE301("WF_ROLE_301","分行风险检测岗审核"),
+    WFROLE302("WF_ROLE_302","分行检测审核岗审核"),
+    WFROLE303("WF_ROLE_303","分行风险管理部主管审核"),
+
+    WFROLEFZ301("WF_ROLE_FZ_301","福州分行风险监测岗审核"),
+    WFROLEFZ302("WF_ROLE_FZ_302","福州分行监测审核岗审核"),
+    WFROLEFZ303("WF_ROLE_FZ_303","福州分行风险管理部主管审核"),
+
+    WFROLE401("WF_ROLE_401","福州分行风险管理部主管审核"),
+    WFROLE402("WF_ROLE_402","福州分行风险管理部主管审核"),
+    WFROLE403("WF_ROLE_403","福州分行风险管理部主管审核");
 
 
     private final String code;

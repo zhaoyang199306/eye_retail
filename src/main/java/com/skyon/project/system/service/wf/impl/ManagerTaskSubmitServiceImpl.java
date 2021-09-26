@@ -1,6 +1,7 @@
 package com.skyon.project.system.service.wf.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.skyon.common.constant.ProjectContants;
 import com.skyon.common.enums.DealType;
 import com.skyon.common.enums.RoleName;
 import com.skyon.common.enums.WFLink;
@@ -38,8 +39,6 @@ public class ManagerTaskSubmitServiceImpl implements TaskSubmitService, Initiali
 
     private static final Logger logger = LoggerFactory.getLogger(ManagerTaskSubmitServiceImpl.class);
 
-    public static final String SUBMIT_BUTTON = "提交";
-
     @Autowired
     private RunWFService runWFService;
     @Autowired
@@ -56,6 +55,10 @@ public class ManagerTaskSubmitServiceImpl implements TaskSubmitService, Initiali
 
     /**
      * 客户经理执行任务  第一次执行  开启流程
+     * 有三种情况；
+     * 一、非自动认定（即 风险等级为待认定）
+     * 二、自动认定非自动签收（即  有系统认定风险等级 且 风险等级黄色及以上  且 不是灰名单 且 （客户不是风险客户 或 是风险客户且风险等级高于原风险等级）
+     * 三、自动认定签收（即 上面的另一面）
      *
      * @param task 参数
      */
@@ -63,22 +66,44 @@ public class ManagerTaskSubmitServiceImpl implements TaskSubmitService, Initiali
     @Transactional
     public void taskSubmitMethod(TaskInfoSubmitPojo task) {
 
+        boolean isDirector = true; // 是否需要主管审核
+        boolean isFuZhou = true; // 任务签收是否属于福州分行
+        boolean isHeadOffice = true; // 客户是否属于总行权限
+        boolean isAutomatic = true; // 非自动/自动判断
+        // 其他参数判断
+
         Map<String, Object> map = new HashMap<>();
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
 
-        map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 预警认定操作人id
-        map.put(WFRole.WFROLE102.getCode(), "7"); // 下一环节的人员组
-        map.put("wf", "1"); // wf 走流程1
+
+        if (true) {  // 一、非自动认定（即 风险等级为待认定）
+            map.put("wfStart", "1"); // 走流程1
+//            map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 预警认定操作人id
+            map.put(WFRole.WFROLE201.getCode(), 52); // 下一环节 支行主管角色 id
+
+        } else if (true) { // 二、自动认定非自动签收（即  有系统认定风险等级 且 风险等级黄色及以上  且 不是灰名单 且 （客户不是风险客户 或 是风险客户且风险等级高于原风险等级）
+            map.put("wfStart", "2"); // 走流程2
+            map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 预警认定操作人id
+        } else if (true) { //  三、自动认定签收（即 上面的另一面）
+            map.put("wfStart", "3"); // 走流程3
+            map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 预警认定操作人id
+        } else { // 无流程
+            logger.info("无流程可走，任务编号：{}" + task.getTaskInfoNo());
+            throw new RuntimeException("无流程可走，任务编号" + task.getTaskInfoNo());
+        }
+
+
         // 某个任务，启动流程
         runWFService.startWf(task.getTaskInfoNo(), map);
-        // 执行任务
+        // 执行任务  返回任务节点名字
         String taskName = taskWFService.exeTaskByTaskInfoNo(task.getTaskInfoNo(),
                 String.valueOf(user.getUserId()), map);
 
-        logger.info("----taskName----: {}", taskName);
-//             执行成功后 修改DP_AP_task_info 表里的状态 run_status
-        if (WFLink.WFLINK101.getInfo().equals(taskName)) {
+        logger.info("----taskNO:{}----taskName----: {}",task.getTaskInfoNo(), taskName);
+
+//             执行成功后 修改DP_AP_task_info 表里的状态 run_status  目的；提交之后,该客户经理的任务栏查不到
+        if (WFRole.WFROLE101.getInfo().equals(taskName)) {
             int i = taskInfoService.updateRunStatusByNo(task.getTaskInfoNo(),
                     JSON.toJSONString(task.getRiskControlMeasures()),
                     task.getPersonalRiskLevel(),
@@ -87,18 +112,20 @@ public class ManagerTaskSubmitServiceImpl implements TaskSubmitService, Initiali
             List<DpApWarningSign> warnSignalList = task.getWarnSignalList();
             if (warnSignalList != null && warnSignalList.size() > 0)
                 warnSignalService.updateDpApWarningSign(warnSignalList);
+
+            // insert环节流转
+            linkLogService.insertWLinkLog(task.getTaskInfoNo(),
+                    DealType.RD.getInfo(),
+                    WFRole.WFROLE101.getInfo(),
+                    user.getUserName(),
+                    ProjectContants.SUBMIT_BUTTON,
+                    JSON.toJSONString(task.getRiskControlMeasures()),
+                    task.getExaminValue());
         }
 
-        // insert环节流转
-        linkLogService.insertWLinkLog(task.getTaskInfoNo(),
-                DealType.RD.getInfo(),
-                WFLink.WFLINK101.getInfo(),
-                user.getUserName(),
-                SUBMIT_BUTTON,
-                JSON.toJSONString(task.getRiskControlMeasures()),
-                task.getExaminValue());
 
-        logger.info("客户经理 提交");
+
+        logger.info("客户经理 提交----{}",task.getTaskInfoNo());
     }
 
     /**
