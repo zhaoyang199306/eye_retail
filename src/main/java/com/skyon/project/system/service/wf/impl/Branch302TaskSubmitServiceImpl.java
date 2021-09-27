@@ -1,22 +1,14 @@
 package com.skyon.project.system.service.wf.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.skyon.common.constant.ProjectContants;
-import com.skyon.common.enums.DealType;
 import com.skyon.common.enums.RoleName;
 import com.skyon.common.enums.WFRole;
-import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
-import com.skyon.framework.security.service.TokenService;
 import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
 import com.skyon.project.system.domain.sys.SysUser;
-import com.skyon.project.system.service.activiti.TaskWFService;
-import com.skyon.project.system.service.eye.WLinkLogService;
-import com.skyon.project.system.service.wf.TaskSubmitService;
+import com.skyon.project.system.service.wf.TaskCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -26,54 +18,27 @@ import java.util.Map;
  * 分行检测审核岗 审核
  */
 @Service
-public class Branch302TaskSubmitServiceImpl implements TaskSubmitService, InitializingBean {
-
-    private static final Logger logger = LoggerFactory.getLogger(Branch302TaskSubmitServiceImpl.class);
-
-    @Autowired
-    private TaskWFService taskWFService;
-    @Autowired
-    private WLinkLogService linkLogService;
-    @Autowired
-    private TokenService tokenService;
-    @Override
-    public void taskSubmitMethod(TaskInfoSubmitPojo task) {
-
-
-        SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
-
-        Map<String, Object> map = new HashMap<>();
-        // 执行分行风险检测岗审核
-        map.put(WFRole.WFROLE303.getCode(), 55); // 下个任务  分行监测审核岗 组ID
-
-        // 其他参数
-
-
-
-
-        // 根据任务编号 - taskInfoNo 执行任务
-        String taskName = taskWFService.exeTaskByTaskInfoNo(task.getTaskInfoNo(),
-                String.valueOf(user.getUserId()), map);
-
-        logger.info("----taskNO:{}----taskName----: {}",task.getTaskInfoNo(), taskName);
-
-        // insert环节流转
-        if (WFRole.WFROLE302.getInfo().equals(taskName)) {
-            linkLogService.insertWLinkLog(task.getTaskInfoNo(),
-                    DealType.RD.getCode(),
-                    WFRole.WFROLE302.getInfo(),
-                    user.getUserName(),
-                    ProjectContants.SUBMIT_BUTTON,
-                    JSON.toJSONString(task.getRiskControlMeasures()),
-                    task.getExaminValue());
-        }
-        logger.info("分行检测审核岗:{} 提交----{}",user.getUserId(),task.getTaskInfoNo());
-
-    }
-
+public class Branch302TaskSubmitServiceImpl extends TaskCommon implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        WfDealRoleRegisterFactory.register(RoleName.BRANCH_RISK_MONITORING_POST.getInfo(),this);
+        WfDealRoleRegisterFactory.register(RoleName.BRANCH_MONITORING_AUDIT_POST.getInfo(),this);
+    }
+
+    @Override
+    protected Map<String, Object> assembleParam(TaskInfoSubmitPojo task, SysUser user) {
+        Map<String, Object> map = new HashMap<>();
+
+        boolean isDirector = true; // 是否需要主管审核
+        // 执行分行风险检测岗审核
+        map.put(WFRole.WFROLE303.getCode(), "55"); // 下个任务  分行监测审核岗 组ID
+
+        boolean isFuZhou = true; // 任务签收是否属于福州分行
+        map.put(WFRole.WFROLEFZ301.getCode(), "57"); // 下个任务  福州分行风险监测岗 组ID
+
+        boolean isHeadOffice = true; // 客户是否属于总行权限
+        map.put(WFRole.WFROLE401.getCode(), "61"); // 下个任务  总行风险管理部监测岗 组ID
+        boolean isAutomatic = true; // 非自动/自动判断
+        return map;
     }
 }

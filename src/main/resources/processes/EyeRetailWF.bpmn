@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1632384411892" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
-  <process id="eye_retail_1" isClosed="false" isExecutable="false" name="${HeadOffice}" processType="None">
+  <process id="eye_retail_1" isClosed="false" isExecutable="true" processType="None">
     <userTask activiti:assignee="${WF_ROLE_101}" activiti:exclusive="true" id="_4" name="客户经理处理"/>
     <userTask activiti:candidateGroups="${WF_ROLE_201}" activiti:exclusive="true" id="_5" name="支行主管处理"/>
     <userTask activiti:candidateGroups="${WF_ROLE_301}" activiti:exclusive="true" id="_6" name="分行风险检测岗审核"/>

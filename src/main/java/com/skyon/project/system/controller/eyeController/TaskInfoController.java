@@ -1,10 +1,6 @@
 package com.skyon.project.system.controller.eyeController;
 
-import com.alibaba.fastjson.JSON;
-import com.skyon.common.enums.DealType;
 import com.skyon.common.enums.RoleName;
-import com.skyon.common.enums.WFLink;
-import com.skyon.common.enums.WFRole;
 import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
 import com.skyon.framework.security.LoginUser;
@@ -20,7 +16,7 @@ import com.skyon.project.system.service.activiti.TaskWFService;
 import com.skyon.project.system.service.eye.SignalManualSevice;
 import com.skyon.project.system.service.eye.WLinkLogService;
 import com.skyon.project.system.service.eye.WTaskInfoService;
-import com.skyon.project.system.service.wf.TaskSubmitService;
+import com.skyon.project.system.service.wf.TaskCommon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -31,10 +27,6 @@ import java.util.*;
 @RestController
 @RequestMapping("/taskInfo")
 public class TaskInfoController extends BaseController {
-
-    private static final String SUBMIT_BUTTON = "提交";
-
-    private static final String EARLY_WARN_COGNIZANCE = "预警认定";
 
     @Autowired
     private SignalManualSevice signalManualSevice;
@@ -123,8 +115,27 @@ public class TaskInfoController extends BaseController {
         List<SysRole> roles = user.getRoles();
 
         // 任务提交
-        TaskSubmitService service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-        service.taskSubmitMethod(pojo);
+        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
+        service.commonSubmit(pojo);
+
+        return AjaxResult.success("成功提交");
+    }
+
+    @PostMapping("/submitTaskTest/{taskNO}")
+    @Transactional
+    public AjaxResult submitTaskTest(@PathVariable("taskNO") String taskNo) throws IOException {
+
+        logger.info("----submitTask----: 任务编号：{}", taskNo);
+
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        SysUser user = loginUser.getUser();
+        List<SysRole> roles = user.getRoles();
+
+        TaskInfoSubmitPojo pojo = new TaskInfoSubmitPojo();
+        pojo.setTaskInfoNo(taskNo);
+        // 任务提交
+        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
+        service.commonSubmit(pojo);
 
         return AjaxResult.success("成功提交");
     }

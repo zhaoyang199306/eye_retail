@@ -1,8 +1,5 @@
 package com.skyon.project.system.service.wf.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.skyon.common.constant.ProjectContants;
-import com.skyon.common.enums.DealType;
 import com.skyon.common.enums.RoleName;
 import com.skyon.common.enums.WFRole;
 import com.skyon.common.utils.ServletUtils;
@@ -12,7 +9,7 @@ import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
 import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.service.activiti.TaskWFService;
 import com.skyon.project.system.service.eye.WLinkLogService;
-import com.skyon.project.system.service.wf.TaskSubmitService;
+import com.skyon.project.system.service.wf.TaskCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -26,48 +23,18 @@ import java.util.Map;
  * 分行风险检测岗 审核
  */
 @Service
-public class Branch301TaskSubmitServiceImpl implements TaskSubmitService, InitializingBean {
-
-    private static final Logger logger = LoggerFactory.getLogger(Branch301TaskSubmitServiceImpl.class);
-
-    @Autowired
-    private TaskWFService taskWFService;
-    @Autowired
-    private WLinkLogService linkLogService;
-    @Autowired
-    private TokenService tokenService;
-
-    @Override
-    public void taskSubmitMethod(TaskInfoSubmitPojo task) {
-        SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
-
-        Map<String, Object> map = new HashMap<>();
-        // 执行分行风险检测岗审核
-        map.put(WFRole.WFROLE302.getCode(), 54); // 下个任务  分行监测审核岗 组ID
-
-        // 根据任务编号 - taskInfoNo 执行任务
-        String taskName = taskWFService.exeTaskByTaskInfoNo(task.getTaskInfoNo(),
-                String.valueOf(user.getUserId()), map);
-
-        logger.info("----taskNO:{}----taskName----: {}", task.getTaskInfoNo(), taskName);
-
-        // insert环节流转
-        if (WFRole.WFROLE301.getInfo().equals(taskName)) {
-            linkLogService.insertWLinkLog(task.getTaskInfoNo(),
-                    DealType.RD.getCode(),
-                    WFRole.WFROLE301.getInfo(),
-                    user.getUserName(),
-                    ProjectContants.SUBMIT_BUTTON,
-                    JSON.toJSONString(task.getRiskControlMeasures()),
-                    task.getExaminValue());
-        }
-        logger.info("分行风险检测岗:{} 提交----{}", user.getUserId(), task.getTaskInfoNo());
-
-    }
-
+public class Branch301TaskSubmitServiceImpl extends TaskCommon implements InitializingBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
         WfDealRoleRegisterFactory.register(RoleName.BRANCH_RISK_MONITORING_POST.getInfo(), this);
+    }
+
+    @Override
+    protected Map<String, Object> assembleParam(TaskInfoSubmitPojo task, SysUser user) {
+        Map<String, Object> map = new HashMap<>();
+        // 执行分行风险检测岗审核
+        map.put(WFRole.WFROLE302.getCode(), "54"); // 下个任务  分行监测审核岗 组ID
+        return map;
     }
 }

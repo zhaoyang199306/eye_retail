@@ -71,7 +71,7 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
     }
 
     @Override
-    public List selectAllTaskInfoNo() {
+    public Set selectAllTaskInfoNo() {
         return taskInfoMapper.selectAllTaskInfoNo();
     }
 

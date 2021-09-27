@@ -23,6 +23,7 @@ package com.skyon.common.enums;
 public enum RoleName {
 
     ACCOUNT_MANAGER("01","客户经理"),
+
     SUB_BRANCH_SUPERVISOR("02","支行主管"),
 
     BRANCH_RISK_MONITORING_POST ("03","分行风险监测岗"),
@@ -33,9 +34,9 @@ public enum RoleName {
     FZ_BRANCH_MONITORING_AUDIT_POST("07","福州分行监测审核岗"),
     FZ_BRANCH_RISK_DEPARTMENT_SUPERVISOR("08","福州分行风险管理部主管"),
 
-    HEAD_RISK_MONITORING_POST ("09","分行风险监测岗"),
-    HEAD_MONITORING_AUDIT_POST("10","分行监测审核岗"),
-    HEAD_RISK_DEPARTMENT_SUPERVISOR("11","分行风险管理部主管");
+    HEAD_RISK_MONITORING_POST ("09","总行风险监测岗"),
+    HEAD_MONITORING_AUDIT_POST("10","总行监测审核岗"),
+    HEAD_RISK_DEPARTMENT_SUPERVISOR("11","总行风险管理部主管");
 
     private final String code;
     private final String info;

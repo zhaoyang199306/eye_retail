@@ -47,7 +47,7 @@ public interface DpApTaskInfoMapper {
     public List<DpApTaskInfo> selectWTaskInfoByCustNo(String custNo);
 
     // 查询所有的task_info_no
-    public List selectAllTaskInfoNo();
+    public Set selectAllTaskInfoNo();
     // 查询处置跟踪的非自营
     public Set selectIsProprietary();
     public Set selectIsNoProprietary();

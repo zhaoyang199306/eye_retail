@@ -124,7 +124,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <select id="selectAllTaskInfoNo" resultType="String">
-        select TASK_INFO_NO from DP_AP_task_info
+        select TASK_NO from SE_WF_TASK_INFO
     </select>
 
 

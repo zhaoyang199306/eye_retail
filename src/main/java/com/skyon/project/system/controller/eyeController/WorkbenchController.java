@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * 工作控制台 Controller
@@ -59,6 +62,7 @@ public class WorkbenchController extends BaseController {
 
         // 根据用户id查询代办任务
         Map<String, String> mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
+        Set<String> owerTaskNo = mapTask.keySet(); // 任务池的 taskNo
 
         logger.info("-------个人任务池-----list: {}", mapTask.toString());
         Map<String, Integer> mapSelf = new HashMap<>();
@@ -75,26 +79,12 @@ public class WorkbenchController extends BaseController {
         }
 
         // 只计算在里面的
-        List list = taskInfoService.selectAllTaskInfoNo();
+//        Set<String> set = taskInfoService.selectAllTaskInfoNo();
+//        List<String> collect = set.stream().filter(owerTaskNo::contains).collect(Collectors.toList());
+//        taskInfoSelfCountNum = taskInfoSelfCountNum + collect.size();
 
-        Set<Map.Entry<String, String>> entries = mapTask.entrySet();
-        Iterator<Map.Entry<String, String>> iterator = entries.iterator();
-        while (iterator.hasNext()) {
-            Map.Entry<String, String> next = iterator.next();
-            String key = next.getKey();
-            String value = next.getValue();
+        taskInfoSelfCountNum = taskInfoSelfCountNum + mapTask.size();
 
-
-            if (list.contains(key)) {
-                taskInfoSelfCountNum++;
-//                if (WFLink.WFLINK1.contains(value)) {
-//                } else if (WFLink.WFLINK2.contains(value)) {
-//                    disposalTrackSelfCountNum++;
-//                } else if (WFLink.WFLINK3.contains(value)) {
-//                    removeRiskSelfCountNum++;
-//                }
-            }
-        }
 
         // 处置跟踪的初始的非自营  单独计算
         Set proprietarys = taskInfoService.selectIsProprietary();
@@ -112,6 +102,15 @@ public class WorkbenchController extends BaseController {
 
 
         return AjaxResult.success(resultList);
+    }
+
+    public static void main(String[] args) {
+        List<String> owerTaskNo = Arrays.asList("2");
+        List<String> set = Arrays.asList("1","2","3");
+
+        List<String> collect = set.stream().filter(key -> owerTaskNo.contains(key)).collect(Collectors.toList());
+
+        System.out.println(collect);
     }
 
     /**

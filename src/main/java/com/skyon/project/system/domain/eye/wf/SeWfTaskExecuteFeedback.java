@@ -36,6 +36,10 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
 
     private String isFinish; // 是否处置完成  处置完成，状态转“已归档”
 
+    private String taskHandler; // 当前处理人
+
+    private String taskHandlePost; // 当前处理岗
+
     //-----------------------------------toString----------------------------------------
 
     @Override
@@ -55,12 +59,30 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
                 ", otherControlMeasures='" + otherControlMeasures + '\'' +
                 ", oneFamilyOnePolicy='" + oneFamilyOnePolicy + '\'' +
                 ", isFinish='" + isFinish + '\'' +
+                ", taskHandler='" + taskHandler + '\'' +
+                ", taskHandlePost='" + taskHandlePost + '\'' +
                 '}';
     }
 
 
     //-----------------------------------get/set----------------------------------------
 
+
+    public String getTaskHandler() {
+        return taskHandler;
+    }
+
+    public void setTaskHandler(String taskHandler) {
+        this.taskHandler = taskHandler;
+    }
+
+    public String getTaskHandlePost() {
+        return taskHandlePost;
+    }
+
+    public void setTaskHandlePost(String taskHandlePost) {
+        this.taskHandlePost = taskHandlePost;
+    }
 
     public String getTaskExecuteId() {
         return taskExecuteId;

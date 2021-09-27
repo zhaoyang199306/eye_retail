@@ -2,6 +2,7 @@ package com.skyon.common.enums;
 
 /**
  * 环节流转节点备选人
+ *
  */
 public enum WFRole {
 
@@ -17,9 +18,9 @@ public enum WFRole {
     WFROLEFZ302("WF_ROLE_FZ_302","福州分行监测审核岗审核"),
     WFROLEFZ303("WF_ROLE_FZ_303","福州分行风险管理部主管审核"),
 
-    WFROLE401("WF_ROLE_401","福州分行风险管理部主管审核"),
-    WFROLE402("WF_ROLE_402","福州分行风险管理部主管审核"),
-    WFROLE403("WF_ROLE_403","福州分行风险管理部主管审核");
+    WFROLE401("WF_ROLE_401","总行风险管理部监测岗审核"),
+    WFROLE402("WF_ROLE_402","总行风险管理部审核岗审核"),
+    WFROLE403("WF_ROLE_403","总行风险管理部主管审核");
 
 
     private final String code;
