@@ -1,6 +1,7 @@
 package com.skyon.project.system.service.eye;
 
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
 
 import java.util.List;
@@ -37,7 +38,10 @@ public interface WTaskInfoService {
     public Set selectIsNoProprietary();
 
     // 根据任务编号查询任务详情
-    public DpApTaskInfo selectDpApTaskInfoByTaskInfoNo(String taskInfoNo);
+    public SeWfTaskInfo selectSeWfTaskInfoByTaskNo(String taskNo);
+
+    // 根据客户编号查询历史任务
+    public List<SeWfTaskInfo> selectSeWfTaskInfoByWarningObjectId(String warningObjectId);
 
 
 }
