@@ -142,16 +142,33 @@ public class TaskInfoController extends BaseController {
 
     /**
      * 根据任务编号查询任务详情
-     * @param taskInfoNo 任务编号
+     * @param taskNo 任务编号
      * @return
      */
-    @GetMapping("/getDetail/{taskInfoNo}")
-    public AjaxResult getSignalManualDetail(@PathVariable("taskInfoNo") String taskInfoNo) {
+    @GetMapping("/getTaskDetail/{taskNo}")
+    public AjaxResult getTaskDetail(@PathVariable("taskNo") String taskNo) {
 
-        DpApTaskInfo dpApTaskInfo = taskInfoService.selectDpApTaskInfoByTaskInfoNo(taskInfoNo);
+        SeWfTaskInfo seWfTaskInfo = taskInfoService.selectSeWfTaskInfoByTaskNo(taskNo);
+        String signalCreateModel = seWfTaskInfo.getSeWfWarningSigns().get(0).getSignalCreateModel();
+        seWfTaskInfo.setSignalSource(signalCreateModel);
 
-        return AjaxResult.success(dpApTaskInfo);
+        return AjaxResult.success(seWfTaskInfo);
     }
+
+
+    /**
+     * 根据客户编号查询历史任务
+     * @param warningObjectId 客户编号
+     * @return
+     */
+    @GetMapping("/getHistoryTask/{warningObjectId}")
+    public AjaxResult getHistoryTask(@PathVariable("warningObjectId") String warningObjectId) {
+
+        List<SeWfTaskInfo> seWfTaskInfo = taskInfoService.selectSeWfTaskInfoByWarningObjectId(warningObjectId);
+
+        return AjaxResult.success(seWfTaskInfo);
+    }
+
 
 
 }
