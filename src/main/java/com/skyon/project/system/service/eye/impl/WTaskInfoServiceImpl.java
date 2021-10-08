@@ -19,8 +19,6 @@ import java.util.Set;
 public class WTaskInfoServiceImpl implements WTaskInfoService {
 
     @Autowired
-    private SeWfWarningSignsMapper seWfWarningSignsMapper;
-    @Autowired
     private DpApTaskInfoMapper taskInfoMapper;
     @Autowired
     private TBondInfoMapper bondInfoMapper;
@@ -91,7 +89,6 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
 
     @Override
     public SeWfTaskInfo selectSeWfTaskInfoByTaskNo(String taskNo) {
-        List<SeWfWarningSigns> lpoyn1215wsdfq3312an1215wsdfq301 = seWfWarningSignsMapper.getSeWfWarningSignsByTaskId("lpoyn1215wsdfq3312an1215wsdfq301");
         return taskInfoMapper.selectSeWfTaskInfoByTaskNo(taskNo);
     }
 
