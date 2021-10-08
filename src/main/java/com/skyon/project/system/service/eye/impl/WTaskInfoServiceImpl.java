@@ -1,7 +1,9 @@
 package com.skyon.project.system.service.eye.impl;
 
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.eye.TBondInfo;
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
+import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
 import com.skyon.project.system.mapper.eye.TBondInfoMapper;
 import com.skyon.project.system.mapper.eye.DpApTaskInfoMapper;
@@ -16,6 +18,8 @@ import java.util.Set;
 @Service
 public class WTaskInfoServiceImpl implements WTaskInfoService {
 
+    @Autowired
+    private SeWfWarningSignsMapper seWfWarningSignsMapper;
     @Autowired
     private DpApTaskInfoMapper taskInfoMapper;
     @Autowired
@@ -86,8 +90,14 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
     }
 
     @Override
-    public DpApTaskInfo selectDpApTaskInfoByTaskInfoNo(String taskInfoNo) {
-        return taskInfoMapper.selectDpApTaskInfoByTaskInfoNo(taskInfoNo);
+    public SeWfTaskInfo selectSeWfTaskInfoByTaskNo(String taskNo) {
+        List<SeWfWarningSigns> lpoyn1215wsdfq3312an1215wsdfq301 = seWfWarningSignsMapper.getSeWfWarningSignsByTaskId("lpoyn1215wsdfq3312an1215wsdfq301");
+        return taskInfoMapper.selectSeWfTaskInfoByTaskNo(taskNo);
+    }
+
+    @Override
+    public List<SeWfTaskInfo> selectSeWfTaskInfoByWarningObjectId(String warningObjectId) {
+        return taskInfoMapper.selectSeWfTaskInfoByWarningObjectId(warningObjectId);
     }
 
 
