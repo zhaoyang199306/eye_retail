@@ -10,6 +10,8 @@ public class WarningTaskListVo extends BaseEntity {
 
     private String warningObjectName;
 
+    private String warningObjectId;
+
     private String adBra;
 
     private String adSubBra;
@@ -40,6 +42,14 @@ public class WarningTaskListVo extends BaseEntity {
 
     public void setWarningObjectName(String warningObjectName) {
         this.warningObjectName = warningObjectName;
+    }
+
+    public String getWarningObjectId() {
+        return warningObjectId;
+    }
+
+    public void setWarningObjectId(String warningObjectId) {
+        this.warningObjectId = warningObjectId;
     }
 
     public String getAdBra() {
