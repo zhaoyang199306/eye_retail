@@ -1,14 +1,17 @@
 package com.skyon.project.system.domain.eye;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
+import com.skyon.project.system.domain.eye.wf.SeWfTaskExecuteFeedback;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * 任务信息表
  * SE_WF_TASK_INFO
  */
-public class SeWfTaskInfo extends BasePojo{
+public class SeWfTaskInfo extends BasePojo {
 
     private String taskId; // 任务ID 主键   not null
     private String taskNo; // 任务编号 not null
@@ -74,6 +77,16 @@ public class SeWfTaskInfo extends BasePojo{
 
     private String disposalTraceModel; // 处置跟踪模式
 
+    private String signalSource; // 信号来源
+
+    //  ----------------------------  关联---------------------------
+
+    private SeWfWarningObject seWfWarningObject; // 预警对象
+
+    private List<SeWfWarningSigns> seWfWarningSigns; // 预警信号
+
+    private SeWfTaskExecuteFeedback seWfTaskExecuteFeedback; // 执行反馈表
+
 
 //-----------------------------------toString----------------------------------------
 
@@ -114,6 +127,9 @@ public class SeWfTaskInfo extends BasePojo{
                 ", parentTaskId='" + parentTaskId + '\'' +
                 ", warningConfirmModel='" + warningConfirmModel + '\'' +
                 ", disposalTraceModel='" + disposalTraceModel + '\'' +
+                ", seWfWarningObject=" + seWfWarningObject +
+                ", seWfWarningSigns=" + seWfWarningSigns +
+                ", seWfTaskExecuteFeedback=" + seWfTaskExecuteFeedback +
                 '}';
     }
 
@@ -393,4 +409,35 @@ public class SeWfTaskInfo extends BasePojo{
         this.disposalTraceModel = disposalTraceModel;
     }
 
+    public SeWfWarningObject getSeWfWarningObject() {
+        return seWfWarningObject;
+    }
+
+    public void setSeWfWarningObject(SeWfWarningObject seWfWarningObject) {
+        this.seWfWarningObject = seWfWarningObject;
+    }
+
+    public List<SeWfWarningSigns> getSeWfWarningSigns() {
+        return seWfWarningSigns;
+    }
+
+    public void setSeWfWarningSigns(List<SeWfWarningSigns> seWfWarningSigns) {
+        this.seWfWarningSigns = seWfWarningSigns;
+    }
+
+    public SeWfTaskExecuteFeedback getSeWfTaskExecuteFeedback() {
+        return seWfTaskExecuteFeedback;
+    }
+
+    public void setSeWfTaskExecuteFeedback(SeWfTaskExecuteFeedback seWfTaskExecuteFeedback) {
+        this.seWfTaskExecuteFeedback = seWfTaskExecuteFeedback;
+    }
+
+    public String getSignalSource() {
+        return signalSource;
+    }
+
+    public void setSignalSource(String signalSource) {
+        this.signalSource = signalSource;
+    }
 }
