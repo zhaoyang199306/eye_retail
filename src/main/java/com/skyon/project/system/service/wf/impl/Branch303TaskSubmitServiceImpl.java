@@ -4,6 +4,7 @@ import com.skyon.common.enums.RoleName;
 import com.skyon.common.enums.WFRole;
 import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
 import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.service.activiti.TaskWFService;
@@ -30,7 +31,7 @@ public class Branch303TaskSubmitServiceImpl extends TaskCommon implements Initia
     }
 
     @Override
-    protected Map<String, Object> assembleParam(TaskInfoSubmitPojo task, SysUser user) {
+    protected Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user) {
         Map<String, Object> map = new HashMap<>();
         // 其他参数判断
         boolean isFuZhou = true; // 任务签收是否属于福州分行
