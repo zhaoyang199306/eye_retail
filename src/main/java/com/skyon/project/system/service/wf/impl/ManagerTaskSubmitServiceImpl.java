@@ -6,6 +6,7 @@ import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
 import com.skyon.framework.security.LoginUser;
 import com.skyon.framework.security.service.TokenService;
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
 import com.skyon.project.system.domain.eye.wf.SeWfTaskExecuteFeedback;
 import com.skyon.project.system.domain.sys.SysUser;
@@ -117,10 +118,10 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
      * 二、自动认定非自动签收（即  有系统认定风险等级 且 风险等级黄色及以上  且 不是灰名单 且 （客户不是风险客户 或 是风险客户且风险等级高于原风险等级）
      * 三、自动认定签收（即 上面的另一面）
      *
-     * @param task 参数
+     * @param seWfTaskInfo 参数
      */
     @Override
-    protected Map<String, Object> assembleParam(TaskInfoSubmitPojo task,SysUser user) {
+    protected Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user) {
         Map<String, Object> map = new HashMap<>();
         if (true) {  // 一、非自动认定（即 风险等级为待认定）
             map.put("first", Boolean.TRUE);
@@ -135,8 +136,8 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
             map.put("wfStart", "3"); // 走流程3
             map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 预警认定操作人id
         } else { // 无流程
-            logger.info("无流程可走，任务编号：{}" + task.getTaskInfoNo());
-            throw new RuntimeException("无流程可走，任务编号" + task.getTaskInfoNo());
+            logger.info("无流程可走，任务编号：{}" + seWfTaskInfo.getTaskNo());
+            throw new RuntimeException("无流程可走，任务编号" + seWfTaskInfo.getTaskNo());
         }
         return map;
     }

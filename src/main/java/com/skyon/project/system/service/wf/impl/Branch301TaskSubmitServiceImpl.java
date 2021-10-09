@@ -5,6 +5,7 @@ import com.skyon.common.enums.WFRole;
 import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
 import com.skyon.framework.security.service.TokenService;
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
 import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.service.activiti.TaskWFService;
@@ -31,7 +32,7 @@ public class Branch301TaskSubmitServiceImpl extends TaskCommon implements Initia
     }
 
     @Override
-    protected Map<String, Object> assembleParam(TaskInfoSubmitPojo task, SysUser user) {
+    protected Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user) {
         Map<String, Object> map = new HashMap<>();
         // 执行分行风险检测岗审核
         map.put(WFRole.WFROLE302.getCode(), "54"); // 下个任务  分行监测审核岗 组ID
