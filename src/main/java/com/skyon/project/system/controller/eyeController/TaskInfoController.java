@@ -106,39 +106,39 @@ public class TaskInfoController extends BaseController {
 
     @PostMapping("/submitTask")
     @Transactional
-    public AjaxResult submitTask(@RequestBody TaskInfoSubmitPojo pojo) throws IOException {
+    public AjaxResult submitTask(@RequestBody SeWfTaskInfo seWfTaskInfo) throws IOException {
 
-        logger.info("----submitTask----: 任务编号：{}，审核意见：{}", pojo.getTaskInfoNo(),pojo.getCheckResult());
-
-        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        SysUser user = loginUser.getUser();
-        List<SysRole> roles = user.getRoles();
-
-        // 任务提交
-        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-        service.commonSubmit(pojo);
-
-        return AjaxResult.success("成功提交");
-    }
-
-    @PostMapping("/submitTaskTest/{taskNO}")
-    @Transactional
-    public AjaxResult submitTaskTest(@PathVariable("taskNO") String taskNo) throws IOException {
-
-        logger.info("----submitTask----: 任务编号：{}", taskNo);
+        logger.info("----submitTask----: 任务编号：{}", seWfTaskInfo.getTaskNo());
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
         List<SysRole> roles = user.getRoles();
 
-        TaskInfoSubmitPojo pojo = new TaskInfoSubmitPojo();
-        pojo.setTaskInfoNo(taskNo);
-        // 任务提交
-        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-        service.commonSubmit(pojo);
+//        // 任务提交
+//        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
+//        service.commonSubmit(seWfTaskInfo);
 
         return AjaxResult.success("成功提交");
     }
+
+//    @PostMapping("/submitTaskTest/{taskNO}")
+//    @Transactional
+//    public AjaxResult submitTaskTest(@PathVariable("taskNO") String taskNo) throws IOException {
+//
+//        logger.info("----submitTask----: 任务编号：{}", taskNo);
+//
+//        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+//        SysUser user = loginUser.getUser();
+//        List<SysRole> roles = user.getRoles();
+//
+//        TaskInfoSubmitPojo pojo = new TaskInfoSubmitPojo();
+//        pojo.setTaskInfoNo(taskNo);
+//        // 任务提交
+//        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
+//        service.commonSubmit(pojo);
+//
+//        return AjaxResult.success("成功提交");
+//    }
 
     /**
      * 根据任务编号查询任务详情

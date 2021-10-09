@@ -3,6 +3,7 @@ package com.skyon.project.system.service.wf.impl;
 import com.skyon.common.enums.RoleName;
 import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
 import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.service.activiti.TaskWFService;
@@ -29,7 +30,7 @@ public class Head403TaskSubmitServiceImpl extends TaskCommon implements Initiali
     }
 
     @Override
-    protected Map<String, Object> assembleParam(TaskInfoSubmitPojo task, SysUser user) {
+    protected Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user) {
         Map<String, Object> map = new HashMap<>();
         boolean isAutomatic = true; // 非自动/自动判断
         return map;
