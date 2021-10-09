@@ -16,7 +16,8 @@ public class SeWfWarningSigns extends BasePojo {
     private String signalNo;  // 信号编号 not null
     private String signalName; // 信号名称
     private String signalCreateModel; // 信号生成方式
-    private String signalTriggerTime; // 信号触发时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date signalTriggerTime; // 信号触发时间
     @JsonFormat(pattern = "yyyy/MM/dd")
     private Date signalDueDay;  // 信号观察期到期日
     private String warningLevel; // 信号风险等级 一级预警信号 01/二级预警信号 02 /三级预警信号 03
@@ -37,7 +38,7 @@ public class SeWfWarningSigns extends BasePojo {
     private String signalMergeId; // 合并预警信号ID
     private String signalStatus; // 信号状态 not null  录入 01/正常 02 /失效 03
     private String distributeStatus; //  下发状态
-    @JsonFormat(pattern = "yyyy/MM/dd")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date distributeTime;  // 下发时间
     private String distributeModel;  // 下发模式 自动/人工/不下发
     private String disposalMode; // 处置模式   自动 01/人工 02 /混合 03
@@ -127,11 +128,11 @@ public class SeWfWarningSigns extends BasePojo {
         this.signalCreateModel = signalCreateModel;
     }
 
-    public String getSignalTriggerTime() {
+    public Date getSignalTriggerTime() {
         return signalTriggerTime;
     }
 
-    public void setSignalTriggerTime(String signalTriggerTime) {
+    public void setSignalTriggerTime(Date signalTriggerTime) {
         this.signalTriggerTime = signalTriggerTime;
     }
 
