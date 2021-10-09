@@ -67,10 +67,10 @@ union all
     <select id="selectDp360CustInfoList" parameterType="DP360CustInfo" resultMap="Dp360CustInfoResult">
         <include refid="selectDp360CustInfoVo"/>
         <where>
-            <if test="custNo != null  and custNo != ''"> and cust_no like concat('%', #{custNo}, '%')</if>
-            <if test="custName != null  and custName != ''"> and cust_name like concat('%', #{custName}, '%')</if>
-            <if test="certNo != null  and certNo != ''"> and cert_no like concat('%', #{certNo}, '%')</if>
-            <if test="subBranch != null  and subBranch != ''"> and sub_branch like concat('%', #{subBranch}, '%')</if>
+            <if test="custNo != null  and custNo != ''"> and cust_no like concat(concat('%', #{custNo}), '%')</if>
+            <if test="custName != null  and custName != ''"> and cust_name like concat(concat('%', #{custName}), '%')</if>
+            <if test="certNo != null  and certNo != ''"> and cert_no like concat(concat('%', #{certNo}), '%')</if>
+            <if test="subBranch != null  and subBranch != ''"> and sub_branch like concat(concat('%', #{subBranch}), '%')</if>
             <if test="custManager != null  and custManager != ''"> and cust_manager = #{custManager}</if>
         </where>
     </select>

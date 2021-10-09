@@ -57,10 +57,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectGenTableVo"/>
 		<where>
 			<if test="tableName != null and tableName != ''">
-				AND lower(table_name) like lower(concat('%', #{tableName}, '%'))
+				AND lower(table_name) like lower(concat(concat('%', #{tableName}), '%'))
 			</if>
 			<if test="tableComment != null and tableComment != ''">
-				AND lower(table_comment) like lower(concat('%', #{tableComment}, '%'))
+				AND lower(table_comment) like lower(concat(concat('%', #{tableComment}), '%'))
 			</if>
 <!-- 			<if test="beginTime != null and beginTime != ''">开始时间检索 -->
 <!-- 				AND date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d') -->
@@ -77,10 +77,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND table_name NOT LIKE 'qrtz_%' AND table_name NOT LIKE 'gen_%'
 		AND table_name NOT IN (select table_name from gen_table)
 		<if test="tableName != null and tableName != ''">
-			AND lower(table_name) like lower(concat('%', #{tableName}, '%'))
+			AND lower(table_name) like lower(concat(concat('%', #{tableName}), '%'))
 		</if>
 		<if test="tableComment != null and tableComment != ''">
-			AND lower(table_comment) like lower(concat('%', #{tableComment}, '%'))
+			AND lower(table_comment) like lower(concat(concat('%', #{tableComment}), '%'))
 		</if>
 		<if test="beginTime != null and beginTime != ''"><!-- 开始时间检索 -->
 			AND date_format(create_time,'%y%m%d') &gt;= date_format(#{beginTime},'%y%m%d')
