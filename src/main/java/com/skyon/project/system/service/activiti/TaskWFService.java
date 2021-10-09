@@ -9,7 +9,11 @@ import java.util.Set;
 
 public interface TaskWFService {
 
-    // 查询个人任务
+    /**
+     *  查询个人任务
+     * @param user
+     * @return Map of ProcessInstance.businessKey,ProcessInstance.name
+     */
     public Map<String, String> taskWfUser(String user);
 
     // 查询候选任务

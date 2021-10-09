@@ -24,10 +24,14 @@ public class ActivityDeploy {
         DeploymentBuilder deployment = repositoryService.createDeployment();
         deployment.name("天眼工作流部署");
         // 加载文件
-        DeploymentBuilder myProcess_1 = deployment.addClasspathResource("processes/EyeRetailWF.bpmn");
-        // 完成部署
-        Deployment deploy = myProcess_1.deploy();
-
-        logger.info("部署id::{}",deploy.getId());
+        DeploymentBuilder myProcess_1 = deployment
+        		.addClasspathResource("processes/EyeRetailWF.bpmn")
+        		.addClasspathResource("processes/EyePeersWF.bpmn");
+		// 完成部署
+		Deployment deploy = myProcess_1.deploy();
+		
+		logger.info("部署工作流id::{}",deploy.getId());
+        
+        
     }
 }

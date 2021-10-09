@@ -1,5 +1,9 @@
 package com.skyon.common.enums;
-
+/**
+ * 预警对象类别枚举类
+ * @author xinglj
+ *
+ */
 public enum WarningObjectCategory {
 	PRIVATE("01","个人客户"),
 	PUBLIC     	("03","对公客户"),
