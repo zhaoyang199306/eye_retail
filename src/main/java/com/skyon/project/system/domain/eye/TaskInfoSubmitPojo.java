@@ -1,5 +1,7 @@
 package com.skyon.project.system.domain.eye;
 
+import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
+
 import java.util.List;
 
 public class TaskInfoSubmitPojo {
@@ -8,12 +10,14 @@ public class TaskInfoSubmitPojo {
     }
 
     private String taskInfoNo;
-    private Object riskControlMeasures; // 风险管控措施
-    private Object radio;
+    private String riskControlMeasures; // 风险管控措施
+    private String radio;
     private String examinValue;
     private String personalRiskLevel;
     private String checkResult;
-    private List<DpApWarningSign> warnSignalList;
+    private String devolutionDate;
+
+    private List<SeWfWarningSigns> warnSignalList;
 
     public String getTaskInfoNo() {
         return taskInfoNo;
@@ -27,15 +31,15 @@ public class TaskInfoSubmitPojo {
         return riskControlMeasures;
     }
 
-    public void setRiskControlMeasures(Object riskControlMeasures) {
+    public void setRiskControlMeasures(String riskControlMeasures) {
         this.riskControlMeasures = riskControlMeasures;
     }
 
-    public Object getRadio() {
+    public String getRadio() {
         return radio;
     }
 
-    public void setRadio(Object radio) {
+    public void setRadio(String radio) {
         this.radio = radio;
     }
 
@@ -63,11 +67,19 @@ public class TaskInfoSubmitPojo {
         this.checkResult = checkResult;
     }
 
-    public List<DpApWarningSign> getWarnSignalList() {
+    public List<SeWfWarningSigns> getWarnSignalList() {
         return warnSignalList;
     }
 
-    public void setWarnSignalList(List<DpApWarningSign> warnSignalList) {
+    public void setWarnSignalList(List<SeWfWarningSigns> warnSignalList) {
         this.warnSignalList = warnSignalList;
+    }
+
+    public String getDevolutionDate() {
+        return devolutionDate;
+    }
+
+    public void setDevolutionDate(String devolutionDate) {
+        this.devolutionDate = devolutionDate;
     }
 }

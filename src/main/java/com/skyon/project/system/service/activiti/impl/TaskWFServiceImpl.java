@@ -32,7 +32,7 @@ public class TaskWFServiceImpl implements TaskWFService {
         ProcessEngine defaultProcessEngine = ProcessEngines.getDefaultProcessEngine();
         RuntimeService runtimeService = defaultProcessEngine.getRuntimeService();
         // 获取任务对象
-        TaskService taskService = defaultProcessEngine.getTaskService();
+        TaskService taskService = defaultProcessEngine.getTaskService();//act提供的任务类
         // 查询当前登录人在为候选人组时的所有任务
         List<Task> list = taskService.createTaskQuery().taskAssignee(user).list();
         List<Task> list1 = taskService.createTaskQuery().taskCandidateUser(user)//指定组任务查询

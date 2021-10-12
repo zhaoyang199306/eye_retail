@@ -261,10 +261,10 @@
 <!--        </foreach>-->
 <!--        and role = '预警认定'-->
 <!--    </select>-->
-
+    <!--需要关联流程表中展示流程状态-->
     <select id="getWTaskInfoListByRole" parameterType="WarningTaskListVo" resultType="map">
         select i.task_no,i.warning_object_name,i.warning_object_id,i.warning_object_category,i.task_status,i.task_type,
-        i.sys_risk_level,
+        i.sys_risk_level,i.task_handle_post,
         COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
         COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
         COUNT(CASE WHEN warning_level = '03' THEN 1 ELSE NULL END) AS threeLevelCount,
@@ -303,8 +303,12 @@
         <if test="taskStatus != null and taskStatus != ''">
             AND i.task_status = #{taskStatus}
         </if>
+       /*融合界面模糊查询*/
+        <if test="warningObjectLikeParam != null and warningObjectLikeParam != ''">
+            AND (o.warning_object_name like concat('%',#{warningObjectLikeParam},'%') or o.warning_object_no like concat('%',#{warningObjectLikeParam},'%') )
+        </if>
         group by i.task_no,i.warning_object_name,i.warning_object_id,i.warning_object_category,i.task_status,i.task_type,i.sys_risk_level,
-        o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,o.warning_object_category
+        o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,i.task_handle_post,o.warning_object_category
     </select>
 
     <select id="selectSeWfTaskInfoByTaskNo" resultMap="SeWfTaskInfo" parameterType="String">
@@ -365,6 +369,12 @@
 
     <update id="celarRunStatusByNo" parameterType="String">
         update DP_AP_task_info set run_status = '01' where TASK_INFO_NO = #{taskInfoNo}
+    </update>
+
+    <update id="updateAffirmTask" parameterType="com.skyon.project.system.domain.eye.TaskInfoSubmitPojo">
+        update SE_WF_TASK_INFO set  RISK_LEVEL = #{personalRiskLevel} ,CURRENT_CONCLUSIONS = #{checkResult}
+        ,CURRENT_CONTROL_MEASURES =#{riskControlMeasures}
+        where TASK_NO = #{taskInfoNo}
     </update>
 
     <insert id="insertWTaskInfo" parameterType="DpApTaskInfo">
