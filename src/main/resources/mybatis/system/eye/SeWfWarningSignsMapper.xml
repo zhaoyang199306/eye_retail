@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skyon.project.system.mapper.eye.wf.SeWfWarningSignsMapper">
+
+	<update id="updateSeWfWarningSigns" parameterType="SeWfWarningSigns">
+		update se_wf_warning_signs
+		<set>
+			<if test="confirmStatus != null and confirmStatus != ''">confirm_status = #{confirmStatus},</if>
+			update_time = sysdate,
+			delete_logo = 0
+		</set>
+		where warning_signal_id = #{warningSignalId}
+	</update>
+
+</mapper> 
