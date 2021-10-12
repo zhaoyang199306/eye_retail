@@ -30,7 +30,6 @@ public class SeWfTaskExecuteFeedbackServiceImpl implements SeWfTaskExecuteFeedba
      * @return 条数
      */
     public int insertTaskExecuteFeedback(SeWfTaskExecuteFeedback feedback){
-        feedback.setTaskExecuteId(UUID.randomUUID().toString().replaceAll("-",""));
         return feedbackMapper.insertTaskExecuteFeedback(feedback);
     }
 
