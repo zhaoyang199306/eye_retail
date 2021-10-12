@@ -17,6 +17,8 @@ import com.skyon.project.system.service.eye.SignalManualSevice;
 import com.skyon.project.system.service.eye.WLinkLogService;
 import com.skyon.project.system.service.eye.WTaskInfoService;
 import com.skyon.project.system.service.wf.TaskCommon;
+
+import org.apache.calcite.rel.core.Aggregate.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -50,24 +52,29 @@ public class PeersTaskInfoController extends BaseController {
      * @return
      */
     @GetMapping("/list")
-    @Transactional
     public AjaxResult getSignalManualList(WarningTaskListVo warningTaskListVo) {
         List<Map> list = new ArrayList<>();
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
         List<SysRole> roles = user.getRoles();
-
         
-        // 还没有开启工作流实例. 查询 客户经理 初始时 的 列表。
-        if (RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) {  
-            warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
-            list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
-        }
-        // 工作流实例中的.根据用户id查询代办任务/根据角色查询代办任务
-        Map mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
-
-
+        // 还没有开启工作流实例. 查询 登录人 经办列表。
+        warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
+        
+		// 已经在工作流实例中的.根据用户id查询代办任务编号/根据角色查询代办任务编号
+        List<String> groups= new ArrayList<String>();
+        for(SysRole r:roles)
+        	groups.add(r.getRoleName());//注意：工作流设计时候候选组要填角色名称
+        Map mapTask = taskWFService.taskWfByUserGroup(String.valueOf(user.getUserId()),groups);
+        List<String > batchNoList = new ArrayList<String>();
+        for(Object k:mapTask.keySet())
+        	if(k!=null) batchNoList.add(k.toString());
+        
+        //根据在途工作流中的代办任务编号查询
+        warningTaskListVo.setTaskNoList(batchNoList);
+        list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
+        
         return AjaxResult.success(list);
     }
 

@@ -10,9 +10,9 @@ spring:
 #            username: ferghana
 #            password: ferghana
             # 初始连接数
-            initialSize: 5
+            initialSize: 1
             # 最小连接池数量
-            minIdle: 10
+            minIdle: 1
             # 最大连接池数量
             maxActive: 20
             # 配置获取连接等待超时的时间

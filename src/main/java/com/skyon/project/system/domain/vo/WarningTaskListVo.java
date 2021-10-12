@@ -1,5 +1,7 @@
 package com.skyon.project.system.domain.vo;
 
+import java.util.List;
+
 import com.skyon.framework.web.domain.BaseEntity;
 
 public class WarningTaskListVo extends BaseEntity {
@@ -8,6 +10,8 @@ public class WarningTaskListVo extends BaseEntity {
 
     private String taskNo;
 
+    private List<String> taskNoList;
+    
     private String warningObjectName;
 
     private String warningObjectId;
@@ -83,4 +87,12 @@ public class WarningTaskListVo extends BaseEntity {
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
     }
+
+	public List<String> getTaskNoList() {
+		return taskNoList;
+	}
+
+	public void setTaskNoList(List<String> taskNoList) {
+		this.taskNoList = taskNoList;
+	}
 }

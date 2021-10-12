@@ -40,4 +40,12 @@ public interface TaskWFService {
 
     // 删除一个流程实例
     public void deleteInstance(String taskInfoNo);
+
+	/**
+	 * 
+	 * @param user
+	 * @param groups 
+	 * @return <任务编号,任务节点名>
+	 */
+	Map<String,String> taskWfByUserGroup(String user, List<String> groups);
 }

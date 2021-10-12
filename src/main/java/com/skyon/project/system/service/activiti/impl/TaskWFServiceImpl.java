@@ -25,7 +25,7 @@ public class TaskWFServiceImpl implements TaskWFService {
     /**
      * 根据用户id查询代办任务
      * @param user 用户id
-     * @return 任务编号
+     * @return 任务编号,任务节点名
      */
     @Override
     public Map<String, String> taskWfUser(String user) {
@@ -48,6 +48,31 @@ public class TaskWFServiceImpl implements TaskWFService {
     @Override
     public List taskWfGroup(String user) {
         return null;
+    }
+    /**
+     * 
+     * @param user
+     * @param groups 
+     * @return <任务编号,任务节点名>
+     */
+    @Override
+	public Map<String,String> taskWfByUserGroup(String user, List<String> groups){
+    	System.out.println("taskWfByUserGroup group:"+groups);
+    	
+        ProcessEngine defaultProcessEngine = ProcessEngines.getDefaultProcessEngine();
+        RuntimeService runtimeService = defaultProcessEngine.getRuntimeService();
+        // 获取任务对象
+        TaskService taskService = defaultProcessEngine.getTaskService();
+        // 查询当前登录人在为候选人组时的所有任务
+        List<Task> list = taskService.createTaskQuery().taskAssignee(user).list();
+        List<Task> list1 = taskService.createTaskQuery().taskCandidateUser(user).list();
+        List<Task> list2 = taskService.createTaskQuery().taskCandidateGroupIn(groups).list();
+        list.addAll(list1);
+        list.addAll(list2);
+        
+        // 查询自己的任务编号
+        return getTaskInfoList(list, runtimeService);
+    
     }
 
     /**
