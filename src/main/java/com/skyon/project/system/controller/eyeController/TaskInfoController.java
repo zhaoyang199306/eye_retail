@@ -8,14 +8,13 @@ import com.skyon.framework.security.service.TokenService;
 import com.skyon.framework.web.controller.BaseController;
 import com.skyon.framework.web.domain.AjaxResult;
 import com.skyon.project.system.domain.eye.*;
+import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
 import com.skyon.project.system.domain.sys.SysRole;
 import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
 import com.skyon.project.system.service.activiti.RunWFService;
 import com.skyon.project.system.service.activiti.TaskWFService;
-import com.skyon.project.system.service.eye.SignalManualSevice;
-import com.skyon.project.system.service.eye.WLinkLogService;
-import com.skyon.project.system.service.eye.WTaskInfoService;
+import com.skyon.project.system.service.eye.*;
 import com.skyon.project.system.service.wf.TaskCommon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,10 +41,17 @@ public class TaskInfoController extends BaseController {
     @Autowired
     private WTaskInfoService taskInfoService;
 
+    @Autowired
+    private SeWfTaskExecuteFeedbackService seWfTaskExecuteFeedbackService;
+
+    @Autowired
+    private SeWfWarningSignsService seWfWarningSignsService;
+
 
     /**
      * 根据角色查询  预警业务列表
-     *      如果角色是客户经理，则根据客户经理名称查询
+     * 如果角色是客户经理，则根据客户经理名称查询
+     *
      * @param warningTaskListVo
      * @return
      */
@@ -117,6 +123,12 @@ public class TaskInfoController extends BaseController {
 //        // 任务提交
 //        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
 //        service.commonSubmit(seWfTaskInfo);
+        seWfTaskExecuteFeedbackService.insertTaskExecuteFeedback(seWfTaskInfo.getSeWfTaskExecuteFeedback());
+        List<SeWfWarningSigns> list = seWfTaskInfo.getSeWfWarningSigns();
+        for (SeWfWarningSigns seWfWarningSigns : list) {
+            seWfWarningSignsService.updateSeWfWarningSigns(seWfWarningSigns);
+        }
+
 
         return AjaxResult.success("成功提交");
     }
@@ -142,6 +154,7 @@ public class TaskInfoController extends BaseController {
 
     /**
      * 根据任务编号查询任务详情
+     *
      * @param taskNo 任务编号
      * @return
      */
@@ -158,6 +171,7 @@ public class TaskInfoController extends BaseController {
 
     /**
      * 根据客户编号查询历史任务
+     *
      * @param warningObjectId 客户编号
      * @return
      */
@@ -168,7 +182,6 @@ public class TaskInfoController extends BaseController {
 
         return AjaxResult.success(seWfTaskInfo);
     }
-
 
 
 }

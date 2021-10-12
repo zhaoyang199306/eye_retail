@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skyon.project.system.mapper.eye.wf.SeWfTaskExecuteFeedbackMapper">
+
+	<insert id="insertTaskExecuteFeedback" parameterType="SeWfTaskExecuteFeedback">
+		<selectKey  keyProperty="taskExecuteId" resultType="String" order="BEFORE">
+			select EXECUTE_FEEDBACK_SEQUENCE.nextval as taskExecuteId from dual
+		</selectKey>
+		insert into SE_WF_TASK_EXECUTE_FEEDBACK(
+		<if test="taskExecuteId != null and taskExecuteId != 0">task_execute_id,</if>
+		<if test="taskId != null and taskId != ''">task_id,</if>
+		<if test="taskType != null and taskType != ''">task_type,</if>
+		<if test="riskLevel != null and riskLevel != ''">risk_level,</if>
+		<if test="partnerRiskLevel != null and partnerRiskLevel != ''">partner_risk_level,</if>
+		<if test="attachedFile != null and attachedFile != ''">attached_file,</if>
+		<if test="currentRiskChanges != null and currentRiskChanges != ''">current_risk_changes,</if>
+		<if test="currentConclusions != null and currentConclusions != ''">current_conclusions,</if>
+		<if test="currentFeedback != null and currentFeedback != ''">current_feedback,</if>
+		<if test="currentControlMeasures != null and currentControlMeasures != ''">current_control_measures,</if>
+		<if test="otherControlMeasures != null and otherControlMeasures != ''">other_control_measures,</if>
+		<if test="oneFamilyOnePolicy != null and oneFamilyOnePolicy != ''">one_family_one_policy,</if>
+		<if test="isFinish != null and isFinish != ''">is_finish,</if>
+		<if test="remark != null and remark != ''">remark,</if>
+		<if test="lpOrgNo != null and lpOrgNo != ''">lp_org_no,</if>
+		create_time,delete_logo
+		)values(
+		<if test="taskExecuteId != null and taskExecuteId != ''">#{taskExecuteId},</if>
+		<if test="taskId != null and taskId != ''">#{taskId},</if>
+		<if test="taskType != null and taskType != ''">#{taskType},</if>
+		<if test="riskLevel != null and riskLevel != ''">#{riskLevel},</if>
+		<if test="partnerRiskLevel != null and partnerRiskLevel != ''">#{partnerRiskLevel},</if>
+		<if test="attachedFile != null and attachedFile != ''">#{attachedFile},</if>
+		<if test="currentRiskChanges != null and currentRiskChanges != ''">#{currentRiskChanges},</if>
+		<if test="currentConclusions != null and currentConclusions != ''">#{currentConclusions},</if>
+		<if test="currentFeedback != null and currentFeedback != ''">#{currentFeedback},</if>
+		<if test="currentControlMeasures != null and currentControlMeasures != ''">#{currentControlMeasures},</if>
+		<if test="otherControlMeasures != null and otherControlMeasures != ''">#{otherControlMeasures},</if>
+		<if test="oneFamilyOnePolicy != null and oneFamilyOnePolicy != ''">#{oneFamilyOnePolicy},</if>
+		<if test="isFinish != null and isFinish != ''">#{isFinish},</if>
+		<if test="remark != null and remark != ''">#{remark},</if>
+		<if test="lpOrgNo != null and lpOrgNo != ''">#{lpOrgNo},</if>
+		sysdate,0
+		)
+	</insert>
+</mapper> 

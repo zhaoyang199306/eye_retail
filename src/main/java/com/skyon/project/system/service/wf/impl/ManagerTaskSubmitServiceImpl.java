@@ -95,7 +95,7 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
 //                warnSignalService.updateDpApWarningSign(warnSignalList);
 
             // insert环节流转
-            feedbackService.insertTaskExecuteFeedback(new SeWfTaskExecuteFeedback());
+//            feedbackService.insertTaskExecuteFeedback(new SeWfTaskExecuteFeedback());
         }
 
 
