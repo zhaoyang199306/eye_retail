@@ -14,4 +14,15 @@
     </select>
 
 
+    <update id="updateSignalManualList" parameterType="java.util.List" >
+        <foreach collection="list" item="bean" index="index" open="" close="" separator=";">
+            UPDATE SE_WF_WARNING_SIGNS
+            <set>
+                CONFIRM_STATUS=#{bean.confirmStatus}
+            </set>
+            <where>
+                WARNING_SIGNAL_ID = #{bean.warningSignalId}
+            </where>
+        </foreach>
+    </update>
 </mapper>
