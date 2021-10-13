@@ -11,7 +11,7 @@ public enum SysRiskLevelEnum {
     ORANGE("02","橙色"),
     YELLOW("03","黄色"),
     BLUE("04","蓝色"),
-    GREEN("04","绿色");
+    GREEN("05","绿色");
 
     private final String code;
     private final String info;

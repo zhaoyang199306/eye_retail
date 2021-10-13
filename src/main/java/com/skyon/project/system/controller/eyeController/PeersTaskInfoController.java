@@ -52,16 +52,17 @@ public class PeersTaskInfoController extends BaseController {
      * @return
      */
     @GetMapping("/list")
+    @Transactional
     public AjaxResult getSignalManualList(WarningTaskListVo warningTaskListVo) {
         List<Map> list = new ArrayList<>();
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
         List<SysRole> roles = user.getRoles();
-        
+
         // 还没有开启工作流实例. 查询 登录人 经办列表。
         warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
-        
+
 		// 已经在工作流实例中的.根据用户id查询代办任务编号/根据角色查询代办任务编号
         List<String> groups= new ArrayList<String>();
         for(SysRole r:roles)
@@ -70,11 +71,11 @@ public class PeersTaskInfoController extends BaseController {
         List<String > batchNoList = new ArrayList<String>();
         for(Object k:mapTask.keySet())
         	if(k!=null) batchNoList.add(k.toString());
-        
+
         //根据在途工作流中的代办任务编号查询
         warningTaskListVo.setTaskNoList(batchNoList);
         list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
-        
+
         return AjaxResult.success(list);
     }
 
@@ -93,13 +94,19 @@ public class PeersTaskInfoController extends BaseController {
 
     @PostMapping("/submitTask")
     @Transactional
-    public AjaxResult submitTask(@RequestBody SeWfTaskInfo seWfTaskInfo) throws IOException {
+    public AjaxResult submitTask(@RequestBody TaskInfoSubmitPojo taskInfo) throws IOException {
 
-        logger.info("----submitTask----: 任务编号：{}", seWfTaskInfo.getTaskNo());
+        logger.info("----submitTask----: 任务编号：{}", taskInfo.getTaskInfoNo());
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
         List<SysRole> roles = user.getRoles();
+
+
+        //任务提交后，预警信号的状态认定还未更新
+        int taskCnt = taskInfoService.updateAffirmTask(taskInfo);
+        int signCnt = signalManualSevice.updateSignalManualList(taskInfo.getWarnSignalList());
+        //后续根据逻辑处理再修改
 
 //        // 任务提交
 //        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());

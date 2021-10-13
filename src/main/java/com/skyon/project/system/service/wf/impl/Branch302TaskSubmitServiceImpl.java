@@ -7,6 +7,7 @@ import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
 import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.service.wf.TaskCommon;
+import com.skyon.project.system.service.wf.WFTaskFlagHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -30,16 +31,23 @@ public class Branch302TaskSubmitServiceImpl extends TaskCommon implements Initia
     protected Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user) {
         Map<String, Object> map = new HashMap<>();
 
-        boolean isDirector = true; // 是否需要主管审核
+        WFTaskFlagHandle handle = new WFTaskFlagHandle(seWfTaskInfo);
+
+        map.put("director1", handle.isSupervisor());// 是否需要主管审核
         // 执行分行风险检测岗审核
         map.put(WFRole.WFROLE303.getCode(), "55"); // 下个任务  分行监测审核岗 组ID
 
-        boolean isFuZhou = true; // 任务签收是否属于福州分行
+        map.put("fuzhou", handle.isFuZhou());// 任务签收是否属于福州分行
         map.put(WFRole.WFROLEFZ301.getCode(), "57"); // 下个任务  福州分行风险监测岗 组ID
 
-        boolean isHeadOffice = true; // 客户是否属于总行权限
+        map.put("HeadOffice", handle.isHead());// 客户是否属于总行权限
         map.put(WFRole.WFROLE401.getCode(), "61"); // 下个任务  总行风险管理部监测岗 组ID
-        boolean isAutomatic = true; // 非自动/自动判断
+
+        map.put("automatic", handle.isAutomatic());// 非自动/自动判断
+
+        map.put("upYellow", handle.resultIsUpYellow());// 是否黄色及以上
+
+        map.put("YCYH", handle.isYCYHPlan());// 是否制定一户一策计划
         return map;
     }
 }

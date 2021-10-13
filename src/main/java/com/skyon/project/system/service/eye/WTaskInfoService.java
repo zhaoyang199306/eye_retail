@@ -11,7 +11,7 @@ import java.util.Set;
 
 public interface WTaskInfoService {
 
-    public List<DpApTaskInfo> getWTaskInfoByList1(Set set);
+    public List<Map> getWTaskInfoByList1(Set set);
 
 
     /**

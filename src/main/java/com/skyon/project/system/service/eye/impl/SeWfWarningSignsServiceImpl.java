@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SeWfWarningSignsServiceImpl implements SeWfWarningSignsService {
 
@@ -21,6 +23,11 @@ public class SeWfWarningSignsServiceImpl implements SeWfWarningSignsService {
 
     public int updateSeWfWarningSigns(SeWfWarningSigns seWfWarningSigns){
         return seWfWarningSignsMapper.updateSeWfWarningSigns(seWfWarningSigns);
+    }
+
+    @Override
+    public int updateSingsSignalStatusById(List<String> id) {
+        return seWfWarningSignsMapper.updateSingsSignalStatusById(id);
     }
 
 }

@@ -20,6 +20,7 @@ import com.skyon.framework.aspectj.lang.enums.OperatorType;
 @Documented
 public @interface Log
 {
+    // @log(title = "${functionName}", businessType = BusinessType.EXPORT)
     /**
      * 模块 
      */

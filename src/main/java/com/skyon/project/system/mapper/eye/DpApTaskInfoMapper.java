@@ -12,7 +12,7 @@ import java.util.Set;
 public interface DpApTaskInfoMapper {
 
     // 根据待办箱的任务编号查询任务详情
-    public List<DpApTaskInfo> getWTaskInfoByList1(Set set);
+    public List<Map> getWTaskInfoByList1(Set taskNo);
 
     /**
      * 根据业务人员编号 查询代办事项

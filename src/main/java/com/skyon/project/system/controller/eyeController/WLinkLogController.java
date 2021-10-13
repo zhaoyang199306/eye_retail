@@ -46,12 +46,12 @@ public class WLinkLogController extends BaseController {
     public AjaxResult clearWF(@PathVariable("taskInfoNo") String taskInfoNo) {
         try {
             logger.info("------------clearWF----清除流程信息---------{}", taskInfoNo);
-            // 删除流程信息表
-            int i = linkLogService.deleteList(taskInfoNo);
-            logger.info("------------删除流程信息表----删除-----{}  条", i);
-
-            // 修改DP_AP_task_info表状态
-            int i1 = taskInfoService.celarRunStatusByNo(taskInfoNo);
+//            // 删除流程信息表
+//            int i = linkLogService.deleteList(taskInfoNo);
+//            logger.info("------------删除流程信息表----删除-----{}  条", i);
+//
+//            // 修改DP_AP_task_info表状态
+//            int i1 = taskInfoService.celarRunStatusByNo(taskInfoNo);
 
             // 删除工作流表 信息
             taskWFService.deleteInstance(taskInfoNo);
