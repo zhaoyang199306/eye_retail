@@ -1,6 +1,7 @@
 package com.skyon.project.system.service.eye.impl;
 
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
+import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
 import com.skyon.project.system.mapper.eye.SignalManualMapper;
 import com.skyon.project.system.mapper.eye.DpApTaskInfoMapper;
 import com.skyon.project.system.service.eye.SignalManualSevice;
@@ -26,5 +27,10 @@ public class SignalManualSeviceImpl implements SignalManualSevice {
     @Override
     public DpApTaskInfo getWTaskInfoListManualByCustNo(String custNo) {
         return taskInfoMapper.getWTaskInfoListManualByCustNo(custNo);
+    }
+
+    @Override
+    public int updateSignalManualList(List<SeWfWarningSigns> seWfWarningSigns) {
+        return signalManualMapper.updateSignalManualList(seWfWarningSigns);
     }
 }

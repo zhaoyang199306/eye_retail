@@ -1,8 +1,6 @@
 package com.skyon.project.system.service.eye.impl;
 
-import com.skyon.project.system.domain.eye.SeWfTaskInfo;
-import com.skyon.project.system.domain.eye.TBondInfo;
-import com.skyon.project.system.domain.eye.DpApTaskInfo;
+import com.skyon.project.system.domain.eye.*;
 import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
 import com.skyon.project.system.mapper.eye.TBondInfoMapper;
@@ -52,6 +50,11 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
     @Override
     public int updateRunStatusByNoAndTrack(String taskInfoNo) {
         return taskInfoMapper.updateRunStatusByNoAndTrack(taskInfoNo);
+    }
+
+    @Override
+    public int updateAffirmTask(TaskInfoSubmitPojo taskInfo) {
+        return taskInfoMapper.updateAffirmTask(taskInfo);
     }
 
     @Override

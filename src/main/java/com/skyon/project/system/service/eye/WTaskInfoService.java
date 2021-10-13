@@ -2,6 +2,7 @@ package com.skyon.project.system.service.eye;
 
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
 import com.skyon.project.system.domain.eye.SeWfTaskInfo;
+import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
 
 import java.util.List;
@@ -24,6 +25,8 @@ public interface WTaskInfoService {
     public int updateRunStatusByNo(String taskInfoNo,String riskValue,String personalRiskLevel,String checkResult);
 
     public int updateRunStatusByNoAndTrack(String taskInfoNo);
+    // 预警认定
+    public int updateAffirmTask(TaskInfoSubmitPojo taskInfo);
 
     public int celarRunStatusByNo(String taskInfoNo);
 
