@@ -22,5 +22,8 @@ public interface PeersRunWFService {
      */
     public static final String PROCESS_EYE_CASTGROUP = "eye_castgroup";
     
-    public void startWf(String taskInfoNo, Map map, WarningObjectCategory category);
+    /**
+     * 启动工作流实例
+     */
+    public void startWf(String taskInfoNo, Map map, String category);
 }

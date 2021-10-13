@@ -1,6 +1,8 @@
 package com.skyon.project.system.controller.eyeController;
 
+import com.alibaba.fastjson.JSON;
 import com.skyon.common.enums.RoleName;
+import com.skyon.common.enums.WarningObjectCategory;
 import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
 import com.skyon.framework.security.LoginUser;
@@ -8,9 +10,11 @@ import com.skyon.framework.security.service.TokenService;
 import com.skyon.framework.web.controller.BaseController;
 import com.skyon.framework.web.domain.AjaxResult;
 import com.skyon.project.system.domain.eye.*;
+import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
 import com.skyon.project.system.domain.sys.SysRole;
 import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
+import com.skyon.project.system.service.activiti.PeersRunWFService;
 import com.skyon.project.system.service.activiti.RunWFService;
 import com.skyon.project.system.service.activiti.TaskWFService;
 import com.skyon.project.system.service.eye.SignalManualSevice;
@@ -35,6 +39,8 @@ public class PeersTaskInfoController extends BaseController {
     @Autowired
     private RunWFService runWFService;
     @Autowired
+    private PeersRunWFService prunWFService;
+    @Autowired
     private TaskWFService taskWFService;
     @Autowired
     private TokenService tokenService;
@@ -46,8 +52,8 @@ public class PeersTaskInfoController extends BaseController {
 
 
     /**
-     * 根据角色查询  预警业务列表
-     *      如果角色是客户经理，则根据客户经理名称查询
+     * 查询已开始和未开始流程的任务
+     *      
      * @param warningTaskListVo
      * @return
      */
@@ -67,12 +73,15 @@ public class PeersTaskInfoController extends BaseController {
         for(SysRole r:roles)
         	groups.add(r.getRoleName());//注意：工作流设计时候候选组要填角色名称
         Map mapTask = taskWFService.taskWfByUserGroup(String.valueOf(user.getUserId()),groups);
-        List<String > batchNoList = new ArrayList<String>();
-        for(Object k:mapTask.keySet())
-        	if(k!=null) batchNoList.add(k.toString());
+        if(mapTask.keySet().size()>0) {
+        	List<String > batchNoList = new ArrayList<String>();
+        	for(Object k:mapTask.keySet())
+        		if(k!=null) batchNoList.add(k.toString());
+        	//根据在途工作流中的代办任务编号查询
+        	warningTaskListVo.setTaskNoList(batchNoList);
+        	
+        }
         
-        //根据在途工作流中的代办任务编号查询
-        warningTaskListVo.setTaskNoList(batchNoList);
         list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
         
         return AjaxResult.success(list);
@@ -90,20 +99,25 @@ public class PeersTaskInfoController extends BaseController {
      * @RequestParam("checkResult") String checkResult,
      * DpApWarningSign warnSignalList
      */
-
     @PostMapping("/submitTask")
     @Transactional
-    public AjaxResult submitTask(@RequestBody SeWfTaskInfo seWfTaskInfo) throws IOException {
+    public AjaxResult submitTask(@RequestBody TaskInfoSubmitPojo taskInfo) throws IOException {
 
-        logger.info("----submitTask----: 任务编号：{}", seWfTaskInfo.getTaskNo());
+        logger.info("----submitTask----: 任务编号：{}", taskInfo.getTaskInfoNo());
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
         List<SysRole> roles = user.getRoles();
 
-//        // 任务提交
-//        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-//        service.commonSubmit(seWfTaskInfo);
+        SeWfTaskInfo task = taskInfoService.selectSeWfTaskInfoByTaskNo(taskInfo.getTaskInfoNo());
+        Map map=new HashMap<String,String>();
+        prunWFService.startWf(taskInfo.getTaskInfoNo(), map, task.getWarningObjectCategory());
+        
+        //更新任务和信号
+        int taskCnt = taskInfoService.updateAffirmTask(taskInfo);
+        int signCnt = signalManualSevice.updateSignalManualList(taskInfo.getWarnSignalList());
+        
+        taskWFService.exeTaskByTaskInfoNo(taskInfo.getTaskInfoNo(), user.getUserName(), map);
 
         return AjaxResult.success("成功提交");
     }
@@ -156,6 +170,22 @@ public class PeersTaskInfoController extends BaseController {
         return AjaxResult.success(seWfTaskInfo);
     }
 
-
+    public static void main(String[] args) {
+    	System.out.println(
+    	WarningObjectCategory.valueOf("PUBLIC"));
+    	TaskInfoSubmitPojo po = new TaskInfoSubmitPojo();
+    	po.setTaskInfoNo("RCN010000000120210918005");
+    	po.setPersonalRiskLevel("01");
+    	po.setCheckResult("有风险");
+    	po.setRiskControlMeasures("1,2"); 
+    	List<SeWfWarningSigns> warnList = new ArrayList<SeWfWarningSigns>();
+    	SeWfWarningSigns warning =new SeWfWarningSigns();
+    	warning.setWarningSignalId("478an1215wsdfq3312an1215wsdfq302");
+    	warning.setConfirmStatus("01");
+		warnList.add(warning);
+		po.setWarnSignalList(warnList);
+    	System.out.println(JSON.toJSONString(po));
+    	
+    }
 
 }

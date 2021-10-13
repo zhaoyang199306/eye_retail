@@ -20,11 +20,11 @@ public class PeersRunWFServiceImpl implements PeersRunWFService  {
 	 * @param map 启动后所需参数
      */
     @Override
-    public void startWf(String taskInfoNo, Map map, WarningObjectCategory category) {
+    public void startWf(String taskInfoNo, Map map, String category) {
         ProcessEngine defaultProcessEngine = ProcessEngines.getDefaultProcessEngine();
 
         String processKey=null;
-        if(category==WarningObjectCategory.PEERS )
+        if(category.equals(WarningObjectCategory.PEERS.getCode()) )
         	processKey=PeersRunWFService.PROCESS_EYE_PEERS;
         else
         	throw new RuntimeException("预警对象类型"+category+"的流程未定义");

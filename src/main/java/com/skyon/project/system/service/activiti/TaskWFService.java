@@ -19,7 +19,13 @@ public interface TaskWFService {
     // 查询候选任务
     public List taskWfGroup(String user);
 
-    // 根据任务编号执行任务
+    /**
+     * 根据任务编号完成任务
+     * @param taskInfoNo
+     * @param user
+     * @param map
+     * @return
+     */
     public String exeTaskByTaskInfoNo(String taskInfoNo, String user, Map map);
 
     // 根据任务编号获取当前任务
