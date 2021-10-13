@@ -275,13 +275,12 @@
         <if test="taskHandler != null and taskHandler != ''">
             i.task_handler = #{taskHandler}
         </if>
-        
-        OR (  1=1 
+        OR (  1=1
         <if test="taskNo != null and taskNo != ''">
             OR i.task_no = #{taskNo}
         </if>
         <if test="taskNoList != null ">
-            OR i.task_no in 
+            OR i.task_no in
             <foreach collection="taskNoList" item="taskNo" index="index" open="(" close=")" separator=",">
 	        #{taskNo}
 	    	</foreach>
@@ -303,7 +302,6 @@
         <if test="taskStatus != null and taskStatus != ''">
             AND i.task_status = #{taskStatus}
         </if>
-       /*融合界面模糊查询*/
         <if test="warningObjectLikeParam != null and warningObjectLikeParam != ''">
             AND (o.warning_object_name like concat('%',#{warningObjectLikeParam},'%') or o.warning_object_no like concat('%',#{warningObjectLikeParam},'%') )
         </if>
