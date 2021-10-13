@@ -36,7 +36,12 @@ public enum RoleName {
 
     HEAD_RISK_MONITORING_POST ("09","总行风险监测岗"),
     HEAD_MONITORING_AUDIT_POST("10","总行监测审核岗"),
-    HEAD_RISK_DEPARTMENT_SUPERVISOR("11","总行风险管理部主管");
+    HEAD_RISK_DEPARTMENT_SUPERVISOR("11","总行风险管理部主管"),
+
+    HEADQUARTERS_RISK_MONITORING_POST("12","指挥部风险监测岗"),
+    HEADQUARTERS_RISK_REVIEW_POST("13","指挥部风险审核岗");
+
+
 
     private final String code;
     private final String info;

@@ -9,11 +9,14 @@ import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
 public class TaskWFServiceImpl implements TaskWFService {
+
+
 //    private ProcessEngine defaultProcessEngine;
 //
 //    {

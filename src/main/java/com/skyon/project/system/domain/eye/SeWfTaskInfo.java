@@ -79,6 +79,8 @@ public class SeWfTaskInfo extends BasePojo {
 
     private String signalSource; // 信号来源
 
+    private String warningTaskKind; // 预警任务种类 01 预警任务（自动认定） 02 预警任务（非自动认定） 03 预警任务（人工信号认定） 04 签收任务
+
     //  ----------------------------  关联---------------------------
 
     private SeWfWarningObject seWfWarningObject; // 预警对象
@@ -136,6 +138,14 @@ public class SeWfTaskInfo extends BasePojo {
 
 //-----------------------------------get/set----------------------------------------
 
+
+    public String getWarningTaskKind() {
+        return warningTaskKind;
+    }
+
+    public void setWarningTaskKind(String warningTaskKind) {
+        this.warningTaskKind = warningTaskKind;
+    }
 
     public String getTaskId() {
         return taskId;

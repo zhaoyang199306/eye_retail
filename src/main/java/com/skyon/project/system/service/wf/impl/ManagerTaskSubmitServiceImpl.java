@@ -1,6 +1,8 @@
 package com.skyon.project.system.service.wf.impl;
 
 import com.skyon.common.enums.RoleName;
+import com.skyon.common.enums.SignalCreateModelEnum;
+import com.skyon.common.enums.SysRiskLevelEnum;
 import com.skyon.common.enums.WFRole;
 import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
@@ -16,6 +18,7 @@ import com.skyon.project.system.service.eye.SeWfTaskExecuteFeedbackService;
 import com.skyon.project.system.service.eye.TWarnSignalService;
 import com.skyon.project.system.service.eye.WTaskInfoService;
 import com.skyon.project.system.service.wf.TaskCommon;
+import com.skyon.project.system.service.wf.WFTaskFlagHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -34,72 +37,6 @@ import java.util.Map;
 public class ManagerTaskSubmitServiceImpl extends TaskCommon implements InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(ManagerTaskSubmitServiceImpl.class);
-
-    @Autowired
-    private RunWFService runWFService;
-    @Autowired
-    private TaskWFService taskWFService;
-    @Autowired
-    private TokenService tokenService;
-    @Autowired
-    private WTaskInfoService taskInfoService;
-    @Autowired
-    private TWarnSignalService warnSignalService;
-    @Autowired
-    private SeWfTaskExecuteFeedbackService feedbackService;
-
-
-
-    @Transactional
-    public void taskSubmitMethod(TaskInfoSubmitPojo task) {
-
-        Map<String, Object> map = new HashMap<>();
-        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        SysUser user = loginUser.getUser();
-
-
-//        if (true) {  // 一、非自动认定（即 风险等级为待认定）
-//            map.put("wfStart", "1"); // 走流程1
-//            map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 预警认定操作人id
-//            map.put(WFRole.WFROLE201.getCode(), "52"); // 下一环节 支行主管角色 id
-//
-//        } else if (true) { // 二、自动认定非自动签收（即  有系统认定风险等级 且 风险等级黄色及以上  且 不是灰名单 且 （客户不是风险客户 或 是风险客户且风险等级高于原风险等级）
-//            map.put("wfStart", "2"); // 走流程2
-//            map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 预警认定操作人id
-//        } else if (true) { //  三、自动认定签收（即 上面的另一面）
-//            map.put("wfStart", "3"); // 走流程3
-//            map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 预警认定操作人id
-//        } else { // 无流程
-//            logger.info("无流程可走，任务编号：{}" + task.getTaskInfoNo());
-//            throw new RuntimeException("无流程可走，任务编号" + task.getTaskInfoNo());
-//        }
-
-
-        // 某个任务，启动流程
-        runWFService.startWf(task.getTaskInfoNo(), map);
-        // 执行任务  返回任务节点名字
-        String taskName = taskWFService.exeTaskByTaskInfoNo(task.getTaskInfoNo(),
-                String.valueOf(user.getUserId()), map);
-
-        logger.info("----taskNO:{}----taskName----: {}",task.getTaskInfoNo(), taskName);
-
-//             执行成功后 修改DP_AP_task_info 表里的状态 run_status  目的；提交之后,该客户经理的任务栏查不到
-        if (WFRole.WFROLE101.getInfo().equals(taskName)) {
-//            int i = taskInfoService.updateRunStatusByNo(task.getTaskInfoNo(),
-//                    JSON.toJSONString(task.getRiskControlMeasures()),
-//                    task.getPersonalRiskLevel(),
-//                    task.getCheckResult());
-//            // 修改预警信号列表 的 认定状态
-//            List<DpApWarningSign> warnSignalList = task.getWarnSignalList();
-//            if (warnSignalList != null && warnSignalList.size() > 0)
-//                warnSignalService.updateDpApWarningSign(warnSignalList);
-
-            // insert环节流转
-//            feedbackService.insertTaskExecuteFeedback(new SeWfTaskExecuteFeedback());
-        }
-
-
-    }
 
     /**
      * Bean 初始化时，把该Bean注册进   流程的工厂类 - WfDealRoleRegisterFactory
@@ -123,22 +60,21 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
     @Override
     protected Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user) {
         Map<String, Object> map = new HashMap<>();
-        if (true) {  // 一、非自动认定（即 风险等级为待认定）
-            map.put("first", Boolean.TRUE);
-            map.put("wfStart", "1"); // 走流程1
-            map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 预警认定操作人id
-            map.put(WFRole.WFROLE201.getCode(), "52"); // 下一环节 支行主管角色 id
+        // 先查询一下是否启动过流程  （有重新回到客户经理手里的情况）
 
-        } else if (true) { // 二、自动认定非自动签收（即  有系统认定风险等级 且 风险等级黄色及以上  且 不是灰名单 且 （客户不是风险客户 或 是风险客户且风险等级高于原风险等级）
+        WFTaskFlagHandle handle = new WFTaskFlagHandle(seWfTaskInfo);
+        boolean signTask = handle.isSignTask();
+
+        map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 客户经理操作人id
+        map.put("first", Boolean.TRUE);
+
+        if (signTask) {  // 签收
             map.put("wfStart", "2"); // 走流程2
-            map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 预警认定操作人id
-        } else if (true) { //  三、自动认定签收（即 上面的另一面）
-            map.put("wfStart", "3"); // 走流程3
-            map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 预警认定操作人id
-        } else { // 无流程
-            logger.info("无流程可走，任务编号：{}" + seWfTaskInfo.getTaskNo());
-            throw new RuntimeException("无流程可走，任务编号" + seWfTaskInfo.getTaskNo());
+        } else { // 非签收
+            map.put("wfStart", "1"); // 走流程1
+            map.put(WFRole.WFROLE201.getCode(), "52"); // 下一环节 支行主管角色 id
         }
         return map;
     }
+
 }

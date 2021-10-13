@@ -14,4 +14,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where warning_signal_id = #{warningSignalId}
 	</update>
 
+	<update id="updateSingsSignalStatusById" parameterType="String">
+		update se_wf_warning_signs set signal_status = '03' where warning_signal_id in
+		<foreach collection="list" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</update>
+
 </mapper> 

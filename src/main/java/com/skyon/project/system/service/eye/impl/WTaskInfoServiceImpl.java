@@ -27,9 +27,10 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
      * @return 实体集合
      */
     @Override
-    public List<DpApTaskInfo> getWTaskInfoByList1(Set set) {
-        return taskInfoMapper.getWTaskInfoByList1(set);
+    public List<Map> getWTaskInfoByList1(Set taskNo) {
+        return taskInfoMapper.getWTaskInfoByList1(taskNo);
     }
+
 
 
     /**
