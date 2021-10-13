@@ -2,6 +2,7 @@ package com.skyon.project.system.mapper.eye;
 
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
 import com.skyon.project.system.domain.eye.SeWfTaskInfo;
+import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
 
 import java.util.List;
@@ -58,5 +59,8 @@ public interface DpApTaskInfoMapper {
 
     // 根据客户编号查询历史任务详情
     public List<SeWfTaskInfo> selectSeWfTaskInfoByWarningObjectId(String warningObjectId);
+
+    // 预警任务认定页面更新任务
+    public int updateAffirmTask(TaskInfoSubmitPojo taskInfo);
 
 }
