@@ -58,16 +58,17 @@ public class PeersTaskInfoController extends BaseController {
      * @return
      */
     @GetMapping("/list")
+    @Transactional
     public AjaxResult getSignalManualList(WarningTaskListVo warningTaskListVo) {
         List<Map> list = new ArrayList<>();
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
         List<SysRole> roles = user.getRoles();
-        
+
         // 还没有开启工作流实例. 查询 登录人 经办列表。
         warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
-        
+
 		// 已经在工作流实例中的.根据用户id查询代办任务编号/根据角色查询代办任务编号
         List<String> groups= new ArrayList<String>();
         for(SysRole r:roles)
@@ -81,9 +82,9 @@ public class PeersTaskInfoController extends BaseController {
         	warningTaskListVo.setTaskNoList(batchNoList);
         	
         }
-        
+
         list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
-        
+
         return AjaxResult.success(list);
     }
 
@@ -122,24 +123,7 @@ public class PeersTaskInfoController extends BaseController {
         return AjaxResult.success("成功提交");
     }
 
-//    @PostMapping("/submitTaskTest/{taskNO}")
-//    @Transactional
-//    public AjaxResult submitTaskTest(@PathVariable("taskNO") String taskNo) throws IOException {
-//
-//        logger.info("----submitTask----: 任务编号：{}", taskNo);
-//
-//        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-//        SysUser user = loginUser.getUser();
-//        List<SysRole> roles = user.getRoles();
-//
-//        TaskInfoSubmitPojo pojo = new TaskInfoSubmitPojo();
-//        pojo.setTaskInfoNo(taskNo);
-//        // 任务提交
-//        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-//        service.commonSubmit(pojo);
-//
-//        return AjaxResult.success("成功提交");
-//    }
+
 
     /**
      * 根据任务编号查询任务详情

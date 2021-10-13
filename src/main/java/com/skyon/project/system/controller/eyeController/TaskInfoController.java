@@ -1,6 +1,7 @@
 package com.skyon.project.system.controller.eyeController;
 
 import com.skyon.common.enums.RoleName;
+import com.skyon.common.enums.WFLink;
 import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
 import com.skyon.framework.security.LoginUser;
@@ -17,11 +18,18 @@ import com.skyon.project.system.service.activiti.TaskWFService;
 import com.skyon.project.system.service.eye.*;
 import com.skyon.project.system.service.wf.TaskCommon;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.*;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
+import static org.springframework.transaction.annotation.Isolation.READ_COMMITTED;
 
 @RestController
 @RequestMapping("/taskInfo")
@@ -68,30 +76,21 @@ public class TaskInfoController extends BaseController {
             // 查询 客户经理 初始时 的 列表。
             warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
             list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
+        } else {
+
+            Set set = taskInfoService.selectAllTaskInfoNo();
+
+
+            // 根据用户id查询代办任务
+            Map mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
+            Set setOwner = mapTask.keySet();  // setOwer::contains
+
+            Set<String> taskNo = (Set<String>) set.stream().filter(value -> setOwner.contains(value)).collect(Collectors.toSet());
+
+
+            // 查询待办箱
+            if (taskNo.size() > 0) list = taskInfoService.getWTaskInfoByList1(taskNo);
         }
-//        else {
-//            // 根据用户id查询代办任务
-//            Map mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
-//            Set<String> set = new HashSet<>();
-//            // 只计算在里面的
-//            List listAll = taskInfoService.selectAllTaskInfoNo();
-//            Set<Map.Entry<String, String>> entries = mapTask.entrySet();
-//            Iterator<Map.Entry<String, String>> iterator = entries.iterator();
-//            while (iterator.hasNext()) {
-//                Map.Entry<String, String> next = iterator.next();
-//                String key = next.getKey();
-//                String value = next.getValue();
-//
-//                if (listAll.contains(key)) {
-//
-//                    if (WFLink.WFLINK1.contains(value))
-//                        set.add(key);
-//                }
-//            }
-//
-//            // 查询待办箱
-//            if (set.size() > 0) list = taskInfoService.getWTaskInfoByList1(set);
-//        }
 
 
         return AjaxResult.success(list);
@@ -112,48 +111,34 @@ public class TaskInfoController extends BaseController {
 
     @PostMapping("/submitTask")
     @Transactional
-    public AjaxResult submitTask(@RequestBody SeWfTaskInfo seWfTaskInfo) throws IOException {
+    public AjaxResult submitTask(@RequestBody SeWfTaskInfo seWfTaskInfo) {
 
         logger.info("----submitTask----: 任务编号：{}", seWfTaskInfo.getTaskNo());
-
-        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        SysUser user = loginUser.getUser();
+        SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
         List<SysRole> roles = user.getRoles();
 
-//        // 任务提交
-//        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-//        service.commonSubmit(seWfTaskInfo);
+        // 保存 任务执行反馈表单
         seWfTaskExecuteFeedbackService.insertTaskExecuteFeedback(seWfTaskInfo.getSeWfTaskExecuteFeedback());
+
+        // 更新信号表
         List<SeWfWarningSigns> list = seWfTaskInfo.getSeWfWarningSigns();
         for (SeWfWarningSigns seWfWarningSigns : list) {
             seWfWarningSignsService.updateSeWfWarningSigns(seWfWarningSigns);
         }
 
+//        // 任务提交
+//        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
+//        service.commonSubmit(seWfTaskInfo, user);
 
         return AjaxResult.success("成功提交");
     }
 
-//    @PostMapping("/submitTaskTest/{taskNO}")
-//    @Transactional
-//    public AjaxResult submitTaskTest(@PathVariable("taskNO") String taskNo) throws IOException {
-//
-//        logger.info("----submitTask----: 任务编号：{}", taskNo);
-//
-//        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-//        SysUser user = loginUser.getUser();
-//        List<SysRole> roles = user.getRoles();
-//
-//        TaskInfoSubmitPojo pojo = new TaskInfoSubmitPojo();
-//        pojo.setTaskInfoNo(taskNo);
-//        // 任务提交
-//        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-//        service.commonSubmit(pojo);
-//
-//        return AjaxResult.success("成功提交");
-//    }
 
     /**
      * 根据任务编号查询任务详情
+     *
+     * @param taskNo     任务编号
+     * @param taskInfoNo 任务编号
      *
      * @param taskNo 任务编号
      * @return

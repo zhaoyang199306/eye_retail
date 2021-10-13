@@ -11,8 +11,9 @@ import com.skyon.project.system.service.eye.SeWfTaskExecuteFeedbackService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -21,8 +22,6 @@ import java.util.Map;
 public abstract class TaskCommon {
     protected static final Logger LOGGERCOMMON = LoggerFactory.getLogger(TaskCommon.class);
 
-    @Autowired
-    private TokenService tokenService;
     @Autowired
     private TaskWFService taskWFService;
     @Autowired
@@ -33,9 +32,9 @@ public abstract class TaskCommon {
     /**
      * 保存任务流转
      */
-    public void commonSubmit(SeWfTaskInfo seWfTaskInfo) {
-        // 当前登录用户信息
-        SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
+    public void commonSubmit(SeWfTaskInfo seWfTaskInfo, SysUser user) {
+
+        LOGGERCOMMON.info("当前事务名2：{}", TransactionSynchronizationManager.getCurrentTransactionName());
 
         // 获取组装参数
         Map<String, Object> map = this.assembleParam(seWfTaskInfo, user);
@@ -49,6 +48,9 @@ public abstract class TaskCommon {
         String taskName = taskWFService.exeTaskByTaskInfoNo(seWfTaskInfo.getTaskNo(),
                 String.valueOf(user.getUserId()), map);
 
+        // 额外操作 修改某些字段
+        this.updateField(seWfTaskInfo);
+
         LOGGERCOMMON.info("----taskNO:{}----taskName----: {}", seWfTaskInfo.getTaskNo(), taskName);
 
         // insert环节流转
@@ -61,10 +63,15 @@ public abstract class TaskCommon {
 //                    JSON.toJSONString(task.getRiskControlMeasures()),
 //                    task.getExaminValue());
 //        }
-        LOGGERCOMMON.info("提交----{}",seWfTaskInfo.getTaskNo());
+        LOGGERCOMMON.info("{},提交----{}", user.getUserName(), seWfTaskInfo.getTaskNo());
     }
 
     // 组装参数 交给每个角色处理
     protected abstract Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user);
+
+    // 修改某些字段 交给每个角色处理
+    protected void updateField(SeWfTaskInfo seWfTaskInfo){
+
+    }
 
 }

@@ -96,6 +96,7 @@
         <result property="parentTaskId" column="PARENT_TASK_ID"/>
         <result property="warningConfirmModel" column="WARNING_CONFIRM_MODEL"/>
         <result property="disposalTraceModel" column="DISPOSAL_TRACEMODEL"/>
+        <result property="warningTaskKind" column="WARNING_TASK_KIND"/>
 
         <!--        <association property="seWfWarningObject"    column="WARNING_OBJECT_ID" javaType="SeWfWarningObject" resultMap="seWfWarningObjectResult" />-->
 <!--        <association property="seWfTaskExecuteFeedback"    column="TASK_EXECUTE_ID" javaType="SeWfTaskExecuteFeedback" resultMap="SeWfTaskExecuteFeedbackResult" />-->
@@ -262,6 +263,24 @@
 <!--        and role = '预警认定'-->
 <!--    </select>-->
     <!--需要关联流程表中展示流程状态-->
+
+    <select id="getWTaskInfoByList1" parameterType="java.util.Set" resultType="map">
+        select i.task_no,i.warning_object_name,i.warning_object_id,i.warning_object_category,i.task_status,i.task_type,
+        i.sys_risk_level,
+        COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
+        COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
+        COUNT(CASE WHEN warning_level = '03' THEN 1 ELSE NULL END) AS threeLevelCount,
+        o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,o.warning_object_category
+        from SE_WF_TASK_INFO i
+        left join SE_WF_WARNING_OBJECT o on i.warning_object_id = o.warning_object_id
+        left join Se_Wf_Warning_Signs s on i.task_id = s.task_id where i.task_no in
+        <foreach collection="collection" item="taskNo" separator="," open="(" close=")">
+            #{taskNo}
+        </foreach>
+        group by i.task_no,i.warning_object_name,i.warning_object_id,i.warning_object_category,i.task_status,i.task_type,i.sys_risk_level,
+        o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,o.warning_object_category
+    </select>
+
     <select id="getWTaskInfoListByRole" parameterType="WarningTaskListVo" resultType="map">
         select i.task_no,i.warning_object_name,i.warning_object_id,i.warning_object_category,i.task_status,i.task_type,
         i.sys_risk_level,i.task_handle_post,
@@ -286,7 +305,7 @@
 	    	</foreach>
         </if>
         )
-        
+
         <if test="warningObjectName != null and warningObjectName != ''">
             AND o.warning_object_name = #{warningObjectName}
         </if>
@@ -310,11 +329,7 @@
     </select>
 
     <select id="selectSeWfTaskInfoByTaskNo" resultMap="SeWfTaskInfo" parameterType="String">
-        select i.*,o.*,s.*,k.* from SE_WF_TASK_INFO i
-        LEFT JOIN SE_WF_WARNING_OBJECT o on i.warning_object_id = o.warning_object_id
-        LEFT JOIN (select e.*  from (select f.* from SE_WF_TASK_EXECUTE_FEEDBACK f,SE_WF_TASK_INFO g where f.task_id = g.task_id and g.task_no = #{taskNo} order by f.create_time desc) e where rownum=1) k on i.TASK_ID=k.TASK_ID
-        left join Se_Wf_Warning_Signs s on i.task_id = s.task_id where i.task_no = #{taskNo}
-<!--         select * from SE_WF_TASK_INFO  where task_no = #{taskNo} -->
+         select * from SE_WF_TASK_INFO  where task_no = #{taskNo}
     </select>
 
     <select id="selectSeWfTaskInfoByWarningObjectId" resultMap="SeWfTaskInfo" parameterType="String">

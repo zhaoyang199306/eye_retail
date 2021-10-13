@@ -11,6 +11,7 @@ import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.service.activiti.TaskWFService;
 import com.skyon.project.system.service.eye.SeWfTaskExecuteFeedbackService;
 import com.skyon.project.system.service.wf.TaskCommon;
+import com.skyon.project.system.service.wf.WFTaskFlagHandle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -41,8 +42,12 @@ public class SubBranchSupervisorTaskSubmitServiceImpl extends TaskCommon impleme
     @Override
     protected Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user) {
         Map<String, Object> map = new HashMap<>();
+        WFTaskFlagHandle handle = new WFTaskFlagHandle(seWfTaskInfo);
         // 执行分行风险检测岗审核
-        map.put(WFRole.WFROLE301.getCode(), "53"); // 下个任务  分行风险监测岗 组ID
+        map.put("automatic",handle.isAutomatic());// 自动非自动判断
+        map.put("signTrue",handle.singsIsTrueByManager()); // 属实不属实判断
+        map.put(WFRole.WFROLE501.getCode(),"74");// 指挥部风险监测岗  角色 id
+        map.put(WFRole.WFROLE301.getCode(),"53");//  分行风险检测岗审核 角色 id
         return map;
     }
 }
