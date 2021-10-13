@@ -11,7 +11,9 @@ public class WarningTaskListVo extends BaseEntity {
     private String taskNo;
 
     private List<String> taskNoList;
-    
+
+    private String  warningObjectLikeParam;
+
     private String warningObjectName;
 
     private String warningObjectId;
@@ -23,6 +25,14 @@ public class WarningTaskListVo extends BaseEntity {
     private String taskType;
 
     private String taskStatus;
+
+    public String getWarningObjectLikeParam() {
+        return warningObjectLikeParam;
+    }
+
+    public void setWarningObjectLikeParam(String warningObjectLikeParam) {
+        this.warningObjectLikeParam = warningObjectLikeParam;
+    }
 
     public String getTaskHandler() {
         return taskHandler;
