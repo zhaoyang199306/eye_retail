@@ -10,6 +10,7 @@ import com.skyon.framework.web.controller.BaseController;
 import com.skyon.framework.web.domain.AjaxResult;
 import com.skyon.project.system.domain.eye.*;
 import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
+import com.skyon.project.system.domain.eye.wf.SeWfTaskExecuteFeedback;
 import com.skyon.project.system.domain.sys.SysRole;
 import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
@@ -117,8 +118,10 @@ public class TaskInfoController extends BaseController {
         SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
         List<SysRole> roles = user.getRoles();
 
+        SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();
+        seWfTaskExecuteFeedback.setTaskId(seWfTaskInfo.getTaskId());
         // 保存 任务执行反馈表单
-        seWfTaskExecuteFeedbackService.insertTaskExecuteFeedback(seWfTaskInfo.getSeWfTaskExecuteFeedback());
+        seWfTaskExecuteFeedbackService.insertTaskExecuteFeedback(seWfTaskExecuteFeedback);
 
         // 更新信号表
         List<SeWfWarningSigns> list = seWfTaskInfo.getSeWfWarningSigns();
