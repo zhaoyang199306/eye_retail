@@ -40,6 +40,10 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
 
     private String taskHandlePost; // 当前处理岗
 
+    private String processName; // 流程节点名称
+
+    private String lastProcessName; // 上一流程节点名称
+
     //-----------------------------------toString----------------------------------------
 
     @Override
@@ -61,6 +65,8 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
                 ", isFinish='" + isFinish + '\'' +
                 ", taskHandler='" + taskHandler + '\'' +
                 ", taskHandlePost='" + taskHandlePost + '\'' +
+                ", processName='" + processName + '\'' +
+                ", lastProcessName='" + lastProcessName + '\'' +
                 '}';
     }
 
@@ -196,5 +202,21 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
 
     public void setIsFinish(String isFinish) {
         this.isFinish = isFinish;
+    }
+
+    public String getProcessName() {
+        return processName;
+    }
+
+    public void setProcessName(String processName) {
+        this.processName = processName;
+    }
+
+    public String getLastProcessName() {
+        return lastProcessName;
+    }
+
+    public void setLastProcessName(String lastProcessName) {
+        this.lastProcessName = lastProcessName;
     }
 }

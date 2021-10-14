@@ -251,7 +251,11 @@
         <result property="currentControlMeasures" column="CURRENT_CONTROL_MEASURES"/>
         <result property="otherControlMeasures" column="OTHER_CONTROL_MEASURES"/>
         <result property="oneFamilyOnePolicy" column="ONE_FAMILY_ONE_POLICY"/>
-        <result property="isFinish" column="isFinish"/>
+        <result property="isFinish" column="IS_FINISH"/>
+        <result property="taskHandler" column="TASK_HANDLER"/>
+        <result property="taskHandlePost" column="TASK_HANDLE_POST"/>
+        <result property="processName" column="PROCESS_NAME"/>
+        <result property="lastProcessName" column="LAST_PROCESS_NAME"/>
     </resultMap>
 
 <!--    <select id="getWTaskInfoByList1" resultType="DpApTaskInfoResult" resultMap="DpApTaskInfoResult">-->
