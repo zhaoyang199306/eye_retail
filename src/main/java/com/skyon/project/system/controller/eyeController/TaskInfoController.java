@@ -132,6 +132,15 @@ public class TaskInfoController extends BaseController {
         SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();
         seWfTaskExecuteFeedback.setTaskId(seWfTaskInfo.getTaskId());
         seWfTaskExecuteFeedback.setProcessName(taskName);
+
+        SeWfTaskExecuteFeedback lastTaskExecuteFeedback = seWfTaskExecuteFeedbackService.getLastTaskExecuteFeedback(seWfTaskInfo.getTaskNo());
+        if(null!=lastTaskExecuteFeedback){
+            seWfTaskExecuteFeedback.setLastProcessName(lastTaskExecuteFeedback.getProcessName());
+        }else{
+            seWfTaskExecuteFeedback.setLastProcessName("");
+        }
+
+
         seWfTaskExecuteFeedbackService.insertTaskExecuteFeedback(seWfTaskExecuteFeedback);
 
         return AjaxResult.success("成功提交");
@@ -142,7 +151,7 @@ public class TaskInfoController extends BaseController {
      * 根据任务编号查询任务详情
      *
      * @param taskNo     任务编号
-     * @param taskInfoNo 任务编号
+     * @param taskNo 任务编号
      *
      * @param taskNo 任务编号
      * @return
@@ -154,6 +163,8 @@ public class TaskInfoController extends BaseController {
         String signalCreateModel = seWfTaskInfo.getSeWfWarningSigns().get(0).getSignalCreateModel();
         seWfTaskInfo.setSignalSource(signalCreateModel);
 
+        List<SeWfTaskExecuteFeedback> allSeWfTaskExecuteFeedbackByTaskNo = seWfTaskExecuteFeedbackService.getAllSeWfTaskExecuteFeedbackByTaskNo(taskNo);
+        seWfTaskInfo.setSeWfTaskExecuteFeedbacks(allSeWfTaskExecuteFeedbackByTaskNo);
         return AjaxResult.success(seWfTaskInfo);
     }
 

@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * 任务执行反馈表单 mapper
  * SeWfTaskExecuteFeedback
@@ -31,6 +33,16 @@ public class SeWfTaskExecuteFeedbackServiceImpl implements SeWfTaskExecuteFeedba
      */
     public int insertTaskExecuteFeedback(SeWfTaskExecuteFeedback feedback){
         return feedbackMapper.insertTaskExecuteFeedback(feedback);
+    }
+
+    @Override
+    public SeWfTaskExecuteFeedback getLastTaskExecuteFeedback(String taskNo) {
+        return feedbackMapper.getLastTaskExecuteFeedback(taskNo);
+    }
+
+    @Override
+    public List<SeWfTaskExecuteFeedback> getAllSeWfTaskExecuteFeedbackByTaskNo(String taskNo) {
+        return feedbackMapper.getAllSeWfTaskExecuteFeedbackByTaskNo(taskNo);
     }
 
 }
