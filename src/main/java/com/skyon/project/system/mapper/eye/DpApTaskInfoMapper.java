@@ -63,4 +63,10 @@ public interface DpApTaskInfoMapper {
     // 预警任务认定页面更新任务
     public int updateAffirmTask(TaskInfoSubmitPojo taskInfo);
 
+    /**
+     * 根据任务编号修改状态为 task_status 处理中 02
+     * @param taskNo 任务编号
+     */
+    public void updateTaskStatusByNo(String taskNo);
+
 }

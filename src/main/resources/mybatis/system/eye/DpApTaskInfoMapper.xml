@@ -295,10 +295,11 @@
         from SE_WF_TASK_INFO i
         left join SE_WF_WARNING_OBJECT o on i.warning_object_id = o.warning_object_id
         left join Se_Wf_Warning_Signs s on i.task_id = s.task_id where
+        i.task_status = '01'
         <if test="taskHandler != null and taskHandler != ''">
-            i.task_handler = #{taskHandler}
+            and i.task_handler = #{taskHandler}
         </if>
-        OR (  1=1
+        and (  1=1
         <if test="taskNo != null and taskNo != ''">
             OR i.task_no = #{taskNo}
         </if>
@@ -321,9 +322,6 @@
         </if>
         <if test="taskType != null and taskType != ''">
             AND i.task_type = #{taskType}
-        </if>
-        <if test="taskStatus != null and taskStatus != ''">
-            AND i.task_status = #{taskStatus}
         </if>
         <if test="warningObjectLikeParam != null and warningObjectLikeParam != ''">
             AND (o.warning_object_name like concat('%',#{warningObjectLikeParam},'%') or o.warning_object_no like concat('%',#{warningObjectLikeParam},'%') )
@@ -398,6 +396,10 @@
         insert into DP_AP_task_info (TASK_INFO_NO,cust_Name,cust_No,branch,cust_Manager,is_manual_input)
         values (DP_AP_task_info_sequence.nextval,#{custName},#{custNo},#{branch},#{custManager},#{isManualInput})
     </insert>
+
+    <update id="updateTaskStatusByNo" parameterType="String">
+        update SE_WF_TASK_INFO set task_status = '02' where task_no = #{taskNo}
+    </update>
 
 
 </mapper>

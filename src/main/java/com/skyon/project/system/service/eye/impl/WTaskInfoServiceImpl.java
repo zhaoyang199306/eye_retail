@@ -101,5 +101,13 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
         return taskInfoMapper.selectSeWfTaskInfoByWarningObjectId(warningObjectId);
     }
 
-
+    /**
+     * 根据任务编号修改状态为 task_status 处理中 02
+     * @param taskNo 任务编号
+     *
+     */
+    @Override
+    public void updateTaskStatusByNo(String taskNo) {
+        taskInfoMapper.updateTaskStatusByNo(taskNo);
+    }
 }

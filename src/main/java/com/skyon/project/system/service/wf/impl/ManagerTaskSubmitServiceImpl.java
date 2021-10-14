@@ -38,6 +38,9 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
 
     private static final Logger logger = LoggerFactory.getLogger(ManagerTaskSubmitServiceImpl.class);
 
+    @Autowired
+    private WTaskInfoService taskInfoService;
+
     /**
      * Bean 初始化时，把该Bean注册进   流程的工厂类 - WfDealRoleRegisterFactory
      *
@@ -77,4 +80,12 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
         return map;
     }
 
+    /**
+     *  客户经理提交后， 需要对任务表里的 TASK_STATUS 修改为 02（处理中）   01：待处理，02：在途，03：归档。
+     * @param seWfTaskInfo
+     */
+    @Override
+    protected void updateField(SeWfTaskInfo seWfTaskInfo) {
+        taskInfoService.updateTaskStatusByNo(seWfTaskInfo.getTaskNo());
+    }
 }
