@@ -109,7 +109,7 @@
         <dependency>
             <groupId>com.oracle</groupId>
             <artifactId>ojdbc14</artifactId>
-            <version>10.2.0.1.0</version>
+            <version>10.2.0.2</version>
         </dependency>
 
         <!-- SpringBoot集成mybatis框架 -->
@@ -394,7 +394,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
-                    <!--					<mainClass>com.skyon</mainClass>-->
+                        <mainClass>com.skyon</mainClass>
                 </configuration>
             </plugin>
         </plugins>

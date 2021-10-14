@@ -282,7 +282,7 @@
     </select>
 
     <select id="getWTaskInfoListByRole" parameterType="WarningTaskListVo" resultType="map">
-        select i.task_no,i.warning_object_name,i.warning_object_id,i.warning_object_category,i.task_status,i.task_type,
+        select i.task_no,i.warning_object_name,i.warning_object_no,i.warning_object_category,i.task_status,i.task_type,
         i.sys_risk_level,i.task_handle_post,
         COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
         COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
@@ -324,7 +324,7 @@
         <if test="warningObjectLikeParam != null and warningObjectLikeParam != ''">
             AND (o.warning_object_name like concat('%',#{warningObjectLikeParam},'%') or o.warning_object_no like concat('%',#{warningObjectLikeParam},'%') )
         </if>
-        group by i.task_no,i.warning_object_name,i.warning_object_id,i.warning_object_category,i.task_status,i.task_type,i.sys_risk_level,
+        group by i.task_no,i.warning_object_name,i.warning_object_no,i.warning_object_category,i.task_status,i.task_type,i.sys_risk_level,
         o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,i.task_handle_post,o.warning_object_category
     </select>
 
