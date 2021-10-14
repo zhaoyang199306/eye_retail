@@ -79,11 +79,9 @@ public class WorkbenchController extends BaseController {
         }
 
         // 只计算在里面的
-//        Set<String> set = taskInfoService.selectAllTaskInfoNo();
-//        List<String> collect = set.stream().filter(owerTaskNo::contains).collect(Collectors.toList());
-//        taskInfoSelfCountNum = taskInfoSelfCountNum + collect.size();
-
-        taskInfoSelfCountNum = taskInfoSelfCountNum + mapTask.size();
+        Set set = taskInfoService.selectAllTaskInfoNo();
+        List<String> collect = (List<String>) set.stream().filter(owerTaskNo::contains).collect(Collectors.toList());
+        taskInfoSelfCountNum = taskInfoSelfCountNum + collect.size();
 
 
         // 处置跟踪的初始的非自营  单独计算

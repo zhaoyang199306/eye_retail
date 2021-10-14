@@ -32,15 +32,15 @@ public abstract class TaskCommon {
     /**
      * 保存任务流转
      */
-    public void commonSubmit(SeWfTaskInfo seWfTaskInfo, SysUser user) {
+    public String commonSubmit(SeWfTaskInfo seWfTaskInfo, SysUser user) {
 
         LOGGERCOMMON.info("当前事务名2：{}", TransactionSynchronizationManager.getCurrentTransactionName());
 
         // 获取组装参数
         Map<String, Object> map = this.assembleParam(seWfTaskInfo, user);
 
+        // 未启动流程的，先启动流程
         if (map.get("first") != null && (Boolean) map.get("first")) {
-            // 某个任务，启动流程
             runWFService.startWf(seWfTaskInfo.getTaskNo(), map);
         }
 
@@ -51,19 +51,9 @@ public abstract class TaskCommon {
         // 额外操作 修改某些字段
         this.updateField(seWfTaskInfo);
 
-        LOGGERCOMMON.info("----taskNO:{}----taskName----: {}", seWfTaskInfo.getTaskNo(), taskName);
+        LOGGERCOMMON.info("{}提交,编号：{},环节：{}", user.getUserName(), seWfTaskInfo.getTaskNo(),taskName);
 
-        // insert环节流转
-//        if (WFRole.WFROLE301.getInfo().equals(taskName)) {
-//            linkLogService.insertWLinkLog(task.getTaskInfoNo(),
-//                    DealType.RD.getCode(),
-//                    WFRole.WFROLE301.getInfo(),
-//                    user.getUserName(),
-//                    ProjectContants.SUBMIT_BUTTON,
-//                    JSON.toJSONString(task.getRiskControlMeasures()),
-//                    task.getExaminValue());
-//        }
-        LOGGERCOMMON.info("{},提交----{}", user.getUserName(), seWfTaskInfo.getTaskNo());
+        return taskName;
     }
 
     // 组装参数 交给每个角色处理

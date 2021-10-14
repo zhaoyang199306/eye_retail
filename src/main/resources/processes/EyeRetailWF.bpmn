@@ -44,8 +44,8 @@
     </sequenceFlow>
     <sequenceFlow id="_36" sourceRef="_30" targetRef="_31"/>
     <startEvent id="_42" name="开始"/>
-    <userTask activiti:assignee="${WF_ROLE_101}" activiti:exclusive="true" id="_44" name="客户经理签收"/>
-    <userTask activiti:candidateGroups="${WF_ROLE_201}" activiti:exclusive="true" id="_52" name="支行主管"/>
+    <userTask activiti:assignee="${WF_ROLE_101}" activiti:exclusive="true" id="_44" name="客户经理核实"/>
+    <userTask activiti:candidateGroups="${WF_ROLE_201}" activiti:exclusive="true" id="_52" name="支行主管审核"/>
     <userTask activiti:candidateGroups="${WF_ROLE_501}" activiti:exclusive="true" id="_55" name="指挥部风险监测岗"/>
     <userTask activiti:candidateGroups="${WF_ROLE_502}" activiti:exclusive="true" id="_57" name="指挥部风险审核岗"/>
     <sequenceFlow id="_58" sourceRef="_55" targetRef="_57"/>

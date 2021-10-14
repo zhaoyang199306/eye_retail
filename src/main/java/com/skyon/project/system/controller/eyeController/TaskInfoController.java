@@ -118,20 +118,21 @@ public class TaskInfoController extends BaseController {
         SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
         List<SysRole> roles = user.getRoles();
 
-        SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();
-        seWfTaskExecuteFeedback.setTaskId(seWfTaskInfo.getTaskId());
-        // 保存 任务执行反馈表单
-        seWfTaskExecuteFeedbackService.insertTaskExecuteFeedback(seWfTaskExecuteFeedback);
-
         // 更新信号表
         List<SeWfWarningSigns> list = seWfTaskInfo.getSeWfWarningSigns();
         for (SeWfWarningSigns seWfWarningSigns : list) {
             seWfWarningSignsService.updateSeWfWarningSigns(seWfWarningSigns);
         }
 
-//        // 任务提交
-//        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-//        service.commonSubmit(seWfTaskInfo, user);
+        // 任务提交
+        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
+        String taskName = service.commonSubmit(seWfTaskInfo, user);
+
+        // 保存 任务执行反馈表单
+        SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();
+        seWfTaskExecuteFeedback.setTaskId(seWfTaskInfo.getTaskId());
+        seWfTaskExecuteFeedback.setProcessName(taskName);
+        seWfTaskExecuteFeedbackService.insertTaskExecuteFeedback(seWfTaskExecuteFeedback);
 
         return AjaxResult.success("成功提交");
     }
