@@ -25,8 +25,6 @@ public abstract class TaskCommon {
     @Autowired
     private TaskWFService taskWFService;
     @Autowired
-    private SeWfTaskExecuteFeedbackService feedbackService;
-    @Autowired
     private RunWFService runWFService;
 
     /**
@@ -40,7 +38,7 @@ public abstract class TaskCommon {
         Map<String, Object> map = this.assembleParam(seWfTaskInfo, user);
 
         // 未启动流程的，先启动流程
-        if (map.get("first") != null && (Boolean) map.get("first")) {
+        if ((Boolean) map.get("first")) {
             runWFService.startWf(seWfTaskInfo.getTaskNo(), map);
         }
 

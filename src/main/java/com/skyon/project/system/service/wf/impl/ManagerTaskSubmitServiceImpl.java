@@ -40,6 +40,8 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
 
     @Autowired
     private WTaskInfoService taskInfoService;
+    @Autowired
+    private TaskWFService taskWFService;
 
     /**
      * Bean 初始化时，把该Bean注册进   流程的工厂类 - WfDealRoleRegisterFactory
@@ -63,13 +65,12 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
     @Override
     protected Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user) {
         Map<String, Object> map = new HashMap<>();
-        // 先查询一下是否启动过流程  （有重新回到客户经理手里的情况）
 
         WFTaskFlagHandle handle = new WFTaskFlagHandle(seWfTaskInfo);
         boolean signTask = handle.isSignTask();
 
         map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 客户经理操作人id
-        map.put("first", Boolean.TRUE);
+        map.put("first", taskWFService.confirmTaskIsExit(seWfTaskInfo.getTaskNo()));  // 先查询一下是否启动过流程  （有重新回到客户经理手里的情况）
 
         if (signTask) {  // 签收
             map.put("wfStart", "2"); // 走流程2

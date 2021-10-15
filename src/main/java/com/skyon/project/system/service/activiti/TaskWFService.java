@@ -54,4 +54,11 @@ public interface TaskWFService {
 	 * @return <任务编号,任务节点名>
 	 */
 	Map<String,String> taskWfByUserGroup(String user, List<String> groups);
+
+    /**
+     * 判断该任务是否已经在 工作流任务中
+     * @param taskInfoNo
+     * @param user
+     */
+    public boolean confirmTaskIsExit(String taskInfoNo);
 }
