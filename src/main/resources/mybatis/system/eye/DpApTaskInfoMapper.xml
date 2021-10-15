@@ -32,34 +32,34 @@
         <result property="isProprietary" column="is_Proprietary"/>
     </resultMap>
 
-<!--    <resultMap id="DpApTaskInfoResult" type="com.skyon.project.system.domain.eye.DpApTaskInfo">-->
-<!--        <id property="taskInfoNo" column="TASK_INFO_NO"/>-->
-<!--        <result property="custNo" column="CUST_NO"/>-->
-<!--        <result property="queueId" column="queue_Id"/>-->
-<!--        <result property="queueName" column="queue_Name"/>-->
-<!--        <result property="publishDepartment" column="publish_Department"/>-->
-<!--        <result property="testSubType" column="TEST_SUB_TYPE"/>-->
-<!--        <result property="doneDate" column="DONE_DATE"/>-->
-<!--        <result property="status" column="STATUS"/>-->
-<!--        <result property="limits" column="LIMITS"/>-->
-<!--        <result property="sysRiskLevel" column="sys_Risk_Level"/>-->
-<!--        <result property="isManualInput" column="is_Manual_Input"/>-->
-<!--        <result property="custManager" column="cust_Manager"/>-->
-<!--        <result property="isProprietary" column="is_Proprietary"/>-->
-<!--        <result property="riskCustNum" column="risk_cust_num"/>-->
-<!--        <result property="channel" column="channel"/>-->
-<!--        <result property="riskComfType" column="RISK_COMF_TYPE" />-->
-<!--        <result property="riskControlMeasures" column="risk_Control_Measures" />-->
-<!--        <result property="personalRiskLevel" column="PERSONAL_RISK_LEVEL" />-->
-<!--        <result property="checkResult" column="CHECK_RESULT" />-->
-<!--        <result property="trackTime" column="track_Time" />-->
-<!--        <association property="dpApCustInfo"  column="cust_no"-->
-<!--                     select="com.skyon.project.system.mapper.eye.DpApCustInfoMapper.getDpApCustInfoByNo"/>-->
-<!--        <collection property="bondInfoList" ofType="TBondInfo" column="task_Info_No"-->
-<!--                    select="com.skyon.project.system.mapper.eye.TBondInfoMapper.selectTBondInfos" />-->
-<!--        <collection property="warnSignals" ofType="DpApWarningSign" column="task_Info_No"-->
-<!--                    select="com.skyon.project.system.mapper.eye.DpApWarningSignMapper.selectDpApWarningSign"/>-->
-<!--    </resultMap>-->
+    <!--    <resultMap id="DpApTaskInfoResult" type="com.skyon.project.system.domain.eye.DpApTaskInfo">-->
+    <!--        <id property="taskInfoNo" column="TASK_INFO_NO"/>-->
+    <!--        <result property="custNo" column="CUST_NO"/>-->
+    <!--        <result property="queueId" column="queue_Id"/>-->
+    <!--        <result property="queueName" column="queue_Name"/>-->
+    <!--        <result property="publishDepartment" column="publish_Department"/>-->
+    <!--        <result property="testSubType" column="TEST_SUB_TYPE"/>-->
+    <!--        <result property="doneDate" column="DONE_DATE"/>-->
+    <!--        <result property="status" column="STATUS"/>-->
+    <!--        <result property="limits" column="LIMITS"/>-->
+    <!--        <result property="sysRiskLevel" column="sys_Risk_Level"/>-->
+    <!--        <result property="isManualInput" column="is_Manual_Input"/>-->
+    <!--        <result property="custManager" column="cust_Manager"/>-->
+    <!--        <result property="isProprietary" column="is_Proprietary"/>-->
+    <!--        <result property="riskCustNum" column="risk_cust_num"/>-->
+    <!--        <result property="channel" column="channel"/>-->
+    <!--        <result property="riskComfType" column="RISK_COMF_TYPE" />-->
+    <!--        <result property="riskControlMeasures" column="risk_Control_Measures" />-->
+    <!--        <result property="personalRiskLevel" column="PERSONAL_RISK_LEVEL" />-->
+    <!--        <result property="checkResult" column="CHECK_RESULT" />-->
+    <!--        <result property="trackTime" column="track_Time" />-->
+    <!--        <association property="dpApCustInfo"  column="cust_no"-->
+    <!--                     select="com.skyon.project.system.mapper.eye.DpApCustInfoMapper.getDpApCustInfoByNo"/>-->
+    <!--        <collection property="bondInfoList" ofType="TBondInfo" column="task_Info_No"-->
+    <!--                    select="com.skyon.project.system.mapper.eye.TBondInfoMapper.selectTBondInfos" />-->
+    <!--        <collection property="warnSignals" ofType="DpApWarningSign" column="task_Info_No"-->
+    <!--                    select="com.skyon.project.system.mapper.eye.DpApWarningSignMapper.selectDpApWarningSign"/>-->
+    <!--    </resultMap>-->
 
     <resultMap id="SeWfTaskInfo" type="com.skyon.project.system.domain.eye.SeWfTaskInfo">
         <id property="taskId" column="TASK_ID"/>
@@ -99,8 +99,8 @@
         <result property="warningTaskKind" column="WARNING_TASK_KIND"/>
 
         <!--        <association property="seWfWarningObject"    column="WARNING_OBJECT_ID" javaType="SeWfWarningObject" resultMap="seWfWarningObjectResult" />-->
-<!--        <association property="seWfTaskExecuteFeedback"    column="TASK_EXECUTE_ID" javaType="SeWfTaskExecuteFeedback" resultMap="SeWfTaskExecuteFeedbackResult" />-->
-<!--        <collection  property="seWfWarningSigns"   javaType="java.util.List"        resultMap="SeWfWarningSignsResult" />-->
+        <!--        <association property="seWfTaskExecuteFeedback"    column="TASK_EXECUTE_ID" javaType="SeWfTaskExecuteFeedback" resultMap="SeWfTaskExecuteFeedbackResult" />-->
+        <!--        <collection  property="seWfWarningSigns"   javaType="java.util.List"        resultMap="SeWfWarningSignsResult" />-->
 
         <association property="seWfWarningObject"  column="WARNING_OBJECT_ID"
                      select="getSeWfWarningObjectByWarningObjectId2"/>
@@ -108,8 +108,8 @@
                      select="getSeWfTaskExecuteFeedbackByTaskId2"/>
         <collection property="seWfWarningSigns" ofType="com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns" column="TASK_ID"
                     select="getSeWfWarningSignsByTaskId2" />
-<!--        <collection property="warnSignals" ofType="DpApWarningSign" column="task_Info_No"-->
-<!--                    select="com.skyon.project.system.mapper.eye.DpApWarningSignMapper.selectDpApWarningSign"/>-->
+        <!--        <collection property="warnSignals" ofType="DpApWarningSign" column="task_Info_No"-->
+        <!--                    select="com.skyon.project.system.mapper.eye.DpApWarningSignMapper.selectDpApWarningSign"/>-->
 
 
     </resultMap>
@@ -183,59 +183,59 @@
     </select>
 
 
-<!--    <resultMap id="seWfWarningObjectResult" type="com.skyon.project.system.domain.eye.SeWfWarningObject">-->
-<!--        <id property="warningObjectId" column="WARNING_OBJECT_ID"/>-->
-<!--        <result property="warningObjectCategory" column="WARNING_OBJECT_CATEGORY"/>-->
-<!--        <result property="warningObjectCid" column="WARNIN_OBJECT_CID"/>-->
-<!--        <result property="warningObjectName" column="WARNING_OBJECT_NAME"/>-->
-<!--        <result property="warningObjectType" column="WARNING_OBJECT_TYPE"/>-->
-<!--        <result property="warningObjectLabel" column="WARNING_OBJECT_LABEL"/>-->
-<!--        <result property="currentRiskLevel" column="CURRENT_RISK_LEVEL"/>-->
-<!--        <result property="pdRiskLevel" column="PD_RISK_LEVEL"/>-->
-<!--        <result property="partnerRiskLevel" column="PARTNER_RISK_LEVEL"/>-->
-<!--        <result property="execuCustMgr" column="EXECU_CUST_MGR"/>-->
-<!--        <result property="execuOrg" column="EXECU_ORG"/>-->
-<!--        <result property="adSubBra" column="AD_SUB_BRA"/>-->
-<!--        <result property="adBra" column="AD_BRA"/>-->
-<!--        <result property="businessOrg" column="BUSINESS_ORG"/>-->
-<!--        <result property="relWarningObjectId" column="REL_WARNING_OBJECT_ID"/>-->
-<!--    </resultMap>-->
+    <!--    <resultMap id="seWfWarningObjectResult" type="com.skyon.project.system.domain.eye.SeWfWarningObject">-->
+    <!--        <id property="warningObjectId" column="WARNING_OBJECT_ID"/>-->
+    <!--        <result property="warningObjectCategory" column="WARNING_OBJECT_CATEGORY"/>-->
+    <!--        <result property="warningObjectCid" column="WARNIN_OBJECT_CID"/>-->
+    <!--        <result property="warningObjectName" column="WARNING_OBJECT_NAME"/>-->
+    <!--        <result property="warningObjectType" column="WARNING_OBJECT_TYPE"/>-->
+    <!--        <result property="warningObjectLabel" column="WARNING_OBJECT_LABEL"/>-->
+    <!--        <result property="currentRiskLevel" column="CURRENT_RISK_LEVEL"/>-->
+    <!--        <result property="pdRiskLevel" column="PD_RISK_LEVEL"/>-->
+    <!--        <result property="partnerRiskLevel" column="PARTNER_RISK_LEVEL"/>-->
+    <!--        <result property="execuCustMgr" column="EXECU_CUST_MGR"/>-->
+    <!--        <result property="execuOrg" column="EXECU_ORG"/>-->
+    <!--        <result property="adSubBra" column="AD_SUB_BRA"/>-->
+    <!--        <result property="adBra" column="AD_BRA"/>-->
+    <!--        <result property="businessOrg" column="BUSINESS_ORG"/>-->
+    <!--        <result property="relWarningObjectId" column="REL_WARNING_OBJECT_ID"/>-->
+    <!--    </resultMap>-->
 
-<!--    <resultMap id="SeWfWarningSignsResult" type="com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns">-->
-<!--        <id property="warningSignalId" column="WARNING_SIGNAL_ID"/>-->
-<!--        <result property="signalNo" column="SIGNAL_NO"/>-->
-<!--        <result property="signalName" column="SIGNAL_NAME"/>-->
-<!--        <result property="signalCreateModel" column="SIGNAL_CREATE_MODEL"/>-->
-<!--        <result property="signalTriggerTime" column="SIGNAL_TRIGGER_TIME"/>-->
-<!--        <result property="signalDueDay" column="SIGNAL_DUE_DAY"/>-->
-<!--        <result property="warningLevel" column="WARNING_LEVEL"/>-->
-<!--        <result property="signalType" column="SIGNAL_TYPE"/>-->
-<!--        <result property="warnDsc" column="WARN_DSC"/>-->
-<!--        <result property="warningObjectId" column="WARNING_OBJECT_ID"/>-->
-<!--        <result property="warningObjectCategory" column="WARNING_OBJECT_CATEGORY"/>-->
-<!--        <result property="warningObjectNo" column="WARNING_OBJECT_NO"/>-->
-<!--        <result property="warningObjectName" column="WARNING_OBJECT_NAME"/>-->
-<!--        <result property="warningObjectType" column="WARNING_OBJECT_TYPE"/>-->
-<!--        <result property="isWarnFlag" column="IS_WARN_FLAG"/>-->
-<!--        <result property="opposeAdvice" column="OPPOSE_ADVICE"/>-->
-<!--        <result property="attachedFile" column="ATTACHED_FILE"/>-->
-<!--        <result property="signalDataSource" column="SIGNAL_DATA_SOURCE"/>-->
-<!--        <result property="triggerRuleId" column="TRIGGER_RULE_ID"/>-->
-<!--        <result property="triggerNumber" column="TRIGGER_NUMBER"/>-->
-<!--        <result property="isSignalMerge" column="ISSIGNAL_MERGE"/>-->
-<!--        <result property="signalMergeId" column="SIGNAL_MERGE_ID"/>-->
-<!--        <result property="signalStatus" column="SIGNAL_STATUS"/>-->
-<!--        <result property="distributeStatus" column="DISTRIBUTE_STATUS"/>-->
-<!--        <result property="distributeTime" column="DISTRIBUTE_TIME"/>-->
-<!--        <result property="distributeModel" column="DISTRIBUTE_MODEL"/>-->
-<!--        <result property="disposalMode" column="DISPOSAL_MODE"/>-->
-<!--        <result property="noDistributeReason" column="NO_DISTRIBUTE_REASON"/>-->
-<!--        <result property="disableReason" column="DISABLE_REASON"/>-->
-<!--        <result property="taskId" column="TASK_ID"/>-->
-<!--        <result property="confirmStatus" column="CONFIRM_STATUS"/>-->
-<!--        <result property="feedback" column="FEEDBACK"/>-->
-<!--        <result property="feedbackDesc" column="FEEDBACK_DESC"/>-->
-<!--    </resultMap>-->
+    <!--    <resultMap id="SeWfWarningSignsResult" type="com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns">-->
+    <!--        <id property="warningSignalId" column="WARNING_SIGNAL_ID"/>-->
+    <!--        <result property="signalNo" column="SIGNAL_NO"/>-->
+    <!--        <result property="signalName" column="SIGNAL_NAME"/>-->
+    <!--        <result property="signalCreateModel" column="SIGNAL_CREATE_MODEL"/>-->
+    <!--        <result property="signalTriggerTime" column="SIGNAL_TRIGGER_TIME"/>-->
+    <!--        <result property="signalDueDay" column="SIGNAL_DUE_DAY"/>-->
+    <!--        <result property="warningLevel" column="WARNING_LEVEL"/>-->
+    <!--        <result property="signalType" column="SIGNAL_TYPE"/>-->
+    <!--        <result property="warnDsc" column="WARN_DSC"/>-->
+    <!--        <result property="warningObjectId" column="WARNING_OBJECT_ID"/>-->
+    <!--        <result property="warningObjectCategory" column="WARNING_OBJECT_CATEGORY"/>-->
+    <!--        <result property="warningObjectNo" column="WARNING_OBJECT_NO"/>-->
+    <!--        <result property="warningObjectName" column="WARNING_OBJECT_NAME"/>-->
+    <!--        <result property="warningObjectType" column="WARNING_OBJECT_TYPE"/>-->
+    <!--        <result property="isWarnFlag" column="IS_WARN_FLAG"/>-->
+    <!--        <result property="opposeAdvice" column="OPPOSE_ADVICE"/>-->
+    <!--        <result property="attachedFile" column="ATTACHED_FILE"/>-->
+    <!--        <result property="signalDataSource" column="SIGNAL_DATA_SOURCE"/>-->
+    <!--        <result property="triggerRuleId" column="TRIGGER_RULE_ID"/>-->
+    <!--        <result property="triggerNumber" column="TRIGGER_NUMBER"/>-->
+    <!--        <result property="isSignalMerge" column="ISSIGNAL_MERGE"/>-->
+    <!--        <result property="signalMergeId" column="SIGNAL_MERGE_ID"/>-->
+    <!--        <result property="signalStatus" column="SIGNAL_STATUS"/>-->
+    <!--        <result property="distributeStatus" column="DISTRIBUTE_STATUS"/>-->
+    <!--        <result property="distributeTime" column="DISTRIBUTE_TIME"/>-->
+    <!--        <result property="distributeModel" column="DISTRIBUTE_MODEL"/>-->
+    <!--        <result property="disposalMode" column="DISPOSAL_MODE"/>-->
+    <!--        <result property="noDistributeReason" column="NO_DISTRIBUTE_REASON"/>-->
+    <!--        <result property="disableReason" column="DISABLE_REASON"/>-->
+    <!--        <result property="taskId" column="TASK_ID"/>-->
+    <!--        <result property="confirmStatus" column="CONFIRM_STATUS"/>-->
+    <!--        <result property="feedback" column="FEEDBACK"/>-->
+    <!--        <result property="feedbackDesc" column="FEEDBACK_DESC"/>-->
+    <!--    </resultMap>-->
 
     <resultMap id="SeWfTaskExecuteFeedbackResult" type="com.skyon.project.system.domain.eye.wf.SeWfTaskExecuteFeedback">
         <id property="taskExecuteId" column="TASK_EXECUTE_ID"/>
@@ -254,14 +254,14 @@
         <result property="isFinish" column="isFinish"/>
     </resultMap>
 
-<!--    <select id="getWTaskInfoByList1" resultType="DpApTaskInfoResult" resultMap="DpApTaskInfoResult">-->
-<!--        select * from DP_AP_task_info-->
-<!--        where TASK_INFO_NO in-->
-<!--        <foreach collection="collection" item="set" open="(" close=")" separator=",">-->
-<!--            #{set}-->
-<!--        </foreach>-->
-<!--        and role = '预警认定'-->
-<!--    </select>-->
+    <!--    <select id="getWTaskInfoByList1" resultType="DpApTaskInfoResult" resultMap="DpApTaskInfoResult">-->
+    <!--        select * from DP_AP_task_info-->
+    <!--        where TASK_INFO_NO in-->
+    <!--        <foreach collection="collection" item="set" open="(" close=")" separator=",">-->
+    <!--            #{set}-->
+    <!--        </foreach>-->
+    <!--        and role = '预警认定'-->
+    <!--    </select>-->
     <!--需要关联流程表中展示流程状态-->
 
     <select id="getWTaskInfoByList1" parameterType="java.util.Set" resultType="map">
@@ -294,15 +294,15 @@
         <if test="taskHandler != null and taskHandler != ''">
             i.task_handler = #{taskHandler}
         </if>
-        OR (  1=1
+        and (  1=1
         <if test="taskNo != null and taskNo != ''">
             OR i.task_no = #{taskNo}
         </if>
-        <if test="taskNoList != null ">
+        <if test="taskNoList != null and taskNoList.size() > 0">
             OR i.task_no in
             <foreach collection="taskNoList" item="taskNo" index="index" open="(" close=")" separator=",">
-	        #{taskNo}
-	    	</foreach>
+                #{taskNo}
+            </foreach>
         </if>
         )
 
@@ -340,20 +340,20 @@
         select * from DP_AP_task_info where CUST_NO = #{custNo}
     </select>
 
-<!--    <select id="getWTaskInfoListByManual" resultType="DpApTaskInfo" resultMap="DpApTaskInfoResult">-->
-<!--        select * from DP_AP_task_info where is_manual_input='1'-->
-<!--    </select>-->
+    <!--    <select id="getWTaskInfoListByManual" resultType="DpApTaskInfo" resultMap="DpApTaskInfoResult">-->
+    <!--        select * from DP_AP_task_info where is_manual_input='1'-->
+    <!--    </select>-->
 
     <select id="selectAllTaskInfoNo" resultType="String">
         select TASK_NO from SE_WF_TASK_INFO
     </select>
 
 
-<!--    <select id="getWTaskInfoListManualByCustNo" resultType="DpApTaskInfo" resultMap="DpApTaskInfoResult">-->
-<!--        select * from DP_AP_task_info t-->
-<!--        left join t_bond_info s on t.task_info_no = s.task_info_no-->
-<!--        where t.is_manual_input='1' and t.cust_no = #{custNO}-->
-<!--    </select>-->
+    <!--    <select id="getWTaskInfoListManualByCustNo" resultType="DpApTaskInfo" resultMap="DpApTaskInfoResult">-->
+    <!--        select * from DP_AP_task_info t-->
+    <!--        left join t_bond_info s on t.task_info_no = s.task_info_no-->
+    <!--        where t.is_manual_input='1' and t.cust_no = #{custNO}-->
+    <!--    </select>-->
 
     <select id="selectIsProprietary" resultType="String">
         select TASK_INFO_NO from DP_AP_task_info t
