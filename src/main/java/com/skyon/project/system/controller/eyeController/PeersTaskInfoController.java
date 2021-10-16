@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.skyon.common.enums.RoleName;
 import com.skyon.common.enums.WarningObjectCategory;
 import com.skyon.common.utils.ServletUtils;
+import com.skyon.framework.aspectj.lang.annotation.DataScope;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
 import com.skyon.framework.security.LoginUser;
 import com.skyon.framework.security.service.TokenService;
@@ -59,6 +60,7 @@ public class PeersTaskInfoController extends BaseController {
      */
     @GetMapping("/list")
     @Transactional
+    @DataScope(deptAlias = "d")
     public AjaxResult getSignalManualList(WarningTaskListVo warningTaskListVo) {
         List<Map> list = new ArrayList<>();
 

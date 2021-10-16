@@ -294,7 +294,9 @@
         o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,o.warning_object_category
         from SE_WF_TASK_INFO i
         left join SE_WF_WARNING_OBJECT o on i.warning_object_id = o.warning_object_id
-        left join Se_Wf_Warning_Signs s on i.task_id = s.task_id where
+        left join Se_Wf_Warning_Signs s on i.task_id = s.task_id 
+        left join sys_dept d on o.ad_sub_bra=d.dept_id
+        where
         i.task_status = '01'
         <if test="taskHandler != null and taskHandler != ''">
             and i.task_handler = #{taskHandler}
@@ -326,6 +328,7 @@
         <if test="warningObjectLikeParam != null and warningObjectLikeParam != ''">
             AND (o.warning_object_name like concat('%',#{warningObjectLikeParam},'%') or o.warning_object_no like concat('%',#{warningObjectLikeParam},'%') )
         </if>
+		${dataScope}
         group by i.task_no,i.warning_object_name,i.warning_object_no,i.warning_object_category,i.task_status,i.task_type,i.sys_risk_level,
         o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,i.task_handle_post,o.warning_object_category
     </select>
