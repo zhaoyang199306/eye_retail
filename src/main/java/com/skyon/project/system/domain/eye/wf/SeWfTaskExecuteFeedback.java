@@ -47,6 +47,8 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
 
     private String lastProcessName; // 上一流程节点名称
 
+    private String checkConclusion; // 审核结论
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime; // 创建时间
 
@@ -73,6 +75,7 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
                 ", taskHandlePost='" + taskHandlePost + '\'' +
                 ", processName='" + processName + '\'' +
                 ", lastProcessName='" + lastProcessName + '\'' +
+                ", checkConclusion='" + checkConclusion + '\'' +
                 ", createTime='" + createTime + '\'' +
                 '}';
     }
@@ -225,6 +228,14 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
 
     public void setLastProcessName(String lastProcessName) {
         this.lastProcessName = lastProcessName;
+    }
+
+    public String getCheckConclusion() {
+        return checkConclusion;
+    }
+
+    public void setCheckConclusion(String checkConclusion) {
+        this.checkConclusion = checkConclusion;
     }
 
     public Date getCreateTime() {

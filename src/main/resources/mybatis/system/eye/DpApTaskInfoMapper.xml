@@ -256,6 +256,7 @@
         <result property="taskHandlePost" column="TASK_HANDLE_POST"/>
         <result property="processName" column="PROCESS_NAME"/>
         <result property="lastProcessName" column="LAST_PROCESS_NAME"/>
+        <result property="checkConclusion" column="CHECK_CONCLUSION"/>
     </resultMap>
 
 <!--    <select id="getWTaskInfoByList1" resultType="DpApTaskInfoResult" resultMap="DpApTaskInfoResult">-->
@@ -305,12 +306,13 @@
         <if test="taskNo != null and taskNo != ''">
             OR i.task_no = #{taskNo}
         </if>
-        <if test="taskNoList != null ">
+        <if test="taskNoList != null and taskNoList.size > 0">
             OR i.task_no in
             <foreach collection="taskNoList" item="taskNo" index="index" open="(" close=")" separator=",">
 	        #{taskNo}
 	    	</foreach>
         </if>
+
         )
 
         <if test="warningObjectName != null and warningObjectName != ''">

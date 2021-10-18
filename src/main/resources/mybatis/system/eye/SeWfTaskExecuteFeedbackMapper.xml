@@ -24,6 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="processName" column="PROCESS_NAME"/>
 		<result property="lastProcessName" column="LAST_PROCESS_NAME"/>
 		<result property="createTime" column="CREATE_TIME"/>
+		<result property="checkConclusion" column="CHECK_CONCLUSION"/>
 	</resultMap>
 
 	<insert id="insertTaskExecuteFeedback" parameterType="SeWfTaskExecuteFeedback">
@@ -46,6 +47,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="isFinish != null and isFinish != ''">is_finish,</if>
 		<if test="remark != null and remark != ''">remark,</if>
 		<if test="lpOrgNo != null and lpOrgNo != ''">lp_org_no,</if>
+		<if test="taskHandler != null and taskHandler != ''">task_handler,</if>
+		<if test="taskHandlePost != null and taskHandlePost != ''">task_handle_post,</if>
+		<if test="processName != null and processName != ''">process_name,</if>
+		<if test="lastProcessName != null and lastProcessName != ''">last_process_name,</if>
+		<if test="checkConclusion != null and checkConclusion != ''">check_conclusion,</if>
 		create_time,delete_logo
 		)values(
 		<if test="taskExecuteId != null and taskExecuteId != ''">#{taskExecuteId},</if>
@@ -63,6 +69,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="isFinish != null and isFinish != ''">#{isFinish},</if>
 		<if test="remark != null and remark != ''">#{remark},</if>
 		<if test="lpOrgNo != null and lpOrgNo != ''">#{lpOrgNo},</if>
+		<if test="taskHandler != null and taskHandler != ''">#{taskHandler},</if>
+		<if test="taskHandlePost != null and taskHandlePost != ''">#{taskHandlePost},</if>
+		<if test="processName != null and processName != ''">#{processName},</if>
+		<if test="lastProcessName != null and lastProcessName != ''">#{lastProcessName},</if>
+		<if test="checkConclusion != null and checkConclusion != ''">#{checkConclusion},</if>
 		sysdate,0
 		)
 	</insert>
