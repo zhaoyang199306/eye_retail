@@ -2,6 +2,8 @@ package com.skyon.project.system.service.eye;
 
 import com.skyon.project.system.domain.eye.wf.SeWfTaskExecuteFeedback;
 
+import java.util.List;
+
 /**
  * 任务执行反馈表单 service
  * SeWfTaskExecuteFeedback
@@ -14,4 +16,8 @@ public interface SeWfTaskExecuteFeedbackService {
      * @return 条数
      */
     public int insertTaskExecuteFeedback(SeWfTaskExecuteFeedback feedback);
+
+    public SeWfTaskExecuteFeedback getLastTaskExecuteFeedback(String taskNo);
+
+    public List<SeWfTaskExecuteFeedback> getAllSeWfTaskExecuteFeedbackByTaskNo(String taskNo);
 }

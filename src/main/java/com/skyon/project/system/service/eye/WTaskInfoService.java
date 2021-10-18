@@ -46,5 +46,11 @@ public interface WTaskInfoService {
     // 根据客户编号查询历史任务
     public List<SeWfTaskInfo> selectSeWfTaskInfoByWarningObjectId(String warningObjectId);
 
+    /**
+     * 根据任务编号修改状态为 task_status 处理中 02
+     * @param taskNo 任务编号
+     */
+    public void updateTaskStatusByNo(String taskNo);
+
 
 }

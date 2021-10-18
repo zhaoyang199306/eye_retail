@@ -65,36 +65,36 @@ public class TaskInfoController extends BaseController {
      * @return
      */
     @GetMapping("/list")
-    @Transactional
     public AjaxResult getSignalManualList(WarningTaskListVo warningTaskListVo) {
         List<Map> list = new ArrayList<>();
+        List<Map> listAct = new ArrayList<>();
 
-        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
-        SysUser user = loginUser.getUser();
+        SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
         List<SysRole> roles = user.getRoles();
 
-        if (RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) { // 后续 传页面展示的角色
+        try {
             // 查询 客户经理 初始时 的 列表。
-            warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
-            list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
-        } else {
+            if (RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) { // 后续 传页面展示的角色
+                warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
+                list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
+            }
 
-            Set set = taskInfoService.selectAllTaskInfoNo();
-
-
-            // 根据用户id查询代办任务
+            // 其余角色包括客户经理 根据用户id查询代办任务
             Map mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
-            Set setOwner = mapTask.keySet();  // setOwer::contains
-
-            Set<String> taskNo = (Set<String>) set.stream().filter(value -> setOwner.contains(value)).collect(Collectors.toSet());
-
+            Set setOwner = mapTask.keySet();
 
             // 查询待办箱
-            if (taskNo.size() > 0) list = taskInfoService.getWTaskInfoByList1(taskNo);
+            if (setOwner.size() > 0)
+                listAct = taskInfoService.getWTaskInfoByList1(setOwner);
+
+            listAct.addAll(list);
+
+            return AjaxResult.success(listAct);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return AjaxResult.error("列表查询异常！");
         }
 
-
-        return AjaxResult.success(list);
     }
 
     /**
@@ -118,20 +118,30 @@ public class TaskInfoController extends BaseController {
         SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
         List<SysRole> roles = user.getRoles();
 
-        SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();
-        seWfTaskExecuteFeedback.setTaskId(seWfTaskInfo.getTaskId());
-        // 保存 任务执行反馈表单
-        seWfTaskExecuteFeedbackService.insertTaskExecuteFeedback(seWfTaskExecuteFeedback);
-
         // 更新信号表
         List<SeWfWarningSigns> list = seWfTaskInfo.getSeWfWarningSigns();
         for (SeWfWarningSigns seWfWarningSigns : list) {
             seWfWarningSignsService.updateSeWfWarningSigns(seWfWarningSigns);
         }
 
-//        // 任务提交
-//        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-//        service.commonSubmit(seWfTaskInfo, user);
+        // 任务提交
+        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
+        String taskName = service.commonSubmit(seWfTaskInfo, user);
+
+        // 保存 任务执行反馈表单
+        SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();
+        seWfTaskExecuteFeedback.setTaskId(seWfTaskInfo.getTaskId());
+        seWfTaskExecuteFeedback.setProcessName(taskName);
+
+        SeWfTaskExecuteFeedback lastTaskExecuteFeedback = seWfTaskExecuteFeedbackService.getLastTaskExecuteFeedback(seWfTaskInfo.getTaskNo());
+        if (null != lastTaskExecuteFeedback) {
+            seWfTaskExecuteFeedback.setLastProcessName(lastTaskExecuteFeedback.getProcessName());
+        } else {
+            seWfTaskExecuteFeedback.setLastProcessName("");
+        }
+
+
+        seWfTaskExecuteFeedbackService.insertTaskExecuteFeedback(seWfTaskExecuteFeedback);
 
         return AjaxResult.success("成功提交");
     }
@@ -140,9 +150,8 @@ public class TaskInfoController extends BaseController {
     /**
      * 根据任务编号查询任务详情
      *
-     * @param taskNo     任务编号
-     * @param taskInfoNo 任务编号
-     *
+     * @param taskNo 任务编号
+     * @param taskNo 任务编号
      * @param taskNo 任务编号
      * @return
      */
@@ -153,6 +162,8 @@ public class TaskInfoController extends BaseController {
         String signalCreateModel = seWfTaskInfo.getSeWfWarningSigns().get(0).getSignalCreateModel();
         seWfTaskInfo.setSignalSource(signalCreateModel);
 
+        List<SeWfTaskExecuteFeedback> allSeWfTaskExecuteFeedbackByTaskNo = seWfTaskExecuteFeedbackService.getAllSeWfTaskExecuteFeedbackByTaskNo(taskNo);
+        seWfTaskInfo.setSeWfTaskExecuteFeedbacks(allSeWfTaskExecuteFeedbackByTaskNo);
         return AjaxResult.success(seWfTaskInfo);
     }
 

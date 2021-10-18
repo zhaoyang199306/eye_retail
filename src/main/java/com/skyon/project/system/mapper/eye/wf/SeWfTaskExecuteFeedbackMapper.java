@@ -2,6 +2,8 @@ package com.skyon.project.system.mapper.eye.wf;
 
 import com.skyon.project.system.domain.eye.wf.SeWfTaskExecuteFeedback;
 
+import java.util.List;
+
 /**
  * 任务执行反馈表单 mapper
  * SeWfTaskExecuteFeedback
@@ -15,5 +17,9 @@ public interface SeWfTaskExecuteFeedbackMapper {
      * @return 条数
      */
     public int insertTaskExecuteFeedback(SeWfTaskExecuteFeedback feedback);
+
+    public SeWfTaskExecuteFeedback getLastTaskExecuteFeedback(String taskNo);
+
+    List<SeWfTaskExecuteFeedback> getAllSeWfTaskExecuteFeedbackByTaskNo(String taskNo);
 
 }

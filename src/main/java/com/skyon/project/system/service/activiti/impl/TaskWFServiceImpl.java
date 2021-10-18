@@ -1,5 +1,6 @@
 package com.skyon.project.system.service.activiti.impl;
 
+import com.skyon.common.utils.StringUtils;
 import com.skyon.project.system.service.activiti.TaskWFService;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
@@ -181,8 +182,20 @@ public class TaskWFServiceImpl implements TaskWFService {
         for (Task task : list) {
             ProcessInstance pi = runtimeService.createProcessInstanceQuery().
                     processInstanceId(task.getProcessInstanceId()).singleResult();
-            map.put(pi.getBusinessKey(),task.getName());
+            if(StringUtils.isNotEmpty(pi.getBusinessKey())) map.put(pi.getBusinessKey(),task.getName());
         }
         return map;
+    }
+
+    /**
+     * 判断该任务是否已经在 工作流任务中
+     * @param taskInfoNo
+     * @param user
+     */
+    public boolean confirmTaskIsExit(String taskInfoNo) {
+        ProcessEngine defaultProcessEngine = ProcessEngines.getDefaultProcessEngine();
+        TaskService taskService = defaultProcessEngine.getTaskService();
+        Task task = taskService.createTaskQuery().processInstanceBusinessKey(taskInfoNo).singleResult();
+        return task == null;
     }
 }

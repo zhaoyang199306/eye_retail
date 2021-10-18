@@ -4,6 +4,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skyon.project.system.mapper.eye.wf.SeWfTaskExecuteFeedbackMapper">
 
+	<resultMap id="SeWfTaskExecuteFeedbackResult" type="com.skyon.project.system.domain.eye.wf.SeWfTaskExecuteFeedback">
+		<id property="taskExecuteId" column="TASK_EXECUTE_ID"/>
+		<result property="taskId" column="TASK_ID"/>
+		<result property="taskType" column="TASK_TYPE"/>
+		<result property="riskLevel" column="RISK_LEVEL"/>
+		<result property="pdRiskLevel" column="PD_RISK_LEVEL"/>
+		<result property="partnerRiskLevel" column="PARTNER_RISK_LEVEL"/>
+		<result property="attachedFile" column="ATTACHED_FILE"/>
+		<result property="currentRiskChanges" column="CURRENT_RISK_CHANGES"/>
+		<result property="currentConclusions" column="CURRENT_CONCLUSIONS"/>
+		<result property="currentFeedback" column="CURRENT_FEEDBACK"/>
+		<result property="currentControlMeasures" column="CURRENT_CONTROL_MEASURES"/>
+		<result property="otherControlMeasures" column="OTHER_CONTROL_MEASURES"/>
+		<result property="oneFamilyOnePolicy" column="ONE_FAMILY_ONE_POLICY"/>
+		<result property="isFinish" column="IS_FINISH"/>
+		<result property="taskHandler" column="TASK_HANDLER"/>
+		<result property="taskHandlePost" column="TASK_HANDLE_POST"/>
+		<result property="processName" column="PROCESS_NAME"/>
+		<result property="lastProcessName" column="LAST_PROCESS_NAME"/>
+		<result property="createTime" column="CREATE_TIME"/>
+	</resultMap>
+
 	<insert id="insertTaskExecuteFeedback" parameterType="SeWfTaskExecuteFeedback">
 		<selectKey  keyProperty="taskExecuteId" resultType="String" order="BEFORE">
 			select EXECUTE_FEEDBACK_SEQUENCE.nextval as taskExecuteId from dual
@@ -44,4 +66,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		sysdate,0
 		)
 	</insert>
+
+
+	<select id="getLastTaskExecuteFeedback" parameterType="String" resultType="SeWfTaskExecuteFeedback" resultMap="SeWfTaskExecuteFeedbackResult">
+		select e.*  from (select f.* from SE_WF_TASK_EXECUTE_FEEDBACK f,SE_WF_TASK_INFO g where f.task_id = g.task_id and g.task_no = #{taskNo} order by f.create_time desc) e where rownum=1
+	</select>
+
+	<select id="getAllSeWfTaskExecuteFeedbackByTaskNo" parameterType="String" resultType="SeWfTaskExecuteFeedback" resultMap="SeWfTaskExecuteFeedbackResult">
+		select f.* from SE_WF_TASK_EXECUTE_FEEDBACK f,SE_WF_TASK_INFO g where f.task_id = g.task_id and g.task_no = #{taskNo} order by f.create_time desc
+	</select>
+
 </mapper> 

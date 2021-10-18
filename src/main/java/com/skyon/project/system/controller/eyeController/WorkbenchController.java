@@ -75,15 +75,13 @@ public class WorkbenchController extends BaseController {
             WarningTaskListVo warningTaskListVo = new WarningTaskListVo();
             warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
             List<Map> listMap = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
-            taskInfoSelfCountNum = taskInfoSelfCountNum + listMap.size();
+            taskInfoSelfCountNum += listMap.size();
         }
 
         // 只计算在里面的
-//        Set<String> set = taskInfoService.selectAllTaskInfoNo();
-//        List<String> collect = set.stream().filter(owerTaskNo::contains).collect(Collectors.toList());
-//        taskInfoSelfCountNum = taskInfoSelfCountNum + collect.size();
-
-        taskInfoSelfCountNum = taskInfoSelfCountNum + mapTask.size();
+        Set set = taskInfoService.selectAllTaskInfoNo();
+        List<String> collect = (List<String>) set.stream().filter(owerTaskNo::contains).collect(Collectors.toList());
+        taskInfoSelfCountNum += collect.size();
 
 
         // 处置跟踪的初始的非自营  单独计算
@@ -104,14 +102,7 @@ public class WorkbenchController extends BaseController {
         return AjaxResult.success(resultList);
     }
 
-    public static void main(String[] args) {
-        List<String> owerTaskNo = Arrays.asList("2");
-        List<String> set = Arrays.asList("1","2","3");
 
-        List<String> collect = set.stream().filter(key -> owerTaskNo.contains(key)).collect(Collectors.toList());
-
-        System.out.println(collect);
-    }
 
     /**
      * 查询工作控制台 预警统计排名

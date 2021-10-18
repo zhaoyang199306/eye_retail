@@ -89,6 +89,8 @@ public class SeWfTaskInfo extends BasePojo {
 
     private SeWfTaskExecuteFeedback seWfTaskExecuteFeedback; // 执行反馈表
 
+    private List<SeWfTaskExecuteFeedback> seWfTaskExecuteFeedbacks; // 过程意见
+
 
 //-----------------------------------toString----------------------------------------
 
@@ -132,6 +134,7 @@ public class SeWfTaskInfo extends BasePojo {
                 ", seWfWarningObject=" + seWfWarningObject +
                 ", seWfWarningSigns=" + seWfWarningSigns +
                 ", seWfTaskExecuteFeedback=" + seWfTaskExecuteFeedback +
+                ", seWfTaskExecuteFeedbacks=" + seWfTaskExecuteFeedbacks +
                 '}';
     }
 
@@ -449,5 +452,13 @@ public class SeWfTaskInfo extends BasePojo {
 
     public void setSignalSource(String signalSource) {
         this.signalSource = signalSource;
+    }
+
+    public List<SeWfTaskExecuteFeedback> getSeWfTaskExecuteFeedbacks() {
+        return seWfTaskExecuteFeedbacks;
+    }
+
+    public void setSeWfTaskExecuteFeedbacks(List<SeWfTaskExecuteFeedback> seWfTaskExecuteFeedbacks) {
+        this.seWfTaskExecuteFeedbacks = seWfTaskExecuteFeedbacks;
     }
 }

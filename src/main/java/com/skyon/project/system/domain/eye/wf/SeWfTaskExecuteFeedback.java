@@ -1,6 +1,9 @@
 package com.skyon.project.system.domain.eye.wf;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.skyon.project.system.domain.eye.BasePojo;
+
+import java.util.Date;
 
 /**
  * 任务执行反馈表单
@@ -40,6 +43,13 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
 
     private String taskHandlePost; // 当前处理岗
 
+    private String processName; // 流程节点名称
+
+    private String lastProcessName; // 上一流程节点名称
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime; // 创建时间
+
     //-----------------------------------toString----------------------------------------
 
     @Override
@@ -61,6 +71,9 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
                 ", isFinish='" + isFinish + '\'' +
                 ", taskHandler='" + taskHandler + '\'' +
                 ", taskHandlePost='" + taskHandlePost + '\'' +
+                ", processName='" + processName + '\'' +
+                ", lastProcessName='" + lastProcessName + '\'' +
+                ", createTime='" + createTime + '\'' +
                 '}';
     }
 
@@ -196,5 +209,29 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
 
     public void setIsFinish(String isFinish) {
         this.isFinish = isFinish;
+    }
+
+    public String getProcessName() {
+        return processName;
+    }
+
+    public void setProcessName(String processName) {
+        this.processName = processName;
+    }
+
+    public String getLastProcessName() {
+        return lastProcessName;
+    }
+
+    public void setLastProcessName(String lastProcessName) {
+        this.lastProcessName = lastProcessName;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

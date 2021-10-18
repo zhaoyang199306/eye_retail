@@ -38,6 +38,11 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
 
     private static final Logger logger = LoggerFactory.getLogger(ManagerTaskSubmitServiceImpl.class);
 
+    @Autowired
+    private WTaskInfoService taskInfoService;
+    @Autowired
+    private TaskWFService taskWFService;
+
     /**
      * Bean 初始化时，把该Bean注册进   流程的工厂类 - WfDealRoleRegisterFactory
      *
@@ -60,13 +65,12 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
     @Override
     protected Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user) {
         Map<String, Object> map = new HashMap<>();
-        // 先查询一下是否启动过流程  （有重新回到客户经理手里的情况）
 
         WFTaskFlagHandle handle = new WFTaskFlagHandle(seWfTaskInfo);
         boolean signTask = handle.isSignTask();
 
         map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 客户经理操作人id
-        map.put("first", Boolean.TRUE);
+        map.put("first", taskWFService.confirmTaskIsExit(seWfTaskInfo.getTaskNo()));  // 先查询一下是否启动过流程  （有重新回到客户经理手里的情况）
 
         if (signTask) {  // 签收
             map.put("wfStart", "2"); // 走流程2
@@ -77,4 +81,12 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
         return map;
     }
 
+    /**
+     *  客户经理提交后， 需要对任务表里的 TASK_STATUS 修改为 02（处理中）   01：待处理，02：在途，03：归档。
+     * @param seWfTaskInfo
+     */
+    @Override
+    protected void updateField(SeWfTaskInfo seWfTaskInfo) {
+        taskInfoService.updateTaskStatusByNo(seWfTaskInfo.getTaskNo());
+    }
 }
