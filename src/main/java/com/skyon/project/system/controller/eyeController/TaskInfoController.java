@@ -124,7 +124,7 @@ public class TaskInfoController extends BaseController {
             seWfWarningSignsService.updateSeWfWarningSigns(seWfWarningSigns);
         }
 
-        // 任务提交
+//        // 任务提交
         TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
         String taskName = service.commonSubmit(seWfTaskInfo, user);
 
@@ -132,12 +132,14 @@ public class TaskInfoController extends BaseController {
         SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();
         seWfTaskExecuteFeedback.setTaskId(seWfTaskInfo.getTaskId());
         seWfTaskExecuteFeedback.setProcessName(taskName);
+        seWfTaskExecuteFeedback.setTaskHandler(user.getUserName());
+        seWfTaskExecuteFeedback.setTaskHandlePost(roles.get(0).getRoleName());
 
         SeWfTaskExecuteFeedback lastTaskExecuteFeedback = seWfTaskExecuteFeedbackService.getLastTaskExecuteFeedback(seWfTaskInfo.getTaskNo());
-        if (null != lastTaskExecuteFeedback) {
-            seWfTaskExecuteFeedback.setLastProcessName(lastTaskExecuteFeedback.getProcessName());
-        } else {
+        if (lastTaskExecuteFeedback == null) {
             seWfTaskExecuteFeedback.setLastProcessName("");
+        } else {
+            seWfTaskExecuteFeedback.setLastProcessName(lastTaskExecuteFeedback.getProcessName());
         }
 
 
