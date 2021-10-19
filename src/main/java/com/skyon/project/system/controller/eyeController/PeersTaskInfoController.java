@@ -23,6 +23,9 @@ import com.skyon.project.system.service.eye.WLinkLogService;
 import com.skyon.project.system.service.eye.WTaskInfoService;
 import com.skyon.project.system.service.wf.TaskCommon;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 import org.apache.calcite.rel.core.Aggregate.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +34,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.*;
 import java.util.*;
 
+@Api(value = "预警认定任务管理")
 @RestController
 @RequestMapping("/peersTaskInfo")
 public class PeersTaskInfoController extends BaseController {
@@ -52,6 +56,14 @@ public class PeersTaskInfoController extends BaseController {
     private WTaskInfoService taskInfoService;
 
 
+    @ApiOperation(value="预警任务列表",
+    		notes = "返回字段名：i.task_no,i.warning_object_name,i.warning_object_no,i.warning_object_category,i.task_status,i.task_type,\n"
+    				+ "        i.sys_risk_level,i.task_handle_post,\n"
+    				+ "        COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,\n"
+    				+ "        COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,\n"
+    				+ "        COUNT(CASE WHEN warning_level = '03' THEN 1 ELSE NULL END) AS threeLevelCount,\n"
+    				+ "        o.ad_sub_bra, o.ad_bra,i.task_start_time,i.task_deadline,o.warning_object_category")
+    
     /**
      * 查询已开始和未开始流程的任务
      *      
