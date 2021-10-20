@@ -2,8 +2,10 @@ package com.skyon.project.system.service.eye;
 
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
 import com.skyon.project.system.domain.eye.SeWfTaskInfo;
+import com.skyon.project.system.domain.eye.TaskInfoListPojo;
 import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +13,7 @@ import java.util.Set;
 
 public interface WTaskInfoService {
 
-    public List<Map> getWTaskInfoByList1(Set set);
+    public List<TaskInfoListPojo> getWTaskInfoByList1(Set set);
 
 
     /**
@@ -19,10 +21,10 @@ public interface WTaskInfoService {
      * @param warningTaskListVo
      * @return
      */
-    public List<Map> getWTaskInfoListByRole(WarningTaskListVo warningTaskListVo);
+    public List<TaskInfoListPojo> getWTaskInfoListByRole(WarningTaskListVo warningTaskListVo);
 
     // 根据taskInfoNo 修改run_status状态
-    public int updateRunStatusByNo(String taskInfoNo,String riskValue,String personalRiskLevel,String checkResult);
+    public int updateRunStatusByNo(String taskInfoNo, String riskValue, String personalRiskLevel, String checkResult);
 
     public int updateRunStatusByNoAndTrack(String taskInfoNo);
     // 预警认定

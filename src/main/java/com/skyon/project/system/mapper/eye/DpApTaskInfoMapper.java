@@ -2,24 +2,27 @@ package com.skyon.project.system.mapper.eye;
 
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
 import com.skyon.project.system.domain.eye.SeWfTaskInfo;
+import com.skyon.project.system.domain.eye.TaskInfoListPojo;
 import com.skyon.project.system.domain.eye.TaskInfoSubmitPojo;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+
 public interface DpApTaskInfoMapper {
 
     // 根据待办箱的任务编号查询任务详情
-    public List<Map> getWTaskInfoByList1(Set taskNo);
+    public List<TaskInfoListPojo> getWTaskInfoByList1(Set taskNo);
 
     /**
      * 根据业务人员编号 查询代办事项
      * @param warningTaskListVo
      * @return
      */
-    public List<Map> getWTaskInfoListByRole(WarningTaskListVo warningTaskListVo);
+    public List<TaskInfoListPojo> getWTaskInfoListByRole(WarningTaskListVo warningTaskListVo);
 
 
     /**
@@ -31,7 +34,7 @@ public interface DpApTaskInfoMapper {
      * @return
      */
     public int updateRunStatusByNo(String taskInfoNo, String riskControlMeasures,
-                                   String personalRiskLevel,String checkResult);
+                                   String personalRiskLevel, String checkResult);
 
     public int updateRunStatusByNoAndTrack(String taskInfoNo);
 

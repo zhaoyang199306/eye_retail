@@ -7,6 +7,7 @@ import com.skyon.framework.security.LoginUser;
 import com.skyon.framework.security.service.TokenService;
 import com.skyon.framework.web.controller.BaseController;
 import com.skyon.framework.web.domain.AjaxResult;
+import com.skyon.project.system.domain.eye.TaskInfoListPojo;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
 import com.skyon.project.system.domain.sys.SysRole;
 import com.skyon.project.system.domain.sys.SysUser;
@@ -74,7 +75,7 @@ public class WorkbenchController extends BaseController {
         if (RoleName.ACCOUNT_MANAGER.getInfo().equals((roles.get(0).getRoleName()))) {
             WarningTaskListVo warningTaskListVo = new WarningTaskListVo();
             warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
-            List<Map> listMap = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
+            List<TaskInfoListPojo> listMap = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
             taskInfoSelfCountNum += listMap.size();
         }
 

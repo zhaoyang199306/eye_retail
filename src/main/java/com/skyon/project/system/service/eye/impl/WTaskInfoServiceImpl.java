@@ -27,7 +27,7 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
      * @return 实体集合
      */
     @Override
-    public List<Map> getWTaskInfoByList1(Set taskNo) {
+    public List<TaskInfoListPojo> getWTaskInfoByList1(Set taskNo) {
         return taskInfoMapper.getWTaskInfoByList1(taskNo);
     }
 
@@ -39,7 +39,7 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
      * @return
      */
     @Override
-    public List<Map> getWTaskInfoListByRole(WarningTaskListVo warningTaskListVo) {
+    public List<TaskInfoListPojo> getWTaskInfoListByRole(WarningTaskListVo warningTaskListVo) {
         return taskInfoMapper.getWTaskInfoListByRole(warningTaskListVo);
     }
 

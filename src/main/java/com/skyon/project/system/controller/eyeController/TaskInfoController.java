@@ -66,15 +66,15 @@ public class TaskInfoController extends BaseController {
      */
     @GetMapping("/list")
     public AjaxResult getSignalManualList(WarningTaskListVo warningTaskListVo) {
-        List<Map> list = new ArrayList<>();
-        List<Map> listAct = new ArrayList<>();
+        List<TaskInfoListPojo> list = new ArrayList<>();
+        List<TaskInfoListPojo> listAct = new ArrayList<>();
 
         SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
         List<SysRole> roles = user.getRoles();
 
         try {
             // 查询 客户经理 初始时 的 列表。
-            if (RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) { // 后续 传页面展示的角色
+            if (1==1 ||RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) { // 后续 传页面展示的角色
                 warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
                 list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
             }
@@ -162,7 +162,6 @@ public class TaskInfoController extends BaseController {
 
         SeWfTaskInfo seWfTaskInfo = taskInfoService.selectSeWfTaskInfoByTaskNo(taskNo);
         String signalCreateModel = seWfTaskInfo.getSeWfWarningSigns().get(0).getSignalCreateModel();
-        seWfTaskInfo.setSignalSource(signalCreateModel);
 
         List<SeWfTaskExecuteFeedback> allSeWfTaskExecuteFeedbackByTaskNo = seWfTaskExecuteFeedbackService.getAllSeWfTaskExecuteFeedbackByTaskNo(taskNo);
         seWfTaskInfo.setSeWfTaskExecuteFeedbacks(allSeWfTaskExecuteFeedbackByTaskNo);

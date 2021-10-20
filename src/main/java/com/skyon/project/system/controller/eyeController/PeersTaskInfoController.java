@@ -74,7 +74,7 @@ public class PeersTaskInfoController extends BaseController {
     @Transactional
     @DataScope(deptAlias = "d")
     public AjaxResult getSignalManualList(WarningTaskListVo warningTaskListVo) {
-        List<Map> list = new ArrayList<>();
+        List<TaskInfoListPojo> list = new ArrayList<>();
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
