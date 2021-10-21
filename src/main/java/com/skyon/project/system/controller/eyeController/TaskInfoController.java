@@ -3,6 +3,7 @@ package com.skyon.project.system.controller.eyeController;
 import com.skyon.common.enums.RoleName;
 import com.skyon.common.enums.WFLink;
 import com.skyon.common.utils.ServletUtils;
+import com.skyon.framework.aspectj.lang.annotation.DataScope;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
 import com.skyon.framework.security.LoginUser;
 import com.skyon.framework.security.service.TokenService;
@@ -18,6 +19,9 @@ import com.skyon.project.system.service.activiti.RunWFService;
 import com.skyon.project.system.service.activiti.TaskWFService;
 import com.skyon.project.system.service.eye.*;
 import com.skyon.project.system.service.wf.TaskCommon;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
@@ -32,6 +36,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.transaction.annotation.Isolation.READ_COMMITTED;
 
+@Api(tags = "预警任务")
 @RestController
 @RequestMapping("/taskInfo")
 public class TaskInfoController extends BaseController {
@@ -64,8 +69,10 @@ public class TaskInfoController extends BaseController {
      * @param warningTaskListVo
      * @return
      */
+    @ApiOperation(value="预警任务列表查询")
     @GetMapping("/list")
-    public AjaxResult getSignalManualList(WarningTaskListVo warningTaskListVo) {
+    @DataScope(deptAlias = "d")
+    public AjaxResult getSignalManualList( WarningTaskListVo warningTaskListVo) {
         List<TaskInfoListPojo> list = new ArrayList<>();
         List<TaskInfoListPojo> listAct = new ArrayList<>();
 
@@ -109,7 +116,7 @@ public class TaskInfoController extends BaseController {
      * @RequestParam("checkResult") String checkResult,
      * DpApWarningSign warnSignalList
      */
-
+    @ApiOperation(value="预警任务详情提交")
     @PostMapping("/submitTask")
     @Transactional
     public AjaxResult submitTask(@RequestBody SeWfTaskInfo seWfTaskInfo) {
@@ -124,7 +131,7 @@ public class TaskInfoController extends BaseController {
             seWfWarningSignsService.updateSeWfWarningSigns(seWfWarningSigns);
         }
 
-//        // 任务提交
+        // 任务提交
         TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
         String taskName = service.commonSubmit(seWfTaskInfo, user);
 

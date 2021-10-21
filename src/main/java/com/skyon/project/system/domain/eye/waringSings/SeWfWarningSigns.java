@@ -1,7 +1,10 @@
 package com.skyon.project.system.domain.eye.waringSings;
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.skyon.project.system.domain.eye.BasePojo;
+import com.skyon.project.system.domain.eye.SeWfWarningObject;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
@@ -12,44 +15,110 @@ import java.util.Date;
  */
 public class SeWfWarningSigns extends BasePojo {
 
-    private String warningSignalId;  // 预警信号ID not null
-    private String signalNo;  // 信号编号 not null
-    private String signalName; // 信号名称
-    private String signalCreateModel; // 信号生成方式
+    @ApiModelProperty(name="signalId",value="信号id(物理主键id)",required=false)
+    private String signalId;
+    @ApiModelProperty(name="lpOrgNo",value="法人机构标识",required=false)
+    private String lpOrgNo;
+    @ApiModelProperty(name="warningObjectId",value="预警对象id",required=false)
+    private String warningObjectId;
+    @ApiModelProperty(name="signalNo",value="信号编号",required=false)
+    private String signalNo;
+    @ApiModelProperty(name="signalName",value="信号名称",required=false)
+    private String signalName;
+    @ApiModelProperty(name="signalCreateModel",value="信号生成方式",required=false)
+    private String signalCreateModel;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date signalTriggerTime; // 信号触发时间
+    @ApiModelProperty(name="signalTriggerTime",value="信号触发时间",required=false)
+    private Date signalTriggerTime;
     @JsonFormat(pattern = "yyyy/MM/dd")
-    private Date signalDueDay;  // 信号观察期到期日
-    private String warningLevel; // 信号风险等级 一级预警信号 01/二级预警信号 02 /三级预警信号 03
-    private String signalType; // 信号大类
-    private String warnDsc; // 风险信息描述 clob
-    private String warningObjectId;  // 预警对象id not null
-    private String warningObjectCategory; // 预警对象类别
-    private String warningObjectNo; // 预警对象编号
-    private String warningObjectName; // 预警对象名称
-    private String warningObjectType; // 监测对象类型
-    private String isWarnFlag; // 是否生成风险提示单
-    private String opposeAdvice; // 应对措施及管控建议
-    private String attachedFile; // 附件
-    private String signalDataSource; // 信号数据来源
-    private String triggerRuleId; // 触发规则ID
-    private long triggerNumber; // 触发次数
-    private String isSignalMerge; // 是否合并信号
-    private String signalMergeId; // 合并预警信号ID
-    private String signalStatus; // 信号状态 not null  录入 01/正常 02 /失效 03
-    private String distributeStatus; //  下发状态
+    @ApiModelProperty(name="signalDueDay",value="信号观察期到期日",required=false)
+    private Date signalDueDay;
+    @ApiModelProperty(name="warningLevel",value="信号风险等级",required=false)
+    private String warningLevel;
+    @ApiModelProperty(name="signalType",value="信号分类",required=false)
+    private String signalType;
+    @ApiModelProperty(name="warnDsc",value="风险信息描述",required=false)
+    private String warnDsc;
+    @ApiModelProperty(name="isWarnFlag",value="是否生成风险提示单",required=false)
+    private String isWarnFlag;
+    @ApiModelProperty(name="warnNo",value="风险提示单编号",required=false)
+    private String warnNo;
+    @ApiModelProperty(name="sendPeople",value="发送对象",required=false)
+    private String sendPeople;
+    @ApiModelProperty(name="recipientPeople",value="抄送对象",required=false)
+    private String recipientPeople;
+    @ApiModelProperty(name="opposeAdvice",value="应对措施及管控建议",required=false)
+    private String opposeAdvice;
+    @ApiModelProperty(name="attachedFile",value="附件",required=false)
+    private String attachedFile;
+    @ApiModelProperty(name="signalDataSource",value="信号数据来源",required=false)
+    private String signalDataSource;
+    @ApiModelProperty(name="signalRuleId",value="信号规则id",required=false)
+    private String signalRuleId;
+    @ApiModelProperty(name="triggerNum",value="触发次数",required=false)
+    private String triggerNum;
+    @ApiModelProperty(name="isRelaFlag",value="是否关联信号",required=false)
+    private String isRelaFlag;
+    @ApiModelProperty(name="relaSignalNo",value="关联预警信号编号",required=false)
+    private String relaSignalNo;
+    @ApiModelProperty(name="isMergeFlag",value="是否合并信号",required=false)
+    private String isMergeFlag;
+    @ApiModelProperty(name="mergeSignalNo",value="合并预警信号编号",required=false)
+    private String mergeSignalNo;
+    @ApiModelProperty(name="signalStatus",value="信号状态",required=false)
+    private String signalStatus;
+    @ApiModelProperty(name="distributeStatus",value="下发状态",required=false)
+    private String distributeStatus;
+    @ApiModelProperty(name="distributeTime",value="下发时间",required=false)
+    private Date distributeTime;
+    @ApiModelProperty(name="distributeModel",value="下发模式",required=false)
+    private String distributeModel;
+    @ApiModelProperty(name="disposalMode",value="认定处置模式",required=false)
+    private String disposalMode;
+    @ApiModelProperty(name="noDistributeReason",value="不下发原因",required=false)
+    private String noDistributeReason;
+    @ApiModelProperty(name="disableReason",value="失效原因",required=false)
+    private String disableReason;
+    @ApiModelProperty(name="taskId",value="任务id",required=false)
+    private String taskId;
+    @ApiModelProperty(name="feedbackStatus",value="反馈状态",required=false)
+    private String feedbackStatus;
+    @ApiModelProperty(name="feedbackDesc",value="反馈意见描述",required=false)
+    private String feedbackDesc;
+    @ApiModelProperty(name="handlerUserId",value="经办人id",required=false)
+    private String handlerUserId;
+    @ApiModelProperty(name="handleRoleId",value="经办角色id",required=false)
+    private String handleRoleId;
+    @ApiModelProperty(name="currHandlerId",value="当前处理人id",required=false)
+    private String currHandlerId;
+    @ApiModelProperty(name="currRoleId",value="当前处理角色id",required=false)
+    private String currRoleId;
+    @ApiModelProperty(name="approvalRulesCond",value="审批规则条件",required=false)
+    private String approvalRulesCond;
+    @ApiModelProperty(name="rmark",value="备注",required=false)
+    private String rmark;
+    @ApiModelProperty(name="createId",value="创建人id",required=false)
+    private String createId;
+    @ApiModelProperty(name="createName",value="创建人名称",required=false)
+    private String createName;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date distributeTime;  // 下发时间
-    private String distributeModel;  // 下发模式 自动/人工/不下发
-    private String disposalMode; // 处置模式   自动 01/人工 02 /混合 03
-    private String noDistributeReason; // 不下发原因
-    private String disableReason; // 失效原因
-    private String taskId; //任务ID not null
-    private String confirmStatus; // 认定状态 属实/不属实
-    private String feedback; // 反馈结论
-    private String feedbackDesc; // 反馈意见描述
+    @ApiModelProperty(name="createTime",value="创建时间",required=false)
+    private Date createTime;
+    @ApiModelProperty(name="updateId",value="修改人id",required=false)
+    private String updateId;
+    @ApiModelProperty(name="updateName",value="修改人名称",required=false)
+    private String updateName;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @ApiModelProperty(name="updateTime",value="修改时间",required=false)
+    private Date updateTime;
+    @ApiModelProperty(name="delFlag",value="删除标识",required=false)
+    private String delFlag;
+    @ApiModelProperty(name="confirmStatus",value="认定状态",required=false)
+    private String confirmStatus;
 
+    //  ----------------------------  关联---------------------------
 
+    private SeWfWarningObject seWfWarningObject; // 预警对象
 
 
     //-----------------------------------toString----------------------------------------
@@ -57,28 +126,30 @@ public class SeWfWarningSigns extends BasePojo {
     @Override
     public String toString() {
         return "SeWfWarningSigns{" +
-                "warningSignalId='" + warningSignalId + '\'' +
+                "signalId='" + signalId + '\'' +
+                ", lpOrgNo='" + lpOrgNo + '\'' +
+                ", warningObjectId='" + warningObjectId + '\'' +
                 ", signalNo='" + signalNo + '\'' +
                 ", signalName='" + signalName + '\'' +
                 ", signalCreateModel='" + signalCreateModel + '\'' +
-                ", signalTriggerTime='" + signalTriggerTime + '\'' +
+                ", signalTriggerTime=" + signalTriggerTime +
                 ", signalDueDay=" + signalDueDay +
                 ", warningLevel='" + warningLevel + '\'' +
                 ", signalType='" + signalType + '\'' +
                 ", warnDsc='" + warnDsc + '\'' +
-                ", warningObjectId='" + warningObjectId + '\'' +
-                ", warningObjectCategory='" + warningObjectCategory + '\'' +
-                ", warningObjectNo='" + warningObjectNo + '\'' +
-                ", warningObjectName='" + warningObjectName + '\'' +
-                ", warningObjectType='" + warningObjectType + '\'' +
                 ", isWarnFlag='" + isWarnFlag + '\'' +
+                ", warnNo='" + warnNo + '\'' +
+                ", sendPeople='" + sendPeople + '\'' +
+                ", recipientPeople='" + recipientPeople + '\'' +
                 ", opposeAdvice='" + opposeAdvice + '\'' +
                 ", attachedFile='" + attachedFile + '\'' +
                 ", signalDataSource='" + signalDataSource + '\'' +
-                ", triggerRuleId='" + triggerRuleId + '\'' +
-                ", triggerNumber=" + triggerNumber +
-                ", isSignalMerge='" + isSignalMerge + '\'' +
-                ", signalMergeId='" + signalMergeId + '\'' +
+                ", signalRuleId='" + signalRuleId + '\'' +
+                ", triggerNum='" + triggerNum + '\'' +
+                ", isRelaFlag='" + isRelaFlag + '\'' +
+                ", relaSignalNo='" + relaSignalNo + '\'' +
+                ", isMergeFlag='" + isMergeFlag + '\'' +
+                ", mergeSignalNo='" + mergeSignalNo + '\'' +
                 ", signalStatus='" + signalStatus + '\'' +
                 ", distributeStatus='" + distributeStatus + '\'' +
                 ", distributeTime=" + distributeTime +
@@ -87,21 +158,79 @@ public class SeWfWarningSigns extends BasePojo {
                 ", noDistributeReason='" + noDistributeReason + '\'' +
                 ", disableReason='" + disableReason + '\'' +
                 ", taskId='" + taskId + '\'' +
-                ", confirmStatus='" + confirmStatus + '\'' +
-                ", feedback='" + feedback + '\'' +
+                ", feedbackStatus='" + feedbackStatus + '\'' +
                 ", feedbackDesc='" + feedbackDesc + '\'' +
+                ", handlerUserId='" + handlerUserId + '\'' +
+                ", handleRoleId='" + handleRoleId + '\'' +
+                ", currHandlerId='" + currHandlerId + '\'' +
+                ", currRoleId='" + currRoleId + '\'' +
+                ", approvalRulesCond='" + approvalRulesCond + '\'' +
+                ", rmark='" + rmark + '\'' +
+                ", createId='" + createId + '\'' +
+                ", createName='" + createName + '\'' +
+                ", createTime=" + createTime +
+                ", updateId='" + updateId + '\'' +
+                ", updateName='" + updateName + '\'' +
+                ", updateTime=" + updateTime +
+                ", delFlag='" + delFlag + '\'' +
+                ", confirmStatus='" + confirmStatus + '\'' +
+                ", seWfWarningObject=" + seWfWarningObject +
                 '}';
     }
 
 
     //-----------------------------------get/set----------------------------------------
 
-    public String getWarningSignalId() {
-        return warningSignalId;
+
+    public String getConfirmStatus() {
+        return confirmStatus;
     }
 
-    public void setWarningSignalId(String warningSignalId) {
-        this.warningSignalId = warningSignalId;
+    public void setConfirmStatus(String confirmStatus) {
+        this.confirmStatus = confirmStatus;
+    }
+
+    public Date getDistributeTime() {
+        return distributeTime;
+    }
+
+    @Override
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public SeWfWarningObject getSeWfWarningObject() {
+        return seWfWarningObject;
+    }
+
+    public void setSeWfWarningObject(SeWfWarningObject seWfWarningObject) {
+        this.seWfWarningObject = seWfWarningObject;
+    }
+
+    public String getSignalId() {
+        return signalId;
+    }
+
+    public void setSignalId(String signalId) {
+        this.signalId = signalId;
+    }
+
+    @Override
+    public String getLpOrgNo() {
+        return lpOrgNo;
+    }
+
+    @Override
+    public void setLpOrgNo(String lpOrgNo) {
+        this.lpOrgNo = lpOrgNo;
+    }
+
+    public String getWarningObjectId() {
+        return warningObjectId;
+    }
+
+    public void setWarningObjectId(String warningObjectId) {
+        this.warningObjectId = warningObjectId;
     }
 
     public String getSignalNo() {
@@ -144,6 +273,15 @@ public class SeWfWarningSigns extends BasePojo {
         this.signalDueDay = signalDueDay;
     }
 
+    public void setDistributeTime(Date distributeTime) {
+        this.distributeTime = distributeTime;
+    }
+
+    @Override
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     public String getWarningLevel() {
         return warningLevel;
     }
@@ -168,52 +306,36 @@ public class SeWfWarningSigns extends BasePojo {
         this.warnDsc = warnDsc;
     }
 
-    public String getWarningObjectId() {
-        return warningObjectId;
-    }
-
-    public void setWarningObjectId(String warningObjectId) {
-        this.warningObjectId = warningObjectId;
-    }
-
-    public String getWarningObjectCategory() {
-        return warningObjectCategory;
-    }
-
-    public void setWarningObjectCategory(String warningObjectCategory) {
-        this.warningObjectCategory = warningObjectCategory;
-    }
-
-    public String getWarningObjectNo() {
-        return warningObjectNo;
-    }
-
-    public void setWarningObjectNo(String warningObjectNo) {
-        this.warningObjectNo = warningObjectNo;
-    }
-
-    public String getWarningObjectName() {
-        return warningObjectName;
-    }
-
-    public void setWarningObjectName(String warningObjectName) {
-        this.warningObjectName = warningObjectName;
-    }
-
-    public String getWarningObjectType() {
-        return warningObjectType;
-    }
-
-    public void setWarningObjectType(String warningObjectType) {
-        this.warningObjectType = warningObjectType;
-    }
-
     public String getIsWarnFlag() {
         return isWarnFlag;
     }
 
     public void setIsWarnFlag(String isWarnFlag) {
         this.isWarnFlag = isWarnFlag;
+    }
+
+    public String getWarnNo() {
+        return warnNo;
+    }
+
+    public void setWarnNo(String warnNo) {
+        this.warnNo = warnNo;
+    }
+
+    public String getSendPeople() {
+        return sendPeople;
+    }
+
+    public void setSendPeople(String sendPeople) {
+        this.sendPeople = sendPeople;
+    }
+
+    public String getRecipientPeople() {
+        return recipientPeople;
+    }
+
+    public void setRecipientPeople(String recipientPeople) {
+        this.recipientPeople = recipientPeople;
     }
 
     public String getOpposeAdvice() {
@@ -240,36 +362,52 @@ public class SeWfWarningSigns extends BasePojo {
         this.signalDataSource = signalDataSource;
     }
 
-    public String getTriggerRuleId() {
-        return triggerRuleId;
+    public String getSignalRuleId() {
+        return signalRuleId;
     }
 
-    public void setTriggerRuleId(String triggerRuleId) {
-        this.triggerRuleId = triggerRuleId;
+    public void setSignalRuleId(String signalRuleId) {
+        this.signalRuleId = signalRuleId;
     }
 
-    public long getTriggerNumber() {
-        return triggerNumber;
+    public String getTriggerNum() {
+        return triggerNum;
     }
 
-    public void setTriggerNumber(long triggerNumber) {
-        this.triggerNumber = triggerNumber;
+    public void setTriggerNum(String triggerNum) {
+        this.triggerNum = triggerNum;
     }
 
-    public String getIsSignalMerge() {
-        return isSignalMerge;
+    public String getIsRelaFlag() {
+        return isRelaFlag;
     }
 
-    public void setIsSignalMerge(String isSignalMerge) {
-        this.isSignalMerge = isSignalMerge;
+    public void setIsRelaFlag(String isRelaFlag) {
+        this.isRelaFlag = isRelaFlag;
     }
 
-    public String getSignalMergeId() {
-        return signalMergeId;
+    public String getRelaSignalNo() {
+        return relaSignalNo;
     }
 
-    public void setSignalMergeId(String signalMergeId) {
-        this.signalMergeId = signalMergeId;
+    public void setRelaSignalNo(String relaSignalNo) {
+        this.relaSignalNo = relaSignalNo;
+    }
+
+    public String getIsMergeFlag() {
+        return isMergeFlag;
+    }
+
+    public void setIsMergeFlag(String isMergeFlag) {
+        this.isMergeFlag = isMergeFlag;
+    }
+
+    public String getMergeSignalNo() {
+        return mergeSignalNo;
+    }
+
+    public void setMergeSignalNo(String mergeSignalNo) {
+        this.mergeSignalNo = mergeSignalNo;
     }
 
     public String getSignalStatus() {
@@ -286,14 +424,6 @@ public class SeWfWarningSigns extends BasePojo {
 
     public void setDistributeStatus(String distributeStatus) {
         this.distributeStatus = distributeStatus;
-    }
-
-    public Date getDistributeTime() {
-        return distributeTime;
-    }
-
-    public void setDistributeTime(Date distributeTime) {
-        this.distributeTime = distributeTime;
     }
 
     public String getDistributeModel() {
@@ -336,20 +466,12 @@ public class SeWfWarningSigns extends BasePojo {
         this.taskId = taskId;
     }
 
-    public String getConfirmStatus() {
-        return confirmStatus;
+    public String getFeedbackStatus() {
+        return feedbackStatus;
     }
 
-    public void setConfirmStatus(String confirmStatus) {
-        this.confirmStatus = confirmStatus;
-    }
-
-    public String getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
+    public void setFeedbackStatus(String feedbackStatus) {
+        this.feedbackStatus = feedbackStatus;
     }
 
     public String getFeedbackDesc() {
@@ -360,4 +482,109 @@ public class SeWfWarningSigns extends BasePojo {
         this.feedbackDesc = feedbackDesc;
     }
 
+    public String getHandlerUserId() {
+        return handlerUserId;
+    }
+
+    public void setHandlerUserId(String handlerUserId) {
+        this.handlerUserId = handlerUserId;
+    }
+
+    public String getHandleRoleId() {
+        return handleRoleId;
+    }
+
+    public void setHandleRoleId(String handleRoleId) {
+        this.handleRoleId = handleRoleId;
+    }
+
+    public String getCurrHandlerId() {
+        return currHandlerId;
+    }
+
+    public void setCurrHandlerId(String currHandlerId) {
+        this.currHandlerId = currHandlerId;
+    }
+
+    public String getCurrRoleId() {
+        return currRoleId;
+    }
+
+    public void setCurrRoleId(String currRoleId) {
+        this.currRoleId = currRoleId;
+    }
+
+    public String getApprovalRulesCond() {
+        return approvalRulesCond;
+    }
+
+    public void setApprovalRulesCond(String approvalRulesCond) {
+        this.approvalRulesCond = approvalRulesCond;
+    }
+
+    public String getRmark() {
+        return rmark;
+    }
+
+    public void setRmark(String rmark) {
+        this.rmark = rmark;
+    }
+
+    @Override
+    public String getCreateId() {
+        return createId;
+    }
+
+    @Override
+    public void setCreateId(String createId) {
+        this.createId = createId;
+    }
+
+    @Override
+    public String getCreateName() {
+        return createName;
+    }
+
+    @Override
+    public void setCreateName(String createName) {
+        this.createName = createName;
+    }
+
+    @Override
+    public String getUpdateId() {
+        return updateId;
+    }
+
+    @Override
+    public void setUpdateId(String updateId) {
+        this.updateId = updateId;
+    }
+
+    @Override
+    public String getUpdateName() {
+        return updateName;
+    }
+
+    @Override
+    public void setUpdateName(String updateName) {
+        this.updateName = updateName;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    @Override
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
+    }
 }

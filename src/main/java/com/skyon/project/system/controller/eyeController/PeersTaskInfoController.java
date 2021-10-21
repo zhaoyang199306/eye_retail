@@ -126,7 +126,7 @@ public class PeersTaskInfoController extends BaseController {
 
         SeWfTaskInfo task = taskInfoService.selectSeWfTaskInfoByTaskNo(taskInfo.getTaskInfoNo());
         Map map=new HashMap<String,String>();
-        prunWFService.startWf(taskInfo.getTaskInfoNo(), map, task.getWarningObjectCategory());
+        prunWFService.startWf(taskInfo.getTaskInfoNo(), map, task.getSeWfWarningObject().getWarningObjectCategory());
         
         //更新任务和信号
         int taskCnt = taskInfoService.updateAffirmTask(taskInfo);
@@ -149,7 +149,6 @@ public class PeersTaskInfoController extends BaseController {
 
         SeWfTaskInfo seWfTaskInfo = taskInfoService.selectSeWfTaskInfoByTaskNo(taskNo);
         String signalCreateModel = seWfTaskInfo.getSeWfWarningSigns().get(0).getSignalCreateModel();
-        seWfTaskInfo.setSignalSource(signalCreateModel);
 
         return AjaxResult.success(seWfTaskInfo);
     }
@@ -178,7 +177,7 @@ public class PeersTaskInfoController extends BaseController {
     	po.setRiskControlMeasures("1,2"); 
     	List<SeWfWarningSigns> warnList = new ArrayList<SeWfWarningSigns>();
     	SeWfWarningSigns warning =new SeWfWarningSigns();
-    	warning.setWarningSignalId("478an1215wsdfq3312an1215wsdfq302");
+    	warning.setSignalId("478an1215wsdfq3312an1215wsdfq302");
     	warning.setConfirmStatus("01");
 		warnList.add(warning);
 		po.setWarnSignalList(warnList);

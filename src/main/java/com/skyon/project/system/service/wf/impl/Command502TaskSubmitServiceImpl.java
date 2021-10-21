@@ -38,7 +38,7 @@ public class Command502TaskSubmitServiceImpl extends TaskCommon implements Initi
         Map<String, Object> map = new HashMap<>();
         WFTaskFlagHandle handle = new WFTaskFlagHandle(seWfTaskInfo);
         map.put("signTrue2", handle.singsIsAllNotTrueByManager()); // 信号全部属实不属实判断
-        map.put("WF_ROLE_101", seWfTaskInfo.getTaskHandler()); // 客户经理 id
+//        map.put("WF_ROLE_101", seWfTaskInfo.getTaskHandler()); // 客户经理 id
         return map;
     }
 
@@ -51,7 +51,7 @@ public class Command502TaskSubmitServiceImpl extends TaskCommon implements Initi
     protected void updateField(SeWfTaskInfo seWfTaskInfo) {
         List<String> list = new ArrayList<>();
         for (SeWfWarningSigns seWfWarningSign : seWfTaskInfo.getSeWfWarningSigns()) {
-            list.add(seWfWarningSign.getWarningSignalId());
+            list.add(seWfWarningSign.getSignalId());
         }
         seWfWarningSignsService.updateSingsSignalStatusById(list);
     }

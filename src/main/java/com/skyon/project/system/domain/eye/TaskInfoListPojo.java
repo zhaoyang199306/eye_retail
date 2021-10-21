@@ -11,7 +11,7 @@ public class TaskInfoListPojo {
 
     @ApiModelProperty(value = "任务编号", name = "taskNo", required = true)
     private String taskNo;
-    @ApiModelProperty(value = "预警对象，名", name = "warningObjectName", required = true)
+    @ApiModelProperty(value = "预警对象名", name = "warningObjectName", required = true)
     private String warningObjectName;
     @ApiModelProperty(value = "预警对象编号", name = "warningObjectNo", required = true)
     private String warningObjectNo;
