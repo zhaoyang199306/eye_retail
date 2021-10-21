@@ -3,6 +3,8 @@ package com.skyon.project.system.domain.eye;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
 import com.skyon.project.system.domain.eye.wf.SeWfTaskExecuteFeedback;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 import java.util.List;
@@ -11,75 +13,92 @@ import java.util.List;
  * 任务信息表
  * SE_WF_TASK_INFO
  */
+@ApiModel(value = "预警详情提交参数",description ="预警详情提交相关参数")
 public class SeWfTaskInfo extends BasePojo {
 
-    private String taskId; // 任务ID 主键   not null
-    private String taskNo; // 任务编号 not null
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date taskStartTime; // 任务开始日期
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date taskDeadline; // 任务完成截止日
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date taskEndTime; // 任务实际完成日期
-    private String warningObjectId; // 预警对象ID not null
-    private String warningObjectCategory; // 预警对象类别
-    private String warningObjectNo; // 预警对象编号
-    private String warningObjectName; // 预警对象名称
-    private String warningObjectType; //监测对象类型
+    @ApiModelProperty(name = "taskId"          , value = "任务ID(物理主键ID)", required = false)
+    private String taskId;  
+    @ApiModelProperty(name = "warningObjectId"          , value = "法人机构标识", required = false)
+    private String warningObjectId;  
+    @ApiModelProperty(name = "taskNo"          , value = "预警对象ID", required = false)
+    private String taskNo;  
+    @ApiModelProperty(name = "taskCreateTime"          , value = "任务编号", required = false)
+    private String taskCreateTime;  
+    @ApiModelProperty(name = "taskDeadline"          , value = "任务生成时间", required = false)
+    private String taskDeadline;  
+    @ApiModelProperty(name = "taskEndDate"          , value = "要求任务完成截止日", required = false)
+    private String taskEndDate;  
+    @ApiModelProperty(name = "taskType"          , value = "任务实际完成日期", required = false)
+    private String taskType;  
+    @ApiModelProperty(name = "taskStatus"          , value = "任务类型", required = false)
+    private String taskStatus;  
+    @ApiModelProperty(name = "handlerUserId"          , value = "任务状态", required = false)
+    private String handlerUserId;  
+    @ApiModelProperty(name = "handleRoleId"          , value = "经办人ID", required = false)
+    private String handleRoleId;  
+    @ApiModelProperty(name = "taskWorking"          , value = "当前任务工作", required = false)
+    private String taskWorking;  
+    @ApiModelProperty(name = "workingStatus"          , value = "当前工作状态", required = false)
+    private String workingStatus;  
+    @ApiModelProperty(name = "currHandlerId"          , value = "当前处理人ID", required = false)
+    private String currHandlerId;  
+    @ApiModelProperty(name = "currRoleId"          , value = "当前处理角色ID", required = false)
+    private String currRoleId;  
+    @ApiModelProperty(name = "currProcSteps"          , value = "当前处理步骤", required = false)
+    private String currProcSteps;  
+    @ApiModelProperty(name = "warningIdentifyModel"          , value = "预警认定模式", required = false)
+    private String warningIdentifyModel;  
+    @ApiModelProperty(name = "sysRiskLevel"          , value = "系统认定客户风险等级", required = false)
+    private String sysRiskLevel;  
+    @ApiModelProperty(name = "riskLevel"          , value = "客户风险等级", required = false)
+    private String riskLevel;  
+    @ApiModelProperty(name = "riskIdentify"          , value = "主体风险认定情况", required = false)
+    private String riskIdentify;  
+    @ApiModelProperty(name = "initialIdentifyConclusions"          , value = "初始检查结论", required = false)
+    private String initialIdentifyConclusions;  
+    @ApiModelProperty(name = "identifyConclusions"          , value = "最终认定检查结论", required = false)
+    private String identifyConclusions;  
+    @ApiModelProperty(name = "identifyFile"          , value = "最终认定附件", required = false)
+    private String identifyFile;  
+    @ApiModelProperty(name = "identifyDate"          , value = "认定生效日期", required = false)
+    private String identifyDate;  
+    @ApiModelProperty(name = "isFinish"          , value = "是否处置完成", required = false)
+    private String isFinish;  
+    @ApiModelProperty(name = "disposalTraceModel"          , value = "处置跟踪模式", required = false)
+    private String disposalTraceModel;  
+    @ApiModelProperty(name = "initialTraceDate"          , value = "初始处置跟踪完成日期", required = false)
+    private String initialTraceDate;  
+    @ApiModelProperty(name = "nextTraceDate"          , value = "下次处置跟踪完成日期", required = false)
+    private String nextTraceDate;  
+    @ApiModelProperty(name = "endTraceDate"          , value = "最终处置跟踪完成日期", required = false)
+    private String endTraceDate;  
+    @ApiModelProperty(name = "riskChanges"          , value = "最近风险变化情况", required = false)
+    private String riskChanges;  
+    @ApiModelProperty(name = "traceFile"          , value = "当前跟踪反馈附件", required = false)
+    private String traceFile;  
+    @ApiModelProperty(name = "disposalTraceFeedback"          , value = "当前处置跟踪反馈意见", required = false)
+    private String disposalTraceFeedback;  
+    @ApiModelProperty(name = "initialControlMeasures"          , value = "初始风险管控措施", required = false)
+    private String initialControlMeasures;  
+    @ApiModelProperty(name = "currentControlMeasures"          , value = "当前风险管控措施", required = false)
+    private String currentControlMeasures;  
+    @ApiModelProperty(name = "otherControlMeasures"          , value = "其他风险管控措施描述", required = false)
+    private String otherControlMeasures;  
+    @ApiModelProperty(name = "oneFamilyOnePolicy"          , value = "一户一策计划", required = false)
+    private String oneFamilyOnePolicy;  
+    @ApiModelProperty(name = "controlFile"          , value = "当前风险管控措施附件", required = false)
+    private String controlFile;  
+    @ApiModelProperty(name = "isNewDisposalTrace"          , value = "是否产生新跟踪任务", required = false)
+    private String isNewDisposalTrace;  
+    @ApiModelProperty(name = "newTaskId"          , value = "新任务ID", required = false)
+    private String newTaskId;  
+    @ApiModelProperty(name = "parentTaskId"          , value = "父任务ID", required = false)
+    private String parentTaskId;  
+    @ApiModelProperty(name = "approvalRulesCond"          , value = "审批规则条件", required = false)
+    private String approvalRulesCond;  
+    @ApiModelProperty(name = "warningTaskKind"          , value = "预警任务种类 01 预警任务（自动认定） 02 预警任务（非自动认定） 03 预警任务（人工信号认定） 04 签收任务", required = false)
+    private String warningTaskKind;  // 预警任务种类 01 预警任务（自动认定） 02 预警任务（非自动认定） 03 预警任务（人工信号认定） 04 签收任务
 
-    private String taskStatus; // not null 任务状态（待处理、处理中）
-
-    private String taskType;// not null 任务类型（预警任务、处置跟踪）
-
-    private String taskHandler; // 任务经办人
-
-    private String taskHandlePost; // 任务经办岗
-
-    private String sysRiskLevel; // 系统认定客户风险等级 红色/橙色/黄色/蓝色/绿色
-
-    private String riskLevel; // 客户风险等级  红色/橙色/黄色/蓝色/绿色
-
-    private String pdRiskLevel; // 产品风险等级
-
-    private String partnerRiskLevel; // 合作方风险等级
-
-    @JsonFormat(pattern = "yyyy/MM/dd")
-    private Date initialTraceDate; // 初始跟踪完成日期
-
-    @JsonFormat(pattern = "yyyy/MM/dd")
-    private Date confirmTraceDate; // 确认跟踪完成日期
-
-    private String attachedFile; // 附件
-
-    private String recentRiskChanges; // 最近风险变化情况
-
-    private String initialConclusions; // 初始检查结论
-
-    private String currentConclusions; // 当前检查结论
-
-    private String disposalTraceFeedback; // 处置跟踪反馈意见
-
-    private String initialControlMeasures; // 初始风险管控措施
-
-    private String currentControlMeasures; // 当前风险管控措施
-
-    private String oneFamilyOnePolicy; // 一户一策计划
-
-    private String isFinish; // 是否处置完成
-
-    private String isNewDisposalTrace; // 是否产生新跟踪任务
-
-    private String newTaskId; // 新任务ID
-
-    private String parentTaskId; // 父任务ID
-
-    private String warningConfirmModel; // 预警认定模式
-
-    private String disposalTraceModel; // 处置跟踪模式
-
-    private String signalSource; // 信号来源
-
-    private String warningTaskKind; // 预警任务种类 01 预警任务（自动认定） 02 预警任务（非自动认定） 03 预警任务（人工信号认定） 04 签收任务
 
     //  ----------------------------  关联---------------------------
 
@@ -98,39 +117,46 @@ public class SeWfTaskInfo extends BasePojo {
     public String toString() {
         return "SeWfTaskInfo{" +
                 "taskId='" + taskId + '\'' +
-                ", taskNo='" + taskNo + '\'' +
-                ", taskStartTime=" + taskStartTime +
-                ", taskDeadline=" + taskDeadline +
-                ", taskEndTime=" + taskEndTime +
                 ", warningObjectId='" + warningObjectId + '\'' +
-                ", warningObjectCategory='" + warningObjectCategory + '\'' +
-                ", warningObjectNo='" + warningObjectNo + '\'' +
-                ", warningObjectName='" + warningObjectName + '\'' +
-                ", warningObjectType='" + warningObjectType + '\'' +
-                ", taskStatus='" + taskStatus + '\'' +
+                ", taskNo='" + taskNo + '\'' +
+                ", taskCreateTime='" + taskCreateTime + '\'' +
+                ", taskDeadline='" + taskDeadline + '\'' +
+                ", taskEndDate='" + taskEndDate + '\'' +
                 ", taskType='" + taskType + '\'' +
-                ", taskHandler='" + taskHandler + '\'' +
-                ", taskHandlePost='" + taskHandlePost + '\'' +
+                ", taskStatus='" + taskStatus + '\'' +
+                ", handlerUserId='" + handlerUserId + '\'' +
+                ", handleRoleId='" + handleRoleId + '\'' +
+                ", taskWorking='" + taskWorking + '\'' +
+                ", workingStatus='" + workingStatus + '\'' +
+                ", currHandlerId='" + currHandlerId + '\'' +
+                ", currRoleId='" + currRoleId + '\'' +
+                ", currProcSteps='" + currProcSteps + '\'' +
+                ", warningIdentifyModel='" + warningIdentifyModel + '\'' +
                 ", sysRiskLevel='" + sysRiskLevel + '\'' +
                 ", riskLevel='" + riskLevel + '\'' +
-                ", pdRiskLevel='" + pdRiskLevel + '\'' +
-                ", partnerRiskLevel='" + partnerRiskLevel + '\'' +
-                ", initialTraceDate=" + initialTraceDate +
-                ", confirmTraceDate=" + confirmTraceDate +
-                ", attachedFile='" + attachedFile + '\'' +
-                ", recentRiskChanges='" + recentRiskChanges + '\'' +
-                ", initialConclusions='" + initialConclusions + '\'' +
-                ", currentConclusions='" + currentConclusions + '\'' +
+                ", riskIdentify='" + riskIdentify + '\'' +
+                ", initialIdentifyConclusions='" + initialIdentifyConclusions + '\'' +
+                ", identifyConclusions='" + identifyConclusions + '\'' +
+                ", identifyFile='" + identifyFile + '\'' +
+                ", identifyDate='" + identifyDate + '\'' +
+                ", isFinish='" + isFinish + '\'' +
+                ", disposalTraceModel='" + disposalTraceModel + '\'' +
+                ", initialTraceDate='" + initialTraceDate + '\'' +
+                ", nextTraceDate='" + nextTraceDate + '\'' +
+                ", endTraceDate='" + endTraceDate + '\'' +
+                ", riskChanges='" + riskChanges + '\'' +
+                ", traceFile='" + traceFile + '\'' +
                 ", disposalTraceFeedback='" + disposalTraceFeedback + '\'' +
                 ", initialControlMeasures='" + initialControlMeasures + '\'' +
                 ", currentControlMeasures='" + currentControlMeasures + '\'' +
+                ", otherControlMeasures='" + otherControlMeasures + '\'' +
                 ", oneFamilyOnePolicy='" + oneFamilyOnePolicy + '\'' +
-                ", isFinish='" + isFinish + '\'' +
+                ", controlFile='" + controlFile + '\'' +
                 ", isNewDisposalTrace='" + isNewDisposalTrace + '\'' +
                 ", newTaskId='" + newTaskId + '\'' +
                 ", parentTaskId='" + parentTaskId + '\'' +
-                ", warningConfirmModel='" + warningConfirmModel + '\'' +
-                ", disposalTraceModel='" + disposalTraceModel + '\'' +
+                ", approvalRulesCond='" + approvalRulesCond + '\'' +
+                ", warningTaskKind='" + warningTaskKind + '\'' +
                 ", seWfWarningObject=" + seWfWarningObject +
                 ", seWfWarningSigns=" + seWfWarningSigns +
                 ", seWfTaskExecuteFeedback=" + seWfTaskExecuteFeedback +
@@ -142,52 +168,12 @@ public class SeWfTaskInfo extends BasePojo {
 //-----------------------------------get/set----------------------------------------
 
 
-    public String getWarningTaskKind() {
-        return warningTaskKind;
-    }
-
-    public void setWarningTaskKind(String warningTaskKind) {
-        this.warningTaskKind = warningTaskKind;
-    }
-
     public String getTaskId() {
         return taskId;
     }
 
     public void setTaskId(String taskId) {
         this.taskId = taskId;
-    }
-
-    public String getTaskNo() {
-        return taskNo;
-    }
-
-    public void setTaskNo(String taskNo) {
-        this.taskNo = taskNo;
-    }
-
-    public Date getTaskStartTime() {
-        return taskStartTime;
-    }
-
-    public void setTaskStartTime(Date taskStartTime) {
-        this.taskStartTime = taskStartTime;
-    }
-
-    public Date getTaskDeadline() {
-        return taskDeadline;
-    }
-
-    public void setTaskDeadline(Date taskDeadline) {
-        this.taskDeadline = taskDeadline;
-    }
-
-    public Date getTaskEndTime() {
-        return taskEndTime;
-    }
-
-    public void setTaskEndTime(Date taskEndTime) {
-        this.taskEndTime = taskEndTime;
     }
 
     public String getWarningObjectId() {
@@ -198,44 +184,36 @@ public class SeWfTaskInfo extends BasePojo {
         this.warningObjectId = warningObjectId;
     }
 
-    public String getWarningObjectCategory() {
-        return warningObjectCategory;
+    public String getTaskNo() {
+        return taskNo;
     }
 
-    public void setWarningObjectCategory(String warningObjectCategory) {
-        this.warningObjectCategory = warningObjectCategory;
+    public void setTaskNo(String taskNo) {
+        this.taskNo = taskNo;
     }
 
-    public String getWarningObjectNo() {
-        return warningObjectNo;
+    public String getTaskCreateTime() {
+        return taskCreateTime;
     }
 
-    public void setWarningObjectNo(String warningObjectNo) {
-        this.warningObjectNo = warningObjectNo;
+    public void setTaskCreateTime(String taskCreateTime) {
+        this.taskCreateTime = taskCreateTime;
     }
 
-    public String getWarningObjectName() {
-        return warningObjectName;
+    public String getTaskDeadline() {
+        return taskDeadline;
     }
 
-    public void setWarningObjectName(String warningObjectName) {
-        this.warningObjectName = warningObjectName;
+    public void setTaskDeadline(String taskDeadline) {
+        this.taskDeadline = taskDeadline;
     }
 
-    public String getWarningObjectType() {
-        return warningObjectType;
+    public String getTaskEndDate() {
+        return taskEndDate;
     }
 
-    public void setWarningObjectType(String warningObjectType) {
-        this.warningObjectType = warningObjectType;
-    }
-
-    public String getTaskStatus() {
-        return taskStatus;
-    }
-
-    public void setTaskStatus(String taskStatus) {
-        this.taskStatus = taskStatus;
+    public void setTaskEndDate(String taskEndDate) {
+        this.taskEndDate = taskEndDate;
     }
 
     public String getTaskType() {
@@ -246,20 +224,76 @@ public class SeWfTaskInfo extends BasePojo {
         this.taskType = taskType;
     }
 
-    public String getTaskHandler() {
-        return taskHandler;
+    public String getTaskStatus() {
+        return taskStatus;
     }
 
-    public void setTaskHandler(String taskHandler) {
-        this.taskHandler = taskHandler;
+    public void setTaskStatus(String taskStatus) {
+        this.taskStatus = taskStatus;
     }
 
-    public String getTaskHandlePost() {
-        return taskHandlePost;
+    public String getHandlerUserId() {
+        return handlerUserId;
     }
 
-    public void setTaskHandlePost(String taskHandlePost) {
-        this.taskHandlePost = taskHandlePost;
+    public void setHandlerUserId(String handlerUserId) {
+        this.handlerUserId = handlerUserId;
+    }
+
+    public String getHandleRoleId() {
+        return handleRoleId;
+    }
+
+    public void setHandleRoleId(String handleRoleId) {
+        this.handleRoleId = handleRoleId;
+    }
+
+    public String getTaskWorking() {
+        return taskWorking;
+    }
+
+    public void setTaskWorking(String taskWorking) {
+        this.taskWorking = taskWorking;
+    }
+
+    public String getWorkingStatus() {
+        return workingStatus;
+    }
+
+    public void setWorkingStatus(String workingStatus) {
+        this.workingStatus = workingStatus;
+    }
+
+    public String getCurrHandlerId() {
+        return currHandlerId;
+    }
+
+    public void setCurrHandlerId(String currHandlerId) {
+        this.currHandlerId = currHandlerId;
+    }
+
+    public String getCurrRoleId() {
+        return currRoleId;
+    }
+
+    public void setCurrRoleId(String currRoleId) {
+        this.currRoleId = currRoleId;
+    }
+
+    public String getCurrProcSteps() {
+        return currProcSteps;
+    }
+
+    public void setCurrProcSteps(String currProcSteps) {
+        this.currProcSteps = currProcSteps;
+    }
+
+    public String getWarningIdentifyModel() {
+        return warningIdentifyModel;
+    }
+
+    public void setWarningIdentifyModel(String warningIdentifyModel) {
+        this.warningIdentifyModel = warningIdentifyModel;
     }
 
     public String getSysRiskLevel() {
@@ -278,68 +312,100 @@ public class SeWfTaskInfo extends BasePojo {
         this.riskLevel = riskLevel;
     }
 
-    public String getPdRiskLevel() {
-        return pdRiskLevel;
+    public String getRiskIdentify() {
+        return riskIdentify;
     }
 
-    public void setPdRiskLevel(String pdRiskLevel) {
-        this.pdRiskLevel = pdRiskLevel;
+    public void setRiskIdentify(String riskIdentify) {
+        this.riskIdentify = riskIdentify;
     }
 
-    public String getPartnerRiskLevel() {
-        return partnerRiskLevel;
+    public String getInitialIdentifyConclusions() {
+        return initialIdentifyConclusions;
     }
 
-    public void setPartnerRiskLevel(String partnerRiskLevel) {
-        this.partnerRiskLevel = partnerRiskLevel;
+    public void setInitialIdentifyConclusions(String initialIdentifyConclusions) {
+        this.initialIdentifyConclusions = initialIdentifyConclusions;
     }
 
-    public Date getInitialTraceDate() {
+    public String getIdentifyConclusions() {
+        return identifyConclusions;
+    }
+
+    public void setIdentifyConclusions(String identifyConclusions) {
+        this.identifyConclusions = identifyConclusions;
+    }
+
+    public String getIdentifyFile() {
+        return identifyFile;
+    }
+
+    public void setIdentifyFile(String identifyFile) {
+        this.identifyFile = identifyFile;
+    }
+
+    public String getIdentifyDate() {
+        return identifyDate;
+    }
+
+    public void setIdentifyDate(String identifyDate) {
+        this.identifyDate = identifyDate;
+    }
+
+    public String getIsFinish() {
+        return isFinish;
+    }
+
+    public void setIsFinish(String isFinish) {
+        this.isFinish = isFinish;
+    }
+
+    public String getDisposalTraceModel() {
+        return disposalTraceModel;
+    }
+
+    public void setDisposalTraceModel(String disposalTraceModel) {
+        this.disposalTraceModel = disposalTraceModel;
+    }
+
+    public String getInitialTraceDate() {
         return initialTraceDate;
     }
 
-    public void setInitialTraceDate(Date initialTraceDate) {
+    public void setInitialTraceDate(String initialTraceDate) {
         this.initialTraceDate = initialTraceDate;
     }
 
-    public Date getConfirmTraceDate() {
-        return confirmTraceDate;
+    public String getNextTraceDate() {
+        return nextTraceDate;
     }
 
-    public void setConfirmTraceDate(Date confirmTraceDate) {
-        this.confirmTraceDate = confirmTraceDate;
+    public void setNextTraceDate(String nextTraceDate) {
+        this.nextTraceDate = nextTraceDate;
     }
 
-    public String getAttachedFile() {
-        return attachedFile;
+    public String getEndTraceDate() {
+        return endTraceDate;
     }
 
-    public void setAttachedFile(String attachedFile) {
-        this.attachedFile = attachedFile;
+    public void setEndTraceDate(String endTraceDate) {
+        this.endTraceDate = endTraceDate;
     }
 
-    public String getRecentRiskChanges() {
-        return recentRiskChanges;
+    public String getRiskChanges() {
+        return riskChanges;
     }
 
-    public void setRecentRiskChanges(String recentRiskChanges) {
-        this.recentRiskChanges = recentRiskChanges;
+    public void setRiskChanges(String riskChanges) {
+        this.riskChanges = riskChanges;
     }
 
-    public String getInitialConclusions() {
-        return initialConclusions;
+    public String getTraceFile() {
+        return traceFile;
     }
 
-    public void setInitialConclusions(String initialConclusions) {
-        this.initialConclusions = initialConclusions;
-    }
-
-    public String getCurrentConclusions() {
-        return currentConclusions;
-    }
-
-    public void setCurrentConclusions(String currentConclusions) {
-        this.currentConclusions = currentConclusions;
+    public void setTraceFile(String traceFile) {
+        this.traceFile = traceFile;
     }
 
     public String getDisposalTraceFeedback() {
@@ -366,6 +432,14 @@ public class SeWfTaskInfo extends BasePojo {
         this.currentControlMeasures = currentControlMeasures;
     }
 
+    public String getOtherControlMeasures() {
+        return otherControlMeasures;
+    }
+
+    public void setOtherControlMeasures(String otherControlMeasures) {
+        this.otherControlMeasures = otherControlMeasures;
+    }
+
     public String getOneFamilyOnePolicy() {
         return oneFamilyOnePolicy;
     }
@@ -374,12 +448,12 @@ public class SeWfTaskInfo extends BasePojo {
         this.oneFamilyOnePolicy = oneFamilyOnePolicy;
     }
 
-    public String getIsFinish() {
-        return isFinish;
+    public String getControlFile() {
+        return controlFile;
     }
 
-    public void setIsFinish(String isFinish) {
-        this.isFinish = isFinish;
+    public void setControlFile(String controlFile) {
+        this.controlFile = controlFile;
     }
 
     public String getIsNewDisposalTrace() {
@@ -406,20 +480,20 @@ public class SeWfTaskInfo extends BasePojo {
         this.parentTaskId = parentTaskId;
     }
 
-    public String getWarningConfirmModel() {
-        return warningConfirmModel;
+    public String getApprovalRulesCond() {
+        return approvalRulesCond;
     }
 
-    public void setWarningConfirmModel(String warningConfirmModel) {
-        this.warningConfirmModel = warningConfirmModel;
+    public void setApprovalRulesCond(String approvalRulesCond) {
+        this.approvalRulesCond = approvalRulesCond;
     }
 
-    public String getDisposalTraceModel() {
-        return disposalTraceModel;
+    public String getWarningTaskKind() {
+        return warningTaskKind;
     }
 
-    public void setDisposalTraceModel(String disposalTraceModel) {
-        this.disposalTraceModel = disposalTraceModel;
+    public void setWarningTaskKind(String warningTaskKind) {
+        this.warningTaskKind = warningTaskKind;
     }
 
     public SeWfWarningObject getSeWfWarningObject() {
@@ -444,14 +518,6 @@ public class SeWfTaskInfo extends BasePojo {
 
     public void setSeWfTaskExecuteFeedback(SeWfTaskExecuteFeedback seWfTaskExecuteFeedback) {
         this.seWfTaskExecuteFeedback = seWfTaskExecuteFeedback;
-    }
-
-    public String getSignalSource() {
-        return signalSource;
-    }
-
-    public void setSignalSource(String signalSource) {
-        this.signalSource = signalSource;
     }
 
     public List<SeWfTaskExecuteFeedback> getSeWfTaskExecuteFeedbacks() {
