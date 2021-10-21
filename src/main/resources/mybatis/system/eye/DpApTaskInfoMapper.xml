@@ -378,5 +378,12 @@
         update SE_WF_TASK_INFO set task_status = '02' where task_no = #{taskNo}
     </update>
 
+    <update id="claimTaskByID" >
+        update SE_WF_TASK_INFO set HANDLER_USER_ID = #{userId},HANDLE_ROLE_ID = #{roleId} where task_no = #{taskNo}
+    </update>
+    <update id="cancelClaimTaskByID" >
+        update SE_WF_TASK_INFO set HANDLER_USER_ID = '',HANDLE_ROLE_ID = '' where task_no = #{taskNo}
+    </update>
+
 
 </mapper>

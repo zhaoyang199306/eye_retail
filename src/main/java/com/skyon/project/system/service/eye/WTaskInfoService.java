@@ -15,6 +15,19 @@ public interface WTaskInfoService {
 
     public List<TaskInfoListPojo> getWTaskInfoByList1(Set set);
 
+    /**
+     * @param taskNo
+     * @param userId
+     * @param roleId
+     * @return
+     */
+    public int claimTaskByID(String taskNo,String userId,String roleId);
+
+    /**
+     * @param taskNo
+     * @return
+     */
+    public int cancelClaimTaskByID(String taskNo);
 
     /**
      * 根据业务人员编号 查询代办事项
