@@ -87,7 +87,8 @@ public class PeersTaskInfoController extends BaseController {
         List<String> groups= new ArrayList<String>();
         for(SysRole r:roles)
         	groups.add(r.getRoleName());//注意：工作流设计时候候选组要填角色名称
-        Map mapTask = taskWFService.taskWfByUserGroup(String.valueOf(user.getUserId()),groups);
+//        Map mapTask = taskWFService.taskWfByUserGroup(String.valueOf(user.getUserId()),groups);
+        Map<String, Long> mapTask = taskWFService.taskWfUser(user);
         if(mapTask.keySet().size()>0) {
         	List<String > batchNoList = new ArrayList<String>();
         	for(Object k:mapTask.keySet())

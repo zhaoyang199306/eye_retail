@@ -87,7 +87,7 @@ public class TaskInfoController extends BaseController {
             }
 
             // 其余角色包括客户经理 根据用户id查询代办任务
-            Map mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
+            Map<String, Long> mapTask = taskWFService.taskWfUser(user);
             Set setOwner = mapTask.keySet();
 
             // 查询待办箱
