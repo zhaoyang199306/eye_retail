@@ -201,8 +201,8 @@
 
     <select id="getWTaskInfoByList1" parameterType="com.skyon.project.system.domain.vo.WarningTaskListVo" resultType="TaskInfoListPojo">
         select  i.task_no as taskNo,o.warning_object_name as warningObjectName,o.warning_object_cid as warningObjectNo,o.warning_object_type as warningObjectType
-        i.task_status as taskStatus,i.task_type as taskType,
-        i.sys_risk_level as riskLevel,i.handle_role_id as handleRoleId, r.role_name as handleRoleName
+        ,i.task_status as taskStatus,i.task_type as taskType,
+        i.sys_risk_level as riskLevel,i.handle_role_id as handleRoleId, r.role_name as handleRoleName,
         COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
         COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
         COUNT(CASE WHEN warning_level = '03' THEN 1 ELSE NULL END) AS threeLevelCount,
@@ -241,14 +241,14 @@
         </resultMap>
     <select id="getWTaskInfoListByRole" parameterType="com.skyon.project.system.domain.vo.WarningTaskListVo" resultType="TaskInfoListPojo">
         select  i.task_no as taskNo,o.warning_object_name as warningObjectName,o.warning_object_cid as warningObjectNo,o.warning_object_type as warningObjectType
-        i.task_status as taskStatus,i.task_type as taskType,
-        i.sys_risk_level as riskLevel,i.handle_role_id as handleRoleId, r.role_name as handleRoleName
+        ,i.task_status as taskStatus,i.task_type as taskType,
+        i.sys_risk_level as riskLevel,i.handle_role_id as handleRoleId, r.role_name as handleRoleName,
         COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
         COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
         COUNT(CASE WHEN warning_level = '03' THEN 1 ELSE NULL END) AS threeLevelCount,
         o.admin_subbranch_no as adminSubbranchNo, o.admin_branch_no as adminBranchNo, i.task_create_time as taskCreateTime,i.task_deadline as taskDeadline,
         o.warning_object_category as warningObjectCategory
-        from se_wf_task_info i
+         from se_wf_task_info i
         left join se_wf_warning_object o on i.warning_object_id = o.warning_object_id
         left join se_wf_warning_signs s on i.task_id = s.task_id
         left join sys_dept d on o.admin_subbranch_no=d.dept_id
