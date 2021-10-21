@@ -1,37 +1,74 @@
 package com.skyon.project.system.domain.eye;
 
+import com.skyon.framework.web.domain.BaseEntity;
 import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
-
+@ApiModel(value = "预警页面返回参数",description ="预警页面返回参数")
 public class TaskInfoListPojo {
 
-    public TaskInfoListPojo() {
+    @ApiModelProperty(value = "任务编号", name = "taskNo", required = true)
+    private String taskNo;
+    @ApiModelProperty(value = "预警对象，名", name = "warningObjectName", required = true)
+    private String warningObjectName;
+    @ApiModelProperty(value = "预警对象编号", name = "warningObjectNo", required = true)
+    private String warningObjectNo;
+    @ApiModelProperty(value = "风险等级", name = "riskLevel", required = true)
+    private String riskLevel; //
+    @ApiModelProperty(value = "任务状态", name = "taskStatus", required = true)
+    private String taskStatus;
+    @ApiModelProperty(value = "任务类型", name = "taskType", required = true)
+    private String taskType; //
+    @ApiModelProperty(value = "系统认定风险等级", name = "sysRiskLevel", required = true)
+    private String sysRiskLevel;
+    @ApiModelProperty(value = "经办角色", name = "handleRoleId", required = true)
+    private String handleRoleId;
+    @ApiModelProperty(value = "经办角色", name = "handleRoleName", required = true)
+    private String handleRoleName;
+    @ApiModelProperty(value = "一级风险等级", name = "oneLevelCount", required = true)
+    private String oneLevelCount;
+    @ApiModelProperty(value = "二级风险等级", name = "twoLevelCount", required = true)
+    private String twoLevelCount;
+    @ApiModelProperty(value = "三级风险等级", name = "threeLevelCount", required = true)
+    private String threeLevelCount;
+    @ApiModelProperty(value = "所属支行", name = "adminSubbranchNo", required = true)
+    private String adminSubbranchNo;
+    @ApiModelProperty(value = "所属分行", name = "adminBranchNo", required = true)
+    private String adminBranchNo; //
+    @ApiModelProperty(value = "任务生成时间", name = "taskCreateTime", required = true)
+    private String taskCreateTime; //
+    @ApiModelProperty(value = "要求任务完成截止日", name = "taskDeadline", required = true)
+    private String taskDeadline; //
+    @ApiModelProperty(value = "预警对象类型", name = "warningObjectCategory", required = true)
+    private String warningObjectCategory;
+    @ApiModelProperty(value = "监测主体类型", name = "warningObjectType", required = true)
+    private String warningObjectType;
+
+
+    public String getWarningObjectType() {
+        return warningObjectType;
     }
 
-        private String taskExecuteId; //
-        private String warningObjectName;
-        private String warningObjectNo;
-        private String riskLevel; //
-        private String taskStatus;
-        private String taskType; //
-        private String sysRiskLevel;
-        private String handleRoleId;
-        private String oneLevelCount;
-        private String twoLevelCount;
-        private String threeLevelCount;
-        private String adminSubbranchNo;
-        private String adminBranchNo; //
-        private String taskCreateTime; //
-        private String taskDeadline; //
-        private String warningObjectCategory;
-
-    public String getTaskExecuteId() {
-        return taskExecuteId;
+    public void setWarningObjectType(String warningObjectType) {
+        this.warningObjectType = warningObjectType;
     }
 
-    public void setTaskExecuteId(String taskExecuteId) {
-        this.taskExecuteId = taskExecuteId;
+    public String getTaskNo() {
+        return taskNo;
+    }
+
+    public void setTaskNo(String taskNo) {
+        this.taskNo = taskNo;
+    }
+
+    public String getHandleRoleName() {
+        return handleRoleName;
+    }
+
+    public void setHandleRoleName(String handleRoleName) {
+        this.handleRoleName = handleRoleName;
     }
 
     public String getWarningObjectName() {
