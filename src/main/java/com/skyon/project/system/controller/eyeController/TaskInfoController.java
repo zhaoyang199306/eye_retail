@@ -63,6 +63,37 @@ public class TaskInfoController extends BaseController {
 
 
     /**
+     * 根据任务编号认领任务
+     *
+     * @param taskNo 任务编号
+     * @param taskNo 任务编号
+     * @param taskNo 任务编号
+     * @return
+     */
+    @GetMapping("/claimTaskByID/{taskNo}")
+    public AjaxResult claimTaskByID(@PathVariable("taskNo") String taskNo) {
+        SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
+        String userId = user.getUserId().toString();
+        String roleId = user.getRoleIds()[0].toString();
+        taskInfoService.claimTaskByID(taskNo,userId,roleId);
+        return AjaxResult.success("认领成功");
+    }
+
+    /**
+     * 根据任务编号认领任务
+     *
+     * @param taskNo 任务编号
+     * @param taskNo 任务编号
+     * @param taskNo 任务编号
+     * @return
+     */
+    @GetMapping("/cancelClaimTaskByID/{taskNo}")
+    public AjaxResult cancelClaimTaskByID(@PathVariable("taskNo") String taskNo) {
+        SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
+        taskInfoService.cancelClaimTaskByID(taskNo);
+        return AjaxResult.success("取消认领成功");
+    }
+    /**
      * 根据角色查询  预警业务列表
      * 如果角色是客户经理，则根据客户经理名称查询
      *

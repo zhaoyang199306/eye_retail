@@ -7,27 +7,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	
 	<select id="queryTaskInfoCount" resultType="Integer">
-        select count(1) from dc_ap_task_info
+        select count(1) from se_wf_task_info
     </select>
 
 	<select id="queryDisposalTrackCount" resultType="Integer">
-        select count(1) from dc_ap_disposal_track
+        select count(1) from se_Wf_disposal_track
     </select>
 
 	<select id="queryRemoveRiskCount" resultType="Integer">
-        select count(1) from dc_ap_remOVE_RISK
+        select count(1) from se_Wf_remOVE_RISK
     </select>
 
 	<select id="querySignalManualCount" resultType="Integer">
-        select count(1) from DC_AP_SIGNAL_MANUAL
+        select count(1) from se_wf_warning_signs where SIGNAL_CREATE_MODEL ="02"
     </select>
 
 	<select id="queryBlackManageFlowCount" resultType="Integer">
-        select count(1) from dc_ap_black_manage_flow
+        select count(1) from se_wf_black_manage_flow
     </select>
 
 	<select id="queryReassignTaskCount" resultType="Integer">
-        select count(1) from dc_ap_reassign_task
+        select count(1) from se_wf_reassign_task
     </select>
 	
 </mapper> 

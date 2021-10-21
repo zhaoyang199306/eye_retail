@@ -17,6 +17,7 @@ public interface DpApTaskInfoMapper {
     // 根据待办箱的任务编号查询任务详情
     public List<TaskInfoListPojo> getWTaskInfoByList1(Set taskNo);
 
+    public int cancelClaimTaskByID(@Param("taskNo") String taskNo);
     /**
      * 根据业务人员编号 查询代办事项
      * @param warningTaskListVo
@@ -41,6 +42,7 @@ public interface DpApTaskInfoMapper {
     // 初始化run_status状态
     public int celarRunStatusByNo(String taskInfoNo);
 
+    public int claimTaskByID(@Param("taskNo") String taskNo, @Param("userId") String userId,@Param("roleId") String roleId);
 
     public int insertWTaskInfo(DpApTaskInfo dpApTaskInfo);
 

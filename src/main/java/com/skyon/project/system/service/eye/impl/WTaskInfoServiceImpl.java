@@ -31,6 +31,15 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
         return taskInfoMapper.getWTaskInfoByList1(taskNo);
     }
 
+    @Override
+    public int claimTaskByID(String taskNo, String userId, String roleId) {
+            return taskInfoMapper.claimTaskByID(taskNo,userId,roleId);
+    }
+
+    @Override
+    public int cancelClaimTaskByID(String taskNo) {
+        return taskInfoMapper.cancelClaimTaskByID(taskNo);
+    }
 
 
     /**
