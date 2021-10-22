@@ -1,70 +1,110 @@
 package com.skyon.project.system.domain.eye;
 
 import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
+@ApiModel(value = "预警详情提交参数",description ="预警详情提交相关参数")
 public class TaskInfoSubmitPojo {
 
-    public TaskInfoSubmitPojo() {
-    }
 
-    private String taskInfoNo;
-    private String riskControlMeasures; // 风险管控措施
-    private String radio;
-    private String examinValue;
-    private String personalRiskLevel;
-    private String checkResult;
-    private String devolutionDate;
-
+    @ApiModelProperty(name = "taskNo" , value = "任务ID(物理主键ID)", required = true)
+    private String taskNo;
+    @ApiModelProperty(name = "initialControlMeasures" , value = "初始风险管控措施", required = false)
+    private String initialControlMeasures; //
+    @ApiModelProperty(name = "currentControlMeasures" , value = "当前风险管控措施", required = true)
+    private String currentControlMeasures; //
+    @ApiModelProperty(name = "sysRiskLevel" , value = "系统认定客户风险等级", required = false)
+    private String sysRiskLevel;
+    @ApiModelProperty(name = "riskLevel" , value = "客户风险等级", required = false)
+    private String riskLevel;
+    @ApiModelProperty(name = "taskDeadline" , value = "要求任务完成截止日", required = false)
+    private String taskDeadline;
+    @ApiModelProperty(name = "initialIdentifyConclusions" , value = "初始检查结论", required = false)
+    private String initialIdentifyConclusions;
+    @ApiModelProperty(name = "identifyConclusions" , value = "最终认定检查结论(理由)", required = true)
+    private String identifyConclusions;
+    @ApiModelProperty(name = "identifyFile" , value = "附件", required = false)
+    private String identifyFile;
+    @ApiModelProperty(name = "warnSignalList" , value = "预警信号列表", required = false)
     private List<SeWfWarningSigns> warnSignalList;
 
-    public String getTaskInfoNo() {
-        return taskInfoNo;
+
+
+
+
+    public String getInitialControlMeasures() {
+        return initialControlMeasures;
     }
 
-    public void setTaskInfoNo(String taskInfoNo) {
-        this.taskInfoNo = taskInfoNo;
+    public void setInitialControlMeasures(String initialControlMeasures) {
+        this.initialControlMeasures = initialControlMeasures;
     }
 
-    public Object getRiskControlMeasures() {
-        return riskControlMeasures;
+    public String getTaskNo() {
+        return taskNo;
     }
 
-    public void setRiskControlMeasures(String riskControlMeasures) {
-        this.riskControlMeasures = riskControlMeasures;
+    public void setTaskNo(String taskNo) {
+        this.taskNo = taskNo;
     }
 
-    public String getRadio() {
-        return radio;
+    public String getCurrentControlMeasures() {
+        return currentControlMeasures;
     }
 
-    public void setRadio(String radio) {
-        this.radio = radio;
+    public void setCurrentControlMeasures(String currentControlMeasures) {
+        this.currentControlMeasures = currentControlMeasures;
     }
 
-    public String getExaminValue() {
-        return examinValue;
+    public String getSysRiskLevel() {
+        return sysRiskLevel;
     }
 
-    public void setExaminValue(String examinValue) {
-        this.examinValue = examinValue;
+    public void setSysRiskLevel(String sysRiskLevel) {
+        this.sysRiskLevel = sysRiskLevel;
     }
 
-    public String getPersonalRiskLevel() {
-        return personalRiskLevel;
+    public String getRiskLevel() {
+        return riskLevel;
     }
 
-    public void setPersonalRiskLevel(String personalRiskLevel) {
-        this.personalRiskLevel = personalRiskLevel;
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel = riskLevel;
     }
 
-    public String getCheckResult() {
-        return checkResult;
+    public String getTaskDeadline() {
+        return taskDeadline;
     }
 
-    public void setCheckResult(String checkResult) {
-        this.checkResult = checkResult;
+    public void setTaskDeadline(String taskDeadline) {
+        this.taskDeadline = taskDeadline;
+    }
+
+    public String getInitialIdentifyConclusions() {
+        return initialIdentifyConclusions;
+    }
+
+    public void setInitialIdentifyConclusions(String initialIdentifyConclusions) {
+        this.initialIdentifyConclusions = initialIdentifyConclusions;
+    }
+
+    public String getIdentifyConclusions() {
+        return identifyConclusions;
+    }
+
+    public void setIdentifyConclusions(String identifyConclusions) {
+        this.identifyConclusions = identifyConclusions;
+    }
+
+    public String getIdentifyFile() {
+        return identifyFile;
+    }
+
+    public void setIdentifyFile(String identifyFile) {
+        this.identifyFile = identifyFile;
     }
 
     public List<SeWfWarningSigns> getWarnSignalList() {
@@ -73,13 +113,5 @@ public class TaskInfoSubmitPojo {
 
     public void setWarnSignalList(List<SeWfWarningSigns> warnSignalList) {
         this.warnSignalList = warnSignalList;
-    }
-
-    public String getDevolutionDate() {
-        return devolutionDate;
-    }
-
-    public void setDevolutionDate(String devolutionDate) {
-        this.devolutionDate = devolutionDate;
     }
 }

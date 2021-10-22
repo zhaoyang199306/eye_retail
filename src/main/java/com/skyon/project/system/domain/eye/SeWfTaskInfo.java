@@ -13,90 +13,90 @@ import java.util.List;
  * 任务信息表
  * SE_WF_TASK_INFO
  */
-@ApiModel(value = "预警详情提交参数",description ="预警详情提交相关参数")
+@ApiModel(value = "预警详情",description ="预警详情")
 public class SeWfTaskInfo extends BasePojo {
 
-    @ApiModelProperty(name = "taskId"          , value = "任务ID(物理主键ID)", required = false)
+    @ApiModelProperty(name = "taskId" , value = "任务ID(物理主键ID)", required = false)
     private String taskId;  
-    @ApiModelProperty(name = "warningObjectId"          , value = "法人机构标识", required = false)
+    @ApiModelProperty(name = "warningObjectId" , value = "法人机构标识", required = false)
     private String warningObjectId;  
-    @ApiModelProperty(name = "taskNo"          , value = "预警对象ID", required = false)
+    @ApiModelProperty(name = "taskNo" , value = "预警对象ID", required = false)
     private String taskNo;  
-    @ApiModelProperty(name = "taskCreateTime"          , value = "任务编号", required = false)
+    @ApiModelProperty(name = "taskCreateTime" , value = "任务编号", required = false)
     private String taskCreateTime;  
-    @ApiModelProperty(name = "taskDeadline"          , value = "任务生成时间", required = false)
+    @ApiModelProperty(name = "taskDeadline" , value = "任务生成时间", required = false)
     private String taskDeadline;  
-    @ApiModelProperty(name = "taskEndDate"          , value = "要求任务完成截止日", required = false)
+    @ApiModelProperty(name = "taskEndDate" , value = "要求任务完成截止日", required = false)
     private String taskEndDate;  
-    @ApiModelProperty(name = "taskType"          , value = "任务实际完成日期", required = false)
+    @ApiModelProperty(name = "taskType" , value = "任务实际完成日期", required = false)
     private String taskType;  
-    @ApiModelProperty(name = "taskStatus"          , value = "任务类型", required = false)
+    @ApiModelProperty(name = "taskStatus" , value = "任务类型", required = false)
     private String taskStatus;  
-    @ApiModelProperty(name = "handlerUserId"          , value = "任务状态", required = false)
+    @ApiModelProperty(name = "handlerUserId" , value = "任务状态", required = false)
     private String handlerUserId;  
-    @ApiModelProperty(name = "handleRoleId"          , value = "经办人ID", required = false)
+    @ApiModelProperty(name = "handleRoleId" , value = "经办人ID", required = false)
     private String handleRoleId;  
-    @ApiModelProperty(name = "taskWorking"          , value = "当前任务工作", required = false)
+    @ApiModelProperty(name = "taskWorking" , value = "当前任务工作", required = false)
     private String taskWorking;  
-    @ApiModelProperty(name = "workingStatus"          , value = "当前工作状态", required = false)
+    @ApiModelProperty(name = "workingStatus" , value = "当前工作状态", required = false)
     private String workingStatus;  
-    @ApiModelProperty(name = "currHandlerId"          , value = "当前处理人ID", required = false)
+    @ApiModelProperty(name = "currHandlerId" , value = "当前处理人ID", required = false)
     private String currHandlerId;  
-    @ApiModelProperty(name = "currRoleId"          , value = "当前处理角色ID", required = false)
+    @ApiModelProperty(name = "currRoleId" , value = "当前处理角色ID", required = false)
     private String currRoleId;  
-    @ApiModelProperty(name = "currProcSteps"          , value = "当前处理步骤", required = false)
+    @ApiModelProperty(name = "currProcSteps" , value = "当前处理步骤", required = false)
     private String currProcSteps;  
-    @ApiModelProperty(name = "warningIdentifyModel"          , value = "预警认定模式", required = false)
+    @ApiModelProperty(name = "warningIdentifyModel" , value = "预警认定模式", required = false)
     private String warningIdentifyModel;  
-    @ApiModelProperty(name = "sysRiskLevel"          , value = "系统认定客户风险等级", required = false)
+    @ApiModelProperty(name = "sysRiskLevel" , value = "系统认定客户风险等级", required = false)
     private String sysRiskLevel;  
-    @ApiModelProperty(name = "riskLevel"          , value = "客户风险等级", required = false)
+    @ApiModelProperty(name = "riskLevel" , value = "客户风险等级", required = false)
     private String riskLevel;  
-    @ApiModelProperty(name = "riskIdentify"          , value = "主体风险认定情况", required = false)
+    @ApiModelProperty(name = "riskIdentify" , value = "主体风险认定情况", required = false)
     private String riskIdentify;  
-    @ApiModelProperty(name = "initialIdentifyConclusions"          , value = "初始检查结论", required = false)
+    @ApiModelProperty(name = "initialIdentifyConclusions" , value = "初始检查结论", required = false)
     private String initialIdentifyConclusions;  
-    @ApiModelProperty(name = "identifyConclusions"          , value = "最终认定检查结论", required = false)
+    @ApiModelProperty(name = "identifyConclusions" , value = "最终认定检查结论", required = false)
     private String identifyConclusions;  
-    @ApiModelProperty(name = "identifyFile"          , value = "最终认定附件", required = false)
+    @ApiModelProperty(name = "identifyFile" , value = "最终认定附件", required = false)
     private String identifyFile;  
-    @ApiModelProperty(name = "identifyDate"          , value = "认定生效日期", required = false)
+    @ApiModelProperty(name = "identifyDate" , value = "认定生效日期", required = false)
     private String identifyDate;  
-    @ApiModelProperty(name = "isFinish"          , value = "是否处置完成", required = false)
+    @ApiModelProperty(name = "isFinish" , value = "是否处置完成", required = false)
     private String isFinish;  
-    @ApiModelProperty(name = "disposalTraceModel"          , value = "处置跟踪模式", required = false)
+    @ApiModelProperty(name = "disposalTraceModel" , value = "处置跟踪模式", required = false)
     private String disposalTraceModel;  
-    @ApiModelProperty(name = "initialTraceDate"          , value = "初始处置跟踪完成日期", required = false)
+    @ApiModelProperty(name = "initialTraceDate" , value = "初始处置跟踪完成日期", required = false)
     private String initialTraceDate;  
-    @ApiModelProperty(name = "nextTraceDate"          , value = "下次处置跟踪完成日期", required = false)
+    @ApiModelProperty(name = "nextTraceDate" , value = "下次处置跟踪完成日期", required = false)
     private String nextTraceDate;  
-    @ApiModelProperty(name = "endTraceDate"          , value = "最终处置跟踪完成日期", required = false)
+    @ApiModelProperty(name = "endTraceDate" , value = "最终处置跟踪完成日期", required = false)
     private String endTraceDate;  
-    @ApiModelProperty(name = "riskChanges"          , value = "最近风险变化情况", required = false)
+    @ApiModelProperty(name = "riskChanges" , value = "最近风险变化情况", required = false)
     private String riskChanges;  
-    @ApiModelProperty(name = "traceFile"          , value = "当前跟踪反馈附件", required = false)
+    @ApiModelProperty(name = "traceFile" , value = "当前跟踪反馈附件", required = false)
     private String traceFile;  
-    @ApiModelProperty(name = "disposalTraceFeedback"          , value = "当前处置跟踪反馈意见", required = false)
+    @ApiModelProperty(name = "disposalTraceFeedback" , value = "当前处置跟踪反馈意见", required = false)
     private String disposalTraceFeedback;  
-    @ApiModelProperty(name = "initialControlMeasures"          , value = "初始风险管控措施", required = false)
+    @ApiModelProperty(name = "initialControlMeasures" , value = "初始风险管控措施", required = false)
     private String initialControlMeasures;  
-    @ApiModelProperty(name = "currentControlMeasures"          , value = "当前风险管控措施", required = false)
+    @ApiModelProperty(name = "currentControlMeasures" , value = "当前风险管控措施", required = false)
     private String currentControlMeasures;  
-    @ApiModelProperty(name = "otherControlMeasures"          , value = "其他风险管控措施描述", required = false)
+    @ApiModelProperty(name = "otherControlMeasures" , value = "其他风险管控措施描述", required = false)
     private String otherControlMeasures;  
-    @ApiModelProperty(name = "oneFamilyOnePolicy"          , value = "一户一策计划", required = false)
+    @ApiModelProperty(name = "oneFamilyOnePolicy" , value = "一户一策计划", required = false)
     private String oneFamilyOnePolicy;  
-    @ApiModelProperty(name = "controlFile"          , value = "当前风险管控措施附件", required = false)
+    @ApiModelProperty(name = "controlFile" , value = "当前风险管控措施附件", required = false)
     private String controlFile;  
-    @ApiModelProperty(name = "isNewDisposalTrace"          , value = "是否产生新跟踪任务", required = false)
+    @ApiModelProperty(name = "isNewDisposalTrace" , value = "是否产生新跟踪任务", required = false)
     private String isNewDisposalTrace;  
-    @ApiModelProperty(name = "newTaskId"          , value = "新任务ID", required = false)
+    @ApiModelProperty(name = "newTaskId" , value = "新任务ID", required = false)
     private String newTaskId;  
-    @ApiModelProperty(name = "parentTaskId"          , value = "父任务ID", required = false)
+    @ApiModelProperty(name = "parentTaskId" , value = "父任务ID", required = false)
     private String parentTaskId;  
-    @ApiModelProperty(name = "approvalRulesCond"          , value = "审批规则条件", required = false)
+    @ApiModelProperty(name = "approvalRulesCond" , value = "审批规则条件", required = false)
     private String approvalRulesCond;  
-    @ApiModelProperty(name = "warningTaskKind"          , value = "预警任务种类 01 预警任务（自动认定） 02 预警任务（非自动认定） 03 预警任务（人工信号认定） 04 签收任务", required = false)
+    @ApiModelProperty(name = "warningTaskKind" , value = "预警任务种类 01 预警任务（自动认定） 02 预警任务（非自动认定） 03 预警任务（人工信号认定） 04 签收任务", required = false)
     private String warningTaskKind;  // 预警任务种类 01 预警任务（自动认定） 02 预警任务（非自动认定） 03 预警任务（人工信号认定） 04 签收任务
 
 

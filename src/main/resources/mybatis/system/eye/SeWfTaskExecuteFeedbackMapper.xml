@@ -5,26 +5,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.skyon.project.system.mapper.eye.wf.SeWfTaskExecuteFeedbackMapper">
 
 	<resultMap id="SeWfTaskExecuteFeedbackResult" type="com.skyon.project.system.domain.eye.wf.SeWfTaskExecuteFeedback">
-		<id property="taskExecuteId" column="TASK_EXECUTE_ID"/>
-		<result property="taskId" column="TASK_ID"/>
-		<result property="taskType" column="TASK_TYPE"/>
-		<result property="riskLevel" column="RISK_LEVEL"/>
-		<result property="pdRiskLevel" column="PD_RISK_LEVEL"/>
-		<result property="partnerRiskLevel" column="PARTNER_RISK_LEVEL"/>
-		<result property="attachedFile" column="ATTACHED_FILE"/>
-		<result property="currentRiskChanges" column="CURRENT_RISK_CHANGES"/>
-		<result property="currentConclusions" column="CURRENT_CONCLUSIONS"/>
-		<result property="currentFeedback" column="CURRENT_FEEDBACK"/>
-		<result property="currentControlMeasures" column="CURRENT_CONTROL_MEASURES"/>
-		<result property="otherControlMeasures" column="OTHER_CONTROL_MEASURES"/>
-		<result property="oneFamilyOnePolicy" column="ONE_FAMILY_ONE_POLICY"/>
-		<result property="isFinish" column="IS_FINISH"/>
-		<result property="taskHandler" column="TASK_HANDLER"/>
-		<result property="taskHandlePost" column="TASK_HANDLE_POST"/>
-		<result property="processName" column="PROCESS_NAME"/>
-		<result property="lastProcessName" column="LAST_PROCESS_NAME"/>
-		<result property="createTime" column="CREATE_TIME"/>
-		<result property="checkConclusion" column="CHECK_CONCLUSION"/>
+		<id property="innerId" column="inner_id"/>
+		<result property="lpOrgNo" column="lp_org_no"/>
+		<result property="warningObjectId" column="warning_object_id"/>
+		<result property="taskNo" column="task_no"/>
+		<result property="workingStatus" column="working_status"/>
+		<result property=" currHandlerId" column=" curr_handler_id"/>
+		<result property=" currRoleId" column=" curr_role_id"/>
+		<result property=" currProcSteps" column=" curr_proc_steps"/>
+		<result property="sysRiskLevel" column="sys_risk_level"/>
+		<result property="riskLevel" column="risk_level"/>
+		<result property="riskIdentify" column="risk_identify"/>
+		<result property="identifyConclusions" column="identify_conclusions"/>
+		<result property="identifyFile" column="identify_file"/>
+		<result property="isFinish" column="is_finish"/>
+		<result property="traceDate" column="trace_date"/>
+		<result property="nextTraceDate" column="next_trace_date"/>
+		<result property="riskChanges" column="risk_changes"/>
+		<result property="traceFile" column="trace_file"/>
+		<result property="disposalTraceFeedback" column="disposal_trace_feedback"/>
+		<result property=" currentControlMeasures" column=" current_control_measures"/>
+		<result property="otherControlMeasures" column="other_control_measures"/>
+		<result property="oneFamilyOnePolicy" column="one_family_one_policy"/>
+		<result property=" controlFile" column=" control_file"/>
+		<result property="isNewDisposalTrace" column="is_new_disposal_trace"/>
+		<result property="rmark" column="rmark"/>
+		<result property=" createId" column=" create_id"/>
+		<result property=" createName" column=" create_name"/>
+		<result property=" createTime" column=" create_time"/>
+		<result property="updateId" column="update_id"/>
+		<result property="updateName" column="update_name"/>
+		<result property="updateTime" column="update_time"/>
+		<result property="delFlag" column="del_flag"/>
 	</resultMap>
 
 	<insert id="insertTaskExecuteFeedback" parameterType="SeWfTaskExecuteFeedback">
@@ -32,48 +44,68 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select EXECUTE_FEEDBACK_SEQUENCE.nextval as taskExecuteId from dual
 		</selectKey>
 		insert into SE_WF_TASK_EXECUTE_FEEDBACK(
-		<if test="taskExecuteId != null and taskExecuteId != 0">task_execute_id,</if>
-		<if test="taskId != null and taskId != ''">task_id,</if>
-		<if test="taskType != null and taskType != ''">task_type,</if>
-		<if test="riskLevel != null and riskLevel != ''">risk_level,</if>
-		<if test="partnerRiskLevel != null and partnerRiskLevel != ''">partner_risk_level,</if>
-		<if test="attachedFile != null and attachedFile != ''">attached_file,</if>
-		<if test="currentRiskChanges != null and currentRiskChanges != ''">current_risk_changes,</if>
-		<if test="currentConclusions != null and currentConclusions != ''">current_conclusions,</if>
-		<if test="currentFeedback != null and currentFeedback != ''">current_feedback,</if>
-		<if test="currentControlMeasures != null and currentControlMeasures != ''">current_control_measures,</if>
-		<if test="otherControlMeasures != null and otherControlMeasures != ''">other_control_measures,</if>
-		<if test="oneFamilyOnePolicy != null and oneFamilyOnePolicy != ''">one_family_one_policy,</if>
-		<if test="isFinish != null and isFinish != ''">is_finish,</if>
-		<if test="remark != null and remark != ''">remark,</if>
-		<if test="lpOrgNo != null and lpOrgNo != ''">lp_org_no,</if>
-		<if test="taskHandler != null and taskHandler != ''">task_handler,</if>
-		<if test="taskHandlePost != null and taskHandlePost != ''">task_handle_post,</if>
-		<if test="processName != null and processName != ''">process_name,</if>
-		<if test="lastProcessName != null and lastProcessName != ''">last_process_name,</if>
-		<if test="checkConclusion != null and checkConclusion != ''">check_conclusion,</if>
+		<if test="innerId!= null and innerId!=0">inner_id,</if>
+		<if test="lpOrgNo!= null and lpOrgNo!=0">lp_org_no,</if>
+		<if test="warningObjectId!= null and warningObjectId!=0">warning_object_id,</if>
+		<if test="taskNo!= null and taskNo!=0">task_no,</if>
+		<if test="workingStatus!= null and workingStatus!=0">working_status,</if>
+		<if test="currHandlerId!= null and currHandlerId!=0">curr_handler_id,</if>
+		<if test="currRoleId!= null and currRoleId!=0">curr_role_id,</if>
+		<if test="currProcSteps!= null and currProcSteps!=0">curr_proc_steps,</if>
+		<if test="sysRiskLevel!= null and sysRiskLevel!=0">sys_risk_level,</if>
+		<if test="riskLevel!= null and riskLevel!=0">risk_level,</if>
+		<if test="riskIdentify!= null and riskIdentify!=0">risk_identify,</if>
+		<if test="identifyConclusions!= null and identifyConclusions!=0">identify_conclusions,</if>
+		<if test="identifyFile!= null and identifyFile!=0">identify_file,</if>
+		<if test="isFinish!= null and isFinish!=0">is_finish,</if>
+		<if test="traceDate!= null and traceDate!=0">trace_date,</if>
+		<if test="nextTraceDate!= null and nextTraceDate!=0">next_trace_date,</if>
+		<if test="riskChanges!= null and riskChanges!=0">risk_changes,</if>
+		<if test="traceFile!= null and traceFile!=0">trace_file,</if>
+		<if test="disposalTraceFeedback!= null and disposalTraceFeedback!=0">disposal_trace_feedback,</if>
+		<if test="currentControlMeasures!= null and currentControlMeasures!=0">current_control_measures,</if>
+		<if test="otherControlMeasures!= null and otherControlMeasures!=0">other_control_measures,</if>
+		<if test="oneFamilyOnePolicy!= null and oneFamilyOnePolicy!=0">one_family_one_policy,</if>
+		<if test="controlFile!= null and controlFile!=0">control_file,</if>
+		<if test="isNewDisposalTrace!= null and isNewDisposalTrace!=0">is_new_disposal_trace,</if>
+		<if test="rmark!= null and rmark!=0">rmark,</if>
+		<if test="createId!= null and createId!=0">create_id,</if>
+		<if test="createName!= null and createName!=0">create_name,</if>
+		<if test="updateId!= null and updateId!=0">update_id,</if>
+		<if test="updateName!= null and updateName!=0">update_name,</if>
+		<if test="updateTime!= null and updateTime!=0">update_time,</if>
 		create_time,delete_logo
 		)values(
-		<if test="taskExecuteId != null and taskExecuteId != ''">#{taskExecuteId},</if>
-		<if test="taskId != null and taskId != ''">#{taskId},</if>
-		<if test="taskType != null and taskType != ''">#{taskType},</if>
-		<if test="riskLevel != null and riskLevel != ''">#{riskLevel},</if>
-		<if test="partnerRiskLevel != null and partnerRiskLevel != ''">#{partnerRiskLevel},</if>
-		<if test="attachedFile != null and attachedFile != ''">#{attachedFile},</if>
-		<if test="currentRiskChanges != null and currentRiskChanges != ''">#{currentRiskChanges},</if>
-		<if test="currentConclusions != null and currentConclusions != ''">#{currentConclusions},</if>
-		<if test="currentFeedback != null and currentFeedback != ''">#{currentFeedback},</if>
-		<if test="currentControlMeasures != null and currentControlMeasures != ''">#{currentControlMeasures},</if>
-		<if test="otherControlMeasures != null and otherControlMeasures != ''">#{otherControlMeasures},</if>
-		<if test="oneFamilyOnePolicy != null and oneFamilyOnePolicy != ''">#{oneFamilyOnePolicy},</if>
-		<if test="isFinish != null and isFinish != ''">#{isFinish},</if>
-		<if test="remark != null and remark != ''">#{remark},</if>
-		<if test="lpOrgNo != null and lpOrgNo != ''">#{lpOrgNo},</if>
-		<if test="taskHandler != null and taskHandler != ''">#{taskHandler},</if>
-		<if test="taskHandlePost != null and taskHandlePost != ''">#{taskHandlePost},</if>
-		<if test="processName != null and processName != ''">#{processName},</if>
-		<if test="lastProcessName != null and lastProcessName != ''">#{lastProcessName},</if>
-		<if test="checkConclusion != null and checkConclusion != ''">#{checkConclusion},</if>
+		<if test="innerId!= null and innerId!=0">#{innerId},</if>
+		<if test="lpOrgNo!= null and lpOrgNo!=0">#{lpOrgNo},</if>
+		<if test="warningObjectId!= null and warningObjectId!=0">#{warningObjectId},</if>
+		<if test="taskNo!= null and taskNo!=0">#{taskNo},</if>
+		<if test="workingStatus!= null and workingStatus!=0">#{workingStatus},</if>
+		<if test="currHandlerId!= null and currHandlerId!=0">#{currHandlerId},</if>
+		<if test="currRoleId!= null and currRoleId!=0">#{currRoleId},</if>
+		<if test="currProcSteps!= null and currProcSteps!=0">#{currProcSteps},</if>
+		<if test="sysRiskLevel!= null and sysRiskLevel!=0">#{sysRiskLevel},</if>
+		<if test="riskLevel!= null and riskLevel!=0">#{riskLevel},</if>
+		<if test="riskIdentify!= null and riskIdentify!=0">#{riskIdentify},</if>
+		<if test="identifyConclusions!= null and identifyConclusions!=0">#{identifyConclusions},</if>
+		<if test="identifyFile!= null and identifyFile!=0">#{identifyFile},</if>
+		<if test="isFinish!= null and isFinish!=0">#{isFinish},</if>
+		<if test="traceDate!= null and traceDate!=0">#{traceDate},</if>
+		<if test="nextTraceDate!= null and nextTraceDate!=0">#{nextTraceDate},</if>
+		<if test="riskChanges!= null and riskChanges!=0">#{riskChanges},</if>
+		<if test="traceFile!= null and traceFile!=0">#{traceFile},</if>
+		<if test="disposalTraceFeedback!= null and disposalTraceFeedback!=0">#{disposalTraceFeedback},</if>
+		<if test="currentControlMeasures!= null and currentControlMeasures!=0">#{currentControlMeasures},</if>
+		<if test="otherControlMeasures!= null and otherControlMeasures!=0">#{otherControlMeasures},</if>
+		<if test="oneFamilyOnePolicy!= null and oneFamilyOnePolicy!=0">#{oneFamilyOnePolicy},</if>
+		<if test="controlFile!= null and controlFile!=0">#{controlFile},</if>
+		<if test="isNewDisposalTrace!= null and isNewDisposalTrace!=0">#{isNewDisposalTrace},</if>
+		<if test="rmark!= null and rmark!=0">#{rmark},</if>
+		<if test="createId!= null and createId!=0">#{createId},</if>
+		<if test="createName!= null and createName!=0">#{createName},</if>
+		<if test="updateId!= null and updateId!=0">#{updateId},</if>
+		<if test="updateName!= null and updateName!=0">#{updateName},</if>
+		<if test="updateTime!= null and updateTime!=0">#{updateTime},</if>
 		sysdate,0
 		)
 	</insert>

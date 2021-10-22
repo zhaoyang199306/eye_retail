@@ -87,8 +87,7 @@ public class PeersTaskInfoController extends BaseController {
         List<String> groups= new ArrayList<String>();
         for(SysRole r:roles)
         	groups.add(r.getRoleName());//注意：工作流设计时候候选组要填角色名称
-//        Map mapTask = taskWFService.taskWfByUserGroup(String.valueOf(user.getUserId()),groups);
-        Map<String, Long> mapTask = taskWFService.taskWfUser(user);
+        Map mapTask = taskWFService.taskWfByUserGroup(String.valueOf(user.getUserId()),groups);
         if(mapTask.keySet().size()>0) {
         	List<String > batchNoList = new ArrayList<String>();
         	for(Object k:mapTask.keySet())
@@ -119,21 +118,21 @@ public class PeersTaskInfoController extends BaseController {
     @Transactional
     public AjaxResult submitTask(@RequestBody TaskInfoSubmitPojo taskInfo) throws IOException {
 
-        logger.info("----submitTask----: 任务编号：{}", taskInfo.getTaskInfoNo());
+        logger.info("----submitTask----: 任务编号：{}", taskInfo.getTaskNo());
 
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         SysUser user = loginUser.getUser();
         List<SysRole> roles = user.getRoles();
 
-        SeWfTaskInfo task = taskInfoService.selectSeWfTaskInfoByTaskNo(taskInfo.getTaskInfoNo());
+        SeWfTaskInfo task = taskInfoService.selectSeWfTaskInfoByTaskNo(taskInfo.getTaskNo());
         Map map=new HashMap<String,String>();
-        prunWFService.startWf(taskInfo.getTaskInfoNo(), map, task.getSeWfWarningObject().getWarningObjectCategory());
+        prunWFService.startWf(taskInfo.getTaskNo(), map, task.getSeWfWarningObject().getWarningObjectCategory());
         
         //更新任务和信号
         int taskCnt = taskInfoService.updateAffirmTask(taskInfo);
         int signCnt = signalManualSevice.updateSignalManualList(taskInfo.getWarnSignalList());
         
-        taskWFService.exeTaskByTaskInfoNo(taskInfo.getTaskInfoNo(), user.getUserName(), map);
+        taskWFService.exeTaskByTaskInfoNo(taskInfo.getTaskNo(), user.getUserName(), map);
 
         return AjaxResult.success("成功提交");
     }
@@ -168,22 +167,22 @@ public class PeersTaskInfoController extends BaseController {
         return AjaxResult.success(seWfTaskInfo);
     }
 
-    public static void main(String[] args) {
-    	System.out.println(
-    	WarningObjectCategory.valueOf("PUBLIC"));
-    	TaskInfoSubmitPojo po = new TaskInfoSubmitPojo();
-    	po.setTaskInfoNo("RCN010000000120210918005");
-    	po.setPersonalRiskLevel("01");
-    	po.setCheckResult("有风险");
-    	po.setRiskControlMeasures("1,2"); 
-    	List<SeWfWarningSigns> warnList = new ArrayList<SeWfWarningSigns>();
-    	SeWfWarningSigns warning =new SeWfWarningSigns();
-    	warning.setSignalId("478an1215wsdfq3312an1215wsdfq302");
-    	warning.setConfirmStatus("01");
-		warnList.add(warning);
-		po.setWarnSignalList(warnList);
-    	System.out.println(JSON.toJSONString(po));
-    	
-    }
+//    public static void main(String[] args) {
+//    	System.out.println(
+//    	WarningObjectCategory.valueOf("PUBLIC"));
+//    	TaskInfoSubmitPojo po = new TaskInfoSubmitPojo();
+//    	po.setTaskInfoNo("RCN010000000120210918005");
+//    	po.setPersonalRiskLevel("01");
+//    	po.setCheckResult("有风险");
+//    	po.setRiskControlMeasures("1,2");
+//    	List<SeWfWarningSigns> warnList = new ArrayList<SeWfWarningSigns>();
+//    	SeWfWarningSigns warning =new SeWfWarningSigns();
+//    	warning.setSignalId("478an1215wsdfq3312an1215wsdfq302");
+//    	warning.setConfirmStatus("01");
+//		warnList.add(warning);
+//		po.setWarnSignalList(warnList);
+//    	System.out.println(JSON.toJSONString(po));
+//
+//    }
 
 }

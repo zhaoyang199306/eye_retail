@@ -25,6 +25,7 @@ public interface DpApTaskInfoMapper {
      */
     public List<TaskInfoListPojo> getWTaskInfoListByRole(WarningTaskListVo warningTaskListVo);
 
+    public int updateHandleRoleId(@Param("taskNo") String taskNo,@Param("handleRoleId") String handleRoleId) ;
 
     /**
      * 根据taskInfoNo 修改run_status状态 与

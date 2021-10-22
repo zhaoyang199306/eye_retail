@@ -37,6 +37,11 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
     }
 
     @Override
+    public int updateHandleRoleId(String taskNo, String HandleRoleId) {
+        return taskInfoMapper.updateHandleRoleId(taskNo, HandleRoleId);
+    }
+
+    @Override
     public int cancelClaimTaskByID(String taskNo) {
         return taskInfoMapper.cancelClaimTaskByID(taskNo);
     }
@@ -66,6 +71,8 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
     public int updateAffirmTask(TaskInfoSubmitPojo taskInfo) {
         return taskInfoMapper.updateAffirmTask(taskInfo);
     }
+
+
 
     @Override
     public int celarRunStatusByNo(String taskInfoNo) {

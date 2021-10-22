@@ -2,6 +2,7 @@ package com.skyon.project.system.domain.eye.wf;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.skyon.project.system.domain.eye.BasePojo;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
@@ -11,72 +12,84 @@ import java.util.Date;
  */
 public class SeWfTaskExecuteFeedback extends BasePojo {
 
-    private String taskExecuteId; // not null  任务执行ID
+    @ApiModelProperty(name="innerId",value="主键id",required=true)
+    private String innerId;
+    @ApiModelProperty(name="warningObjectId",value="预警对象id",required=false)
+    private String warningObjectId;
+    @ApiModelProperty(name="taskNo",value="任务编号",required=false)
+    private String taskNo;
+    @ApiModelProperty(name="workingStatus",value="当前工作状态",required=false)
+    private String workingStatus;
+    @ApiModelProperty(name="currHandlerId",value="当前处理人id",required=false)
+    private String currHandlerId;
+    @ApiModelProperty(name="currRoleId",value="当前处理角色id",required=false)
+    private String currRoleId;
+    @ApiModelProperty(name="currProcSteps",value="当前处理步骤",required=false)
+    private String currProcSteps;
+    @ApiModelProperty(name="sysRiskLevel",value="系统认定客户风险等级",required=false)
+    private String sysRiskLevel;
+    @ApiModelProperty(name="riskLevel",value="客户风险等级",required=false)
+    private String riskLevel;
+    @ApiModelProperty(name="riskIdentify",value="主体风险认定情况",required=false)
+    private String riskIdentify;
+    @ApiModelProperty(name="identifyConclusions",value="认定检查结论(理由)",required=false)
+    private String identifyConclusions;
+    @ApiModelProperty(name="identifyFile",value="认定附件",required=false)
+    private String identifyFile;
+    @ApiModelProperty(name="isFinish",value="是否处置完成",required=false)
+    private String isFinish;
+    @ApiModelProperty(name="traceDate",value="本次处置跟踪完成日期",required=false)
+    private String traceDate;
+    @ApiModelProperty(name="nextTraceDate",value="下次处置跟踪完成日期",required=false)
+    private String nextTraceDate;
+    @ApiModelProperty(name="riskChanges",value="本次风险变化情况",required=false)
+    private String riskChanges;
+    @ApiModelProperty(name="traceFile",value="最新跟踪反馈附件",required=false)
+    private String traceFile;
+    @ApiModelProperty(name="disposalTraceFeedback",value="当前处置跟踪反馈意见",required=false)
+    private String disposalTraceFeedback;
+    @ApiModelProperty(name="currentControlMeasures",value="当前风险管控措施",required=false)
+    private String currentControlMeasures;
+    @ApiModelProperty(name="otherControlMeasures",value="其他风险管控措施描述",required=false)
+    private String otherControlMeasures;
+    @ApiModelProperty(name="oneFamilyOnePolicy",value="一户一策计划",required=false)
+    private String oneFamilyOnePolicy;
+    @ApiModelProperty(name="controlFile",value="当前风险管控措施附件",required=false)
+    private String controlFile;
+    @ApiModelProperty(name="isNewDisposalTrace",value="是否产生新跟踪任务",required=false)
+    private String isNewDisposalTrace;
 
-    private String taskId;  // not null  任务ID
 
-    private String taskType; // 执行任务  预警认定/处置跟踪
 
-    private String riskLevel; // 客户风险等级 红色/橙色/黄色/蓝色/绿色
-
-    private String pdRiskLevel; // 产品风险等级 高风险/低风险 ---\\零售
-
-    private String partnerRiskLevel; // 合作方风险等级
-
-    private String attachedFile; // 附件
-
-    private String currentRiskChanges; // 本次风险变化情况
-
-    private String currentConclusions; // 本次检查结论
-
-    private String currentFeedback; // 本次反馈意见
-
-    private String currentControlMeasures; // 本次风险管控措施
-
-    private String otherControlMeasures; //
-
-    private String oneFamilyOnePolicy; // 一户一策计划
-
-    private String isFinish; // 是否处置完成  处置完成，状态转“已归档”
-
-    private String taskHandler; // 当前处理人
-
-    private String taskHandlePost; // 当前处理岗
-
-    private String processName; // 流程节点名称
-
-    private String lastProcessName; // 上一流程节点名称
-
-    private String checkConclusion; // 审核结论
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime; // 创建时间
 
     //-----------------------------------toString----------------------------------------
 
     @Override
     public String toString() {
         return "SeWfTaskExecuteFeedback{" +
-                "taskExecuteId='" + taskExecuteId + '\'' +
-                ", taskId='" + taskId + '\'' +
-                ", taskType='" + taskType + '\'' +
+                "innerId='" + innerId + '\'' +
+                ", warningObjectId='" + warningObjectId + '\'' +
+                ", taskNo='" + taskNo + '\'' +
+                ", workingStatus='" + workingStatus + '\'' +
+                ", currHandlerId='" + currHandlerId + '\'' +
+                ", currRoleId='" + currRoleId + '\'' +
+                ", currProcSteps='" + currProcSteps + '\'' +
+                ", sysRiskLevel='" + sysRiskLevel + '\'' +
                 ", riskLevel='" + riskLevel + '\'' +
-                ", pdRiskLevel='" + pdRiskLevel + '\'' +
-                ", partnerRiskLevel='" + partnerRiskLevel + '\'' +
-                ", attachedFile='" + attachedFile + '\'' +
-                ", currentRiskChanges='" + currentRiskChanges + '\'' +
-                ", currentConclusions='" + currentConclusions + '\'' +
-                ", currentFeedback='" + currentFeedback + '\'' +
+                ", riskIdentify='" + riskIdentify + '\'' +
+                ", identifyConclusions='" + identifyConclusions + '\'' +
+                ", identifyFile='" + identifyFile + '\'' +
+                ", isFinish='" + isFinish + '\'' +
+                ", traceDate='" + traceDate + '\'' +
+                ", nextTraceDate='" + nextTraceDate + '\'' +
+                ", riskChanges='" + riskChanges + '\'' +
+                ", traceFile='" + traceFile + '\'' +
+                ", disposalTraceFeedback='" + disposalTraceFeedback + '\'' +
                 ", currentControlMeasures='" + currentControlMeasures + '\'' +
                 ", otherControlMeasures='" + otherControlMeasures + '\'' +
                 ", oneFamilyOnePolicy='" + oneFamilyOnePolicy + '\'' +
-                ", isFinish='" + isFinish + '\'' +
-                ", taskHandler='" + taskHandler + '\'' +
-                ", taskHandlePost='" + taskHandlePost + '\'' +
-                ", processName='" + processName + '\'' +
-                ", lastProcessName='" + lastProcessName + '\'' +
-                ", checkConclusion='" + checkConclusion + '\'' +
-                ", createTime='" + createTime + '\'' +
+                ", controlFile='" + controlFile + '\'' +
+                ", isNewDisposalTrace='" + isNewDisposalTrace + '\'' +
                 '}';
     }
 
@@ -84,46 +97,69 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
     //-----------------------------------get/set----------------------------------------
 
 
-    public String getTaskHandler() {
-        return taskHandler;
+    public String getInnerId() {
+        return innerId;
     }
 
-    public void setTaskHandler(String taskHandler) {
-        this.taskHandler = taskHandler;
-    }
-
-    public String getTaskHandlePost() {
-        return taskHandlePost;
-    }
-
-    public void setTaskHandlePost(String taskHandlePost) {
-        this.taskHandlePost = taskHandlePost;
-    }
-
-    public String getTaskExecuteId() {
-        return taskExecuteId;
-    }
-
-    public void setTaskExecuteId(String taskExecuteId) {
-        this.taskExecuteId = taskExecuteId;
+    public void setInnerId(String innerId) {
+        this.innerId = innerId;
     }
 
 
-
-    public String getTaskId() {
-        return taskId;
+    public String getWarningObjectId() {
+        return warningObjectId;
     }
 
-    public void setTaskId(String taskId) {
-        this.taskId = taskId;
+    public void setWarningObjectId(String warningObjectId) {
+        this.warningObjectId = warningObjectId;
     }
 
-    public String getTaskType() {
-        return taskType;
+    public String getTaskNo() {
+        return taskNo;
     }
 
-    public void setTaskType(String taskType) {
-        this.taskType = taskType;
+    public void setTaskNo(String taskNo) {
+        this.taskNo = taskNo;
+    }
+
+    public String getWorkingStatus() {
+        return workingStatus;
+    }
+
+    public void setWorkingStatus(String workingStatus) {
+        this.workingStatus = workingStatus;
+    }
+
+    public String getCurrHandlerId() {
+        return currHandlerId;
+    }
+
+    public void setCurrHandlerId(String currHandlerId) {
+        this.currHandlerId = currHandlerId;
+    }
+
+    public String getCurrRoleId() {
+        return currRoleId;
+    }
+
+    public void setCurrRoleId(String currRoleId) {
+        this.currRoleId = currRoleId;
+    }
+
+    public String getCurrProcSteps() {
+        return currProcSteps;
+    }
+
+    public void setCurrProcSteps(String currProcSteps) {
+        this.currProcSteps = currProcSteps;
+    }
+
+    public String getSysRiskLevel() {
+        return sysRiskLevel;
+    }
+
+    public void setSysRiskLevel(String sysRiskLevel) {
+        this.sysRiskLevel = sysRiskLevel;
     }
 
     public String getRiskLevel() {
@@ -134,52 +170,76 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
         this.riskLevel = riskLevel;
     }
 
-    public String getPdRiskLevel() {
-        return pdRiskLevel;
+    public String getRiskIdentify() {
+        return riskIdentify;
     }
 
-    public void setPdRiskLevel(String pdRiskLevel) {
-        this.pdRiskLevel = pdRiskLevel;
+    public void setRiskIdentify(String riskIdentify) {
+        this.riskIdentify = riskIdentify;
     }
 
-    public String getPartnerRiskLevel() {
-        return partnerRiskLevel;
+    public String getIdentifyConclusions() {
+        return identifyConclusions;
     }
 
-    public void setPartnerRiskLevel(String partnerRiskLevel) {
-        this.partnerRiskLevel = partnerRiskLevel;
+    public void setIdentifyConclusions(String identifyConclusions) {
+        this.identifyConclusions = identifyConclusions;
     }
 
-    public String getAttachedFile() {
-        return attachedFile;
+    public String getIdentifyFile() {
+        return identifyFile;
     }
 
-    public void setAttachedFile(String attachedFile) {
-        this.attachedFile = attachedFile;
+    public void setIdentifyFile(String identifyFile) {
+        this.identifyFile = identifyFile;
     }
 
-    public String getCurrentRiskChanges() {
-        return currentRiskChanges;
+    public String getIsFinish() {
+        return isFinish;
     }
 
-    public void setCurrentRiskChanges(String currentRiskChanges) {
-        this.currentRiskChanges = currentRiskChanges;
+    public void setIsFinish(String isFinish) {
+        this.isFinish = isFinish;
     }
 
-    public String getCurrentConclusions() {
-        return currentConclusions;
+    public String getTraceDate() {
+        return traceDate;
     }
 
-    public void setCurrentConclusions(String currentConclusions) {
-        this.currentConclusions = currentConclusions;
+    public void setTraceDate(String traceDate) {
+        this.traceDate = traceDate;
     }
 
-    public String getCurrentFeedback() {
-        return currentFeedback;
+    public String getNextTraceDate() {
+        return nextTraceDate;
     }
 
-    public void setCurrentFeedback(String currentFeedback) {
-        this.currentFeedback = currentFeedback;
+    public void setNextTraceDate(String nextTraceDate) {
+        this.nextTraceDate = nextTraceDate;
+    }
+
+    public String getRiskChanges() {
+        return riskChanges;
+    }
+
+    public void setRiskChanges(String riskChanges) {
+        this.riskChanges = riskChanges;
+    }
+
+    public String getTraceFile() {
+        return traceFile;
+    }
+
+    public void setTraceFile(String traceFile) {
+        this.traceFile = traceFile;
+    }
+
+    public String getDisposalTraceFeedback() {
+        return disposalTraceFeedback;
+    }
+
+    public void setDisposalTraceFeedback(String disposalTraceFeedback) {
+        this.disposalTraceFeedback = disposalTraceFeedback;
     }
 
     public String getCurrentControlMeasures() {
@@ -206,43 +266,21 @@ public class SeWfTaskExecuteFeedback extends BasePojo {
         this.oneFamilyOnePolicy = oneFamilyOnePolicy;
     }
 
-    public String getIsFinish() {
-        return isFinish;
+    public String getControlFile() {
+        return controlFile;
     }
 
-    public void setIsFinish(String isFinish) {
-        this.isFinish = isFinish;
+    public void setControlFile(String controlFile) {
+        this.controlFile = controlFile;
     }
 
-    public String getProcessName() {
-        return processName;
+    public String getIsNewDisposalTrace() {
+        return isNewDisposalTrace;
     }
 
-    public void setProcessName(String processName) {
-        this.processName = processName;
+    public void setIsNewDisposalTrace(String isNewDisposalTrace) {
+        this.isNewDisposalTrace = isNewDisposalTrace;
     }
 
-    public String getLastProcessName() {
-        return lastProcessName;
-    }
 
-    public void setLastProcessName(String lastProcessName) {
-        this.lastProcessName = lastProcessName;
-    }
-
-    public String getCheckConclusion() {
-        return checkConclusion;
-    }
-
-    public void setCheckConclusion(String checkConclusion) {
-        this.checkConclusion = checkConclusion;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
 }

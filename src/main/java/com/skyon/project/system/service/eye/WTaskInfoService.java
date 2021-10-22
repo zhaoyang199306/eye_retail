@@ -24,6 +24,14 @@ public interface WTaskInfoService {
     public int claimTaskByID(String taskNo,String userId,String roleId);
 
     /**
+     *
+     * @param taskNo
+     * @param HandleRoleId
+     * @return
+     */
+    public int updateHandleRoleId(String taskNo,String HandleRoleId);
+
+    /**
      * @param taskNo
      * @return
      */
