@@ -1,37 +1,37 @@
 package com.skyon.common.enums;
+
 /**
  * 预警对象类别枚举类
- * @author xinglj
  *
+ * @author xinglj
  */
 public enum WarningObjectCategory {
-	PRIVATE("01","个人客户"),
-	PUBLIC     	("03","对公客户"),
-	SMALLPUBLIC     	("02","小微客户"),
-	NOPEERS    	("04","非同业主体"),
-	PEERS     	("05","同业主体"),
-	PARTNER  	("06","合作方(渠道)"),
-	NSO_PRIVATE  	("07","非自营零售客户"),//Non self operated
-	PRODUCTION       	("08","产品"),
-	ASSETS       	("09","资产"),
-	CASTGROUP       	("10","投组");
-	
-	private final String code;
+    PUBLIC("01", "对公客户"),
+    PEERS("02", "同业主体"),
+    PRIVATE("03", "个人客户"),
+    SMALLPUBLIC("04", "小微客户"),
+    PARTNER("05", "合作方"),
+    CASTGROUP("06", "投组"),
+    BOND("07", "债券"),
+    PRODUCTION("08", "零售产品"),
+    NSO_PRIVATE("09", "非自营零售客户"),//Non self operated,
+
+    NOPEERS("10", "非同业主体"),
+    ASSETS("11", "资产");
+
+    private final String code;
     private final String info;
 
-    WarningObjectCategory(String code, String info)
-    {
+    WarningObjectCategory(String code, String info) {
         this.code = code;
         this.info = info;
     }
 
-    public String getCode()
-    {
+    public String getCode() {
         return code;
     }
 
-    public String getInfo()
-    {
+    public String getInfo() {
         return info;
     }
 }
