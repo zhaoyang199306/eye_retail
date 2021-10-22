@@ -27,9 +27,11 @@ public class RunWFServiceImpl implements RunWFService {
     public void startWf(String taskInfoNo, Map map) {
         ProcessEngine defaultProcessEngine = ProcessEngines.getDefaultProcessEngine();
 
-        // 启动流程  天眼name: eye_retail_1
-        ProcessInstance myProcess_1 = defaultProcessEngine.getRuntimeService().startProcessInstanceByKey("eye_retail_1", taskInfoNo, map);
+        // 启动不同的流程：eye_retail_1
+        ProcessInstance myProcess_1 = defaultProcessEngine.getRuntimeService().startProcessInstanceByKey(map.get("processKey").toString(), taskInfoNo, map);
 
         logger.info("++++++++++{},启动流程实例id:{}", taskInfoNo, myProcess_1.getId());
     }
+
+
 }

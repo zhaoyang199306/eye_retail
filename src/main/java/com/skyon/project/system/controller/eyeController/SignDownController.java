@@ -75,7 +75,7 @@ public class SignDownController extends BaseController {
         List<SysRole> roles = user.getRoles();
 
         // 判断是否为信号下发角色。前端也做控制
-        if(RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())){
+        if(RoleName.WF_ROLE_011.getCode().equals(roles.get(0).getRoleId())){
             list = signDownService.getSignalDownList(listType);
             return AjaxResult.success(list);
         }else{
@@ -97,7 +97,7 @@ public class SignDownController extends BaseController {
         List<SysRole> roles = user.getRoles();
 
         // 判断是否为信号下发角色。前端也做控制
-        if(RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())){
+        if(RoleName.WF_ROLE_011.getCode().equals(roles.get(0).getRoleId())){
             //该查询方式 未限制机构隔离
             int cnt = signDownService.updateDistributeStatus(signDownListVo);
             if(cnt==signDownListVo.getId().size()){
@@ -123,7 +123,7 @@ public class SignDownController extends BaseController {
         List<SysRole> roles = user.getRoles();
 
         // 判断是否为信号下发角色。前端也做控制
-        if(RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())){
+        if(RoleName.WF_ROLE_011.getCode().equals(roles.get(0).getRoleId())){
             //该查询方式 未限制机构隔离
             int cnt = signDownService.updateSingsSignalStatusById(id);
             if(cnt==id.size()){

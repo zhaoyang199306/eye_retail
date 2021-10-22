@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
@@ -8,7 +11,6 @@
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
-
   <component name="skyon-eye2">
     <option name="projectToken">8cc8edebe9c6493e2f595c5588e0ef2b0cf69850f099b857ec2a3ec288b500a2</option>
     <option name="projectId">101302</option>
@@ -16,8 +18,4 @@
     <option name="projectType">api</option>
     <option name="attachUploadUrl">http://yapi.smart-xwork.cn/</option>
   </component>
-
-
 </project>
-
-

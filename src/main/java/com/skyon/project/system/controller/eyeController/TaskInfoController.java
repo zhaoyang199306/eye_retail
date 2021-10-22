@@ -2,6 +2,7 @@ package com.skyon.project.system.controller.eyeController;
 
 import com.skyon.common.enums.RoleName;
 import com.skyon.common.enums.WFLink;
+import com.skyon.common.enums.WfCode;
 import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.aspectj.lang.annotation.DataScope;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
@@ -111,7 +112,7 @@ public class TaskInfoController extends BaseController {
 
         try {
             // 查询 客户经理 初始时 的 列表。
-            if (1==1 ||RoleName.ACCOUNT_MANAGER.getInfo().equals(roles.get(0).getRoleName())) { // 后续 传页面展示的角色
+            if (1==1 ||RoleName.WF_ROLE_011.getCode().equals(roles.get(0).getRoleId())) { // 后续 传页面展示的角色
                 warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
                 list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
             }
@@ -172,7 +173,7 @@ public class TaskInfoController extends BaseController {
 
         // 任务提交
         TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-        String taskName = service.commonSubmit(seWfTaskInfo, user);
+        String taskName = service.commonSubmit(seWfTaskInfo.getTaskNo(), WfCode.WF1001, user);
 
         // 保存 任务执行反馈表单
         SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();

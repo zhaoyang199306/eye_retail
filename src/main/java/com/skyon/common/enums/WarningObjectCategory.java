@@ -1,5 +1,9 @@
 package com.skyon.common.enums;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 预警对象类别枚举类
  *
@@ -33,5 +37,16 @@ public enum WarningObjectCategory {
 
     public String getInfo() {
         return info;
+    }
+
+
+    // 零售（个人客户  小微客户  合作方  零售产品、非自营零售户）
+    public static final List<String> retailArr(){
+        return Arrays.asList(PRIVATE.code,SMALLPUBLIC.code,PARTNER.code,PRODUCTION.code,NSO_PRIVATE.code);
+    }
+
+    // 同业（对公客户、同业主体、投组、债券）
+    public static final List<String> peerArr(){
+        return  Arrays.asList(PUBLIC.code,PEERS.code,CASTGROUP.code,BOND.code);
     }
 }

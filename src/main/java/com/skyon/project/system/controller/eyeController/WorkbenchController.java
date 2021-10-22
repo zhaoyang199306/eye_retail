@@ -72,7 +72,7 @@ public class WorkbenchController extends BaseController {
         int removeRiskSelfCountNum = 0;
 
         // 预警认定初始单独计算
-        if (RoleName.ACCOUNT_MANAGER.getInfo().equals((roles.get(0).getRoleName()))) {
+        if (RoleName.WF_ROLE_011.getCode().equals((roles.get(0).getRoleId()))) {
             WarningTaskListVo warningTaskListVo = new WarningTaskListVo();
             warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
             List<TaskInfoListPojo> listMap = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);

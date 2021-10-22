@@ -1,5 +1,6 @@
 package com.skyon.project.system.service.wf;
 
+import com.skyon.common.enums.WfCode;
 import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.security.service.TokenService;
 import com.skyon.project.system.domain.eye.SeWfTaskInfo;
@@ -8,6 +9,7 @@ import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.service.activiti.RunWFService;
 import com.skyon.project.system.service.activiti.TaskWFService;
 import com.skyon.project.system.service.eye.SeWfTaskExecuteFeedbackService;
+import org.activiti.engine.impl.cmd.NeedsActiveTaskCmd;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,35 +32,34 @@ public abstract class TaskCommon {
     /**
      * 保存任务流转
      */
-    public String commonSubmit(SeWfTaskInfo seWfTaskInfo, SysUser user) {
+    public String commonSubmit(String taskNo, WfCode code, SysUser user) {
 
         LOGGERCOMMON.info("当前事务名2：{}", TransactionSynchronizationManager.getCurrentTransactionName());
 
         // 获取组装参数
-        Map<String, Object> map = this.assembleParam(seWfTaskInfo, user);
+        Map<String, Object> map = this.assembleParam(taskNo, code, user);
 
         // 未启动流程的，先启动流程
-        if (map.get("first")!=null && (Boolean) map.get("first")) {
-            runWFService.startWf(seWfTaskInfo.getTaskNo(), map);
+        if (map.get("first") != null && (Boolean) map.get("first")) {
+            runWFService.startWf(taskNo, map);
         }
 
         // 根据任务编号 - taskInfoNo 执行任务
-        String taskName = taskWFService.exeTaskByTaskInfoNo(seWfTaskInfo.getTaskNo(),
-                String.valueOf(user.getUserId()), map);
+        String taskName = taskWFService.exeTaskByTaskInfoNo(taskNo, String.valueOf(user.getUserId()), map);
 
         // 额外操作 修改某些字段
-        this.updateField(seWfTaskInfo);
+        this.updateField(taskNo);
 
-        LOGGERCOMMON.info("{}提交,编号：{},环节：{}", user.getUserName(), seWfTaskInfo.getTaskNo(),taskName);
+        LOGGERCOMMON.info("{}提交,编号：{},环节：{}", user.getUserName(), taskNo, taskName);
 
         return taskName;
     }
 
     // 组装参数 交给每个角色处理
-    protected abstract Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user);
+    protected abstract Map<String, Object> assembleParam(String taskNo, WfCode code, SysUser user);
 
     // 修改某些字段 交给每个角色处理
-    protected void updateField(SeWfTaskInfo seWfTaskInfo){
+    protected void updateField(String taskNo) {
 
     }
 

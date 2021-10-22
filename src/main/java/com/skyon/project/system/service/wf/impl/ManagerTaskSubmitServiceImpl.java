@@ -1,9 +1,6 @@
 package com.skyon.project.system.service.wf.impl;
 
-import com.skyon.common.enums.RoleName;
-import com.skyon.common.enums.SignalCreateModelEnum;
-import com.skyon.common.enums.SysRiskLevelEnum;
-import com.skyon.common.enums.WFRole;
+import com.skyon.common.enums.*;
 import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.manager.factory.WfDealRoleRegisterFactory;
 import com.skyon.framework.security.LoginUser;
@@ -50,43 +47,57 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
      */
     @Override
     public void afterPropertiesSet() throws Exception {
-        WfDealRoleRegisterFactory.register(RoleName.ACCOUNT_MANAGER.getInfo(), this);
+        WfDealRoleRegisterFactory.register(RoleName.WF_ROLE_011.getCode(), this);
     }
 
     /**
      * 客户经理执行任务  第一次执行  开启流程
-     * 有三种情况；
-     * 一、非自动认定（即 风险等级为待认定）
-     * 二、自动认定非自动签收（即  有系统认定风险等级 且 风险等级黄色及以上  且 不是灰名单 且 （客户不是风险客户 或 是风险客户且风险等级高于原风险等级）
-     * 三、自动认定签收（即 上面的另一面）
-     *
      * @param seWfTaskInfo 参数
      */
     @Override
-    protected Map<String, Object> assembleParam(SeWfTaskInfo seWfTaskInfo, SysUser user) {
+    protected Map<String, Object> assembleParam(String taskNo, WfCode code, SysUser user) {
         Map<String, Object> map = new HashMap<>();
 
-        WFTaskFlagHandle handle = new WFTaskFlagHandle(seWfTaskInfo);
-        boolean signTask = handle.isSignTask();
+//        WFTaskFlagHandle handle = new WFTaskFlagHandle(seWfTaskInfo);
+//        boolean signTask = handle.isSignTask();
 
         map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 客户经理操作人id
-        map.put("first", taskWFService.confirmTaskIsExit(seWfTaskInfo.getTaskNo()));  // 先查询一下是否启动过流程  （有重新回到客户经理手里的情况）
+        map.put("first", taskWFService.confirmTaskIsExit(taskNo));  // 先查询一下是否启动过流程  （有重新回到客户经理手里的情况）
 
-        if (signTask) {  // 签收
-            map.put("wfStart", "2"); // 走流程2
-        } else { // 非签收
-            map.put("wfStart", "1"); // 走流程1
-            map.put(WFRole.WFROLE201.getCode(), "52"); // 下一环节 支行主管角色 id
-        }
+//        if (WarningObjectCategory.retailArr().contains()) { // 零售
+//            if (TaskTyeCode.SING_TASK.getCode().equals(taskType)) { // 签收任务
+//                map.put("processKey", "");
+//            } else if (TaskTyeCode.PRE_TASK.getCode().equals(taskType)) { // 预警认定
+//                map.put("processKey", "retail_warn_wf_2101");
+//            } else if (TaskTyeCode.DISPOSAL_TRACK.getCode().equals(taskType)) { // 处置跟踪
+//                map.put("processKey", "");
+//            } else if (TaskTyeCode.SIGNAL_OBJECTION.getCode().equals(taskType)) { // 信号异议
+//                map.put("processKey", "");
+//            } else if (TaskTyeCode.RISK_OBJECTION.getCode().equals(taskType)) { // 风险异议
+//                map.put("processKey", "");
+//            } else if (TaskTyeCode.PARTNER_FEEDBACK_PROCESS.getCode().equals(taskType)) { // 合作方
+//                map.put("processKey", "");
+//            } else {
+//                throw new RuntimeException("未匹配到合适的任务类型");
+//            }
+//
+//        } else if (WarningObjectCategory.peerArr().contains(warningObjectCategory)) { // 同业
+//
+//        } else {
+//            throw new RuntimeException("未匹配到合适的预警对象类型");
+//        }
+
+
         return map;
     }
 
     /**
-     *  客户经理提交后， 需要对任务表里的 TASK_STATUS 修改为 02（处理中）   01：待处理，02：在途，03：归档。
-     * @param seWfTaskInfo
+     * 客户经理提交后， 需要对任务表里的 TASK_STATUS 修改为 02（处理中）   01：待处理，02：在途，03：归档。
+     *
+     * @param taskNo
      */
     @Override
-    protected void updateField(SeWfTaskInfo seWfTaskInfo) {
-        taskInfoService.updateTaskStatusByNo(seWfTaskInfo.getTaskNo());
+    protected void updateField(String taskNo) {
+        taskInfoService.updateTaskStatusByNo(taskNo);
     }
 }
