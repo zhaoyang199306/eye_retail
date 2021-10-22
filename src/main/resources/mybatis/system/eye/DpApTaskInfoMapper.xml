@@ -97,10 +97,6 @@
         <result property="signalType" column="SIGNAL_TYPE"/>
         <result property="warnDsc" column="WARN_DSC"/>
         <result property="warningObjectId" column="WARNING_OBJECT_ID"/>
-        <result property="warningObjectCategory" column="WARNING_OBJECT_CATEGORY"/>
-        <result property="warningObjectNo" column="WARNING_OBJECT_NO"/>
-        <result property="warningObjectName" column="WARNING_OBJECT_NAME"/>
-        <result property="warningObjectType" column="WARNING_OBJECT_TYPE"/>
         <result property="isWarnFlag" column="IS_WARN_FLAG"/>
         <result property="warnNo" column="WARN_NO"/>
         <result property="sendPeople" column="SEND_PEOPLE"/>
@@ -137,8 +133,7 @@
     </select>
 
     <resultMap id="seWfWarningObjectResult" type="com.skyon.project.system.domain.eye.SeWfWarningObject">
-        <id property="warningObjectId" column="SIGNAL_ID"/>
-        <result property="warningObjectId" column="WARNING_OBJECT_ID"/>
+        <id property="warningObjectId" column="WARNING_OBJECT_ID"/>
         <result property="lpOrgNo" column="LP_ORG_NO"/>
         <result property="warningObjectCategory" column="WARNING_OBJECT_CATEGORY"/>
         <result property="warningObjectCid" column="WARNING_OBJECT_CID"/>
@@ -154,6 +149,15 @@
         <result property="adminBranchNo" column="ADMIN_BRANCH_NO"/>
         <result property="businessOrgNo" column="BUSINESS_ORG_NO"/>
         <result property="relWarningObjectId" column="REL_WARNING_OBJECT_ID"/>
+        <result property="rmark" column="RMARK"/>
+        <result property="createId" column="CREATE_ID"/>
+        <result property="createName" column="CREATE_NAME"/>
+        <result property="createTime" column="CREATE_TIME"/>
+        <result property="updateId" column="UPDATE_ID"/>
+        <result property="updateName" column="UPDATE_NAME"/>
+        <result property="updateTime" column="UPDATE_TIME"/>
+        <result property="delFlag" column="DEL_FLAG"/>
+
     </resultMap>
 
     <select id="getSeWfWarningObjectByWarningObjectId2" parameterType="String" resultType="SeWfWarningObject" resultMap="seWfWarningObjectResult">
@@ -161,7 +165,7 @@
     </select>
 
     <select id="getSeWfTaskExecuteFeedbackByTaskId2" parameterType="String" resultType="SeWfTaskExecuteFeedback" resultMap="SeWfTaskExecuteFeedbackResult">
-        select e.*  from (select f.* from SE_WF_TASK_EXECUTE_FEEDBACK f,SE_WF_TASK_INFO g where f.task_id = g.task_id and g.task_no = #{taskNo} order by f.create_time desc) e where rownum=1
+        select e.*  from (select f.* from SE_WF_TASK_EXECUTE_FEEDBACK f,SE_WF_TASK_INFO g where f.task_no = g.task_no and g.task_no = #{taskNo} order by f.create_time desc) e where rownum=1
     </select>
 
 

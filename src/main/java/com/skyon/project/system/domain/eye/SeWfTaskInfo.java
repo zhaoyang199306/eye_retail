@@ -13,7 +13,7 @@ import java.util.List;
  * 任务信息表
  * SE_WF_TASK_INFO
  */
-@ApiModel(value = "预警详情",description ="预警详情")
+@ApiModel(value = "任务信息表实体类",description ="任务信息表实体类")
 public class SeWfTaskInfo extends BasePojo {
 
     @ApiModelProperty(name = "taskId" , value = "任务ID(物理主键ID)", required = false)

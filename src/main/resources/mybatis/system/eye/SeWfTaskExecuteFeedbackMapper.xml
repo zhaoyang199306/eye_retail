@@ -112,11 +112,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 
 	<select id="getLastTaskExecuteFeedback" parameterType="String" resultType="SeWfTaskExecuteFeedback" resultMap="SeWfTaskExecuteFeedbackResult">
-		select e.*  from (select f.* from SE_WF_TASK_EXECUTE_FEEDBACK f,SE_WF_TASK_INFO g where f.task_id = g.task_id and g.task_no = #{taskNo} order by f.create_time desc) e where rownum=1
+		select e.*  from (select f.* from SE_WF_TASK_EXECUTE_FEEDBACK f,SE_WF_TASK_INFO g where f.task_no = g.task_id and g.task_no = #{taskNo} order by f.create_time desc) e where rownum=1
 	</select>
 
 	<select id="getAllSeWfTaskExecuteFeedbackByTaskNo" parameterType="String" resultType="SeWfTaskExecuteFeedback" resultMap="SeWfTaskExecuteFeedbackResult">
-		select f.* from SE_WF_TASK_EXECUTE_FEEDBACK f,SE_WF_TASK_INFO g where f.task_id = g.task_id and g.task_no = #{taskNo} order by f.create_time desc
+		select f.* from SE_WF_TASK_EXECUTE_FEEDBACK f,SE_WF_TASK_INFO g where f.task_no = g.task_id and g.task_no = #{taskNo} order by f.create_time desc
 	</select>
 
 </mapper> 

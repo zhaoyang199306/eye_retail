@@ -16,7 +16,7 @@ public class BasePojo {
     private String updateName;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
-    private String deleteLogo;  // 删除标识 not null
+    private String delFlag;  // 删除标识 not null
 
     //-----------------------------------get/set----------------------------------------
 
@@ -85,11 +85,11 @@ public class BasePojo {
         this.updateTime = updateTime;
     }
 
-    public String getDeleteLogo() {
-        return deleteLogo;
+    public String getDelFlag() {
+        return delFlag;
     }
 
-    public void setDeleteLogo(String deleteLogo) {
-        this.deleteLogo = deleteLogo;
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag;
     }
 }

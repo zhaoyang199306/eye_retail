@@ -1,45 +1,46 @@
 package com.skyon.project.system.domain.eye;
 
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 预警对象表
  * SE_WF_WARNING_OBJECT
  */
 public class SeWfWarningObject extends BasePojo{
 
-    private String warningObjectId; //  not null 预警对象ID
+    @ApiModelProperty(name = "warningObjectId", value = "预警对象ID(物理主键ID)", required = false)
+    private  String warningObjectId;
+    @ApiModelProperty(name = "warningObjectCategory", value = "预警对象类别", required = false)
+    private  String warningObjectCategory;
+    @ApiModelProperty(name = "warningObjectCid", value = "预警对象内码", required = false)
+    private  String warningObjectCid;
+    @ApiModelProperty(name = "warningObjectName", value = "预警对象名称", required = false)
+    private  String warningObjectName;
+    @ApiModelProperty(name = "warningObjectType", value = "监测对象类型", required = false)
+    private  String warningObjectType;
+    @ApiModelProperty(name = "warningObjectSort", value = "监测对象管辖类别", required = false)
+    private  String warningObjectSort;
+    @ApiModelProperty(name = "riskLevel", value = "客户风险等级", required = false)
+    private  String riskLevel;
+    @ApiModelProperty(name = "riskHighLevel", value = "客户历史最高风险等级", required = false)
+    private  String riskHighLevel;
+    @ApiModelProperty(name = "riskIdentify", value = "主体风险认定情况", required = false)
+    private  String riskIdentify;
+    @ApiModelProperty(name = "execuMgrNo", value = "管户客户经理编号", required = false)
+    private  String execuMgrNo;
+    @ApiModelProperty(name = "execuOrgNo", value = "管户机构编号", required = false)
+    private  String execuOrgNo;
+    @ApiModelProperty(name = "adminSubbranchNo", value = "所属支行编号", required = false)
+    private  String adminSubbranchNo;
+    @ApiModelProperty(name = "adminBranchNo", value = "所属分行编号", required = false)
+    private  String adminBranchNo;
+    @ApiModelProperty(name = "businessOrgNo", value = "业务责任机构编号", required = false)
+    private  String businessOrgNo;
+    @ApiModelProperty(name = "relWarningObjectId", value = "关联预警对象ID", required = false)
+    private  String relWarningObjectId;
 
-    // 自营个人、自营小微、非自营零售户、合作方、非同业主体、同业主体、资产、投组、产品
-    private String warningObjectCategory; // not null 预警对象类别
-
-    private String warningObjectCid; // not null 预警对象内码
-
-    private String warningObjectName; // 预警对象名称
-
-    private String warningObjectType; // 监测对象类型
-
-    // 预警对象标签：例如（发债、上市、黑名单、灰名单...）,待确认标签范围
-    private String warningObjectLabel; // 预警对象标签
-
-    private String currentRiskLevel; // 当前风险等级 未分类/红色/橙色/黄色/蓝色/绿色
-
-    private String pdRiskLevel; // 产品风险等级  未分类/有风险/无风险 ---\\零售&同业
-
-    private String partnerRiskLevel; // 合作方风险等级  未分类/高风险/低风险 ---\\零售
-
-    private String execuCustMgr;  // 管户客户经理
-
-    private String execuOrg; // 管户机构
-
-    private String adSubBra; // 所属支行
-
-    private String adBra; // 所属分行
-
-    private String businessOrg; // 业务责任机构
-
-    private String relWarningObjectId; // 关联预警对象ID
 
     //-----------------------------------toString----------------------------------------
-
 
     @Override
     public String toString() {
@@ -49,18 +50,19 @@ public class SeWfWarningObject extends BasePojo{
                 ", warningObjectCid='" + warningObjectCid + '\'' +
                 ", warningObjectName='" + warningObjectName + '\'' +
                 ", warningObjectType='" + warningObjectType + '\'' +
-                ", warningObjectLabel='" + warningObjectLabel + '\'' +
-                ", currentRiskLevel='" + currentRiskLevel + '\'' +
-                ", pdRiskLevel='" + pdRiskLevel + '\'' +
-                ", partnerRiskLevel='" + partnerRiskLevel + '\'' +
-                ", execuCustMgr='" + execuCustMgr + '\'' +
-                ", execuOrg='" + execuOrg + '\'' +
-                ", adSubBra='" + adSubBra + '\'' +
-                ", adBra='" + adBra + '\'' +
-                ", businessOrg='" + businessOrg + '\'' +
+                ", warningObjectSort='" + warningObjectSort + '\'' +
+                ", riskLevel='" + riskLevel + '\'' +
+                ", riskHighLevel='" + riskHighLevel + '\'' +
+                ", riskIdentify='" + riskIdentify + '\'' +
+                ", execuMgrNo='" + execuMgrNo + '\'' +
+                ", execuOrgNo='" + execuOrgNo + '\'' +
+                ", adminSubbranchNo='" + adminSubbranchNo + '\'' +
+                ", adminBranchNo='" + adminBranchNo + '\'' +
+                ", businessOrgNo='" + businessOrgNo + '\'' +
                 ", relWarningObjectId='" + relWarningObjectId + '\'' +
                 '}';
     }
+
 
     //-----------------------------------get/set----------------------------------------
 
@@ -105,76 +107,76 @@ public class SeWfWarningObject extends BasePojo{
         this.warningObjectType = warningObjectType;
     }
 
-    public String getWarningObjectLabel() {
-        return warningObjectLabel;
+    public String getWarningObjectSort() {
+        return warningObjectSort;
     }
 
-    public void setWarningObjectLabel(String warningObjectLabel) {
-        this.warningObjectLabel = warningObjectLabel;
+    public void setWarningObjectSort(String warningObjectSort) {
+        this.warningObjectSort = warningObjectSort;
     }
 
-    public String getCurrentRiskLevel() {
-        return currentRiskLevel;
+    public String getRiskLevel() {
+        return riskLevel;
     }
 
-    public void setCurrentRiskLevel(String currentRiskLevel) {
-        this.currentRiskLevel = currentRiskLevel;
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel = riskLevel;
     }
 
-    public String getPdRiskLevel() {
-        return pdRiskLevel;
+    public String getRiskHighLevel() {
+        return riskHighLevel;
     }
 
-    public void setPdRiskLevel(String pdRiskLevel) {
-        this.pdRiskLevel = pdRiskLevel;
+    public void setRiskHighLevel(String riskHighLevel) {
+        this.riskHighLevel = riskHighLevel;
     }
 
-    public String getPartnerRiskLevel() {
-        return partnerRiskLevel;
+    public String getRiskIdentify() {
+        return riskIdentify;
     }
 
-    public void setPartnerRiskLevel(String partnerRiskLevel) {
-        this.partnerRiskLevel = partnerRiskLevel;
+    public void setRiskIdentify(String riskIdentify) {
+        this.riskIdentify = riskIdentify;
     }
 
-    public String getExecuCustMgr() {
-        return execuCustMgr;
+    public String getExecuMgrNo() {
+        return execuMgrNo;
     }
 
-    public void setExecuCustMgr(String execuCustMgr) {
-        this.execuCustMgr = execuCustMgr;
+    public void setExecuMgrNo(String execuMgrNo) {
+        this.execuMgrNo = execuMgrNo;
     }
 
-    public String getExecuOrg() {
-        return execuOrg;
+    public String getExecuOrgNo() {
+        return execuOrgNo;
     }
 
-    public void setExecuOrg(String execuOrg) {
-        this.execuOrg = execuOrg;
+    public void setExecuOrgNo(String execuOrgNo) {
+        this.execuOrgNo = execuOrgNo;
     }
 
-    public String getAdSubBra() {
-        return adSubBra;
+    public String getAdminSubbranchNo() {
+        return adminSubbranchNo;
     }
 
-    public void setAdSubBra(String adSubBra) {
-        this.adSubBra = adSubBra;
+    public void setAdminSubbranchNo(String adminSubbranchNo) {
+        this.adminSubbranchNo = adminSubbranchNo;
     }
 
-    public String getAdBra() {
-        return adBra;
+    public String getAdminBranchNo() {
+        return adminBranchNo;
     }
 
-    public void setAdBra(String adBra) {
-        this.adBra = adBra;
+    public void setAdminBranchNo(String adminBranchNo) {
+        this.adminBranchNo = adminBranchNo;
     }
 
-    public String getBusinessOrg() {
-        return businessOrg;
+    public String getBusinessOrgNo() {
+        return businessOrgNo;
     }
 
-    public void setBusinessOrg(String businessOrg) {
-        this.businessOrg = businessOrg;
+    public void setBusinessOrgNo(String businessOrgNo) {
+        this.businessOrgNo = businessOrgNo;
     }
 
     public String getRelWarningObjectId() {
