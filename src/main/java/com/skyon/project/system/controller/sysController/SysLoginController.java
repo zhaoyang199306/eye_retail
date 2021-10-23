@@ -58,6 +58,20 @@ public class SysLoginController
     }
 
     /**
+     * 不跨域情况下，从session获取一期已登录信息进行二期登录
+     * @return
+     */
+    @GetMapping("/session/login")
+    public AjaxResult sessionLogin(String callback)
+    {
+        AjaxResult ajax = AjaxResult.success();
+        // 生成令牌
+        String token = loginService.sessionLogin(callback);
+        ajax.put(Constants.TOKEN, token);
+        return ajax;
+    }
+    
+    /**
      * 获取用户信息
      * 
      * @return 用户信息

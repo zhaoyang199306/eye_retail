@@ -10,8 +10,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>eye-retail</artifactId>
-
+    <artifactId>rews2b</artifactId>
+	<packaging>war</packaging>
     <properties>
         <mybatis.spring.boot.starter.version>1.3.2</mybatis.spring.boot.starter.version>
         <pagehelper.spring.boot.starter.version>1.2.5</pagehelper.spring.boot.starter.version>

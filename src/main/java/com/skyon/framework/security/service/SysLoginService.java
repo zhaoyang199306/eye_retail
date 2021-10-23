@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import com.skyon.common.constant.Constants;
@@ -39,6 +40,10 @@ public class SysLoginService
     @Autowired
     private RedisCache redisCache;
 
+    private RestTemplate rest = new RestTemplate();
+    
+    @Autowired
+    UserDetailsService userDetailsService;
     /**
      * 登录验证
      * 
@@ -97,6 +102,21 @@ public class SysLoginService
         return tokenService.createToken(loginUser);
     }
 
+    /**
+     * 不跨域情况下，从session获取一期已登录信息进行二期登录
+     * @param url 
+     * @return tokenn
+     */
+    public  String sessionLogin(String url) {
+    	String userId = rest.getForObject(url, String.class);
+    	if(userId.length()==0)
+    		throw new RuntimeException("not login!");
+    	System.out.println("从session获取一期已登录："+userId);
+		LoginUser login= (LoginUser) userDetailsService.loadUserByUsername(userId);
+        // 生成token
+        return tokenService.createToken(login);
+    }
+    
     private void ssoLogin(LoginUser loginUser){
         String username = loginUser.getUsername();
         String password = loginUser.getPassword();
@@ -122,4 +142,10 @@ public class SysLoginService
         }
         redisCache.setCacheObject(username + "fraudToken", tokenFerghana, 30, TimeUnit.MINUTES);
     }
+    
+    public static void main(String[] args) {
+		SysLoginService s = new SysLoginService();
+		String u= s.sessionLogin("http://localhost:8080/rews/auth/login/getLogin?loginToken=56EA93FE33F40445D0F165C6B694AB0D");
+		System.out.println(u);
+	}
 }
