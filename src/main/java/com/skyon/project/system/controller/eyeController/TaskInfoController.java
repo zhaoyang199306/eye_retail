@@ -119,7 +119,7 @@ public class TaskInfoController extends BaseController {
             }
 
             // 其余角色包括客户经理 根据用户id查询代办任务
-            Map mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
+            Map<String, Long> mapTask = taskWFService.taskWfUser(user);
             Set setOwner = mapTask.keySet();
 
 
@@ -171,7 +171,7 @@ public class TaskInfoController extends BaseController {
         try {
 
             // 其余角色包括客户经理 根据用户id查询代办任务
-            Map mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
+            Map mapTask = taskWFService.taskWfUser(user);
             Set setOwner = mapTask.keySet();
 
 
@@ -393,7 +393,7 @@ public class TaskInfoController extends BaseController {
 
             // 任务提交
         TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-        String taskName = service.commonSubmit(seWfTaskInfo.getTaskNo(), code, user);
+        String taskName = service.commonSubmit(seWfTaskInfo.getTaskNo(), WfCode.WF1001, user, "");
 
         // 保存 任务执行反馈表单
         SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();

@@ -32,12 +32,12 @@ public abstract class TaskCommon {
     /**
      * 保存任务流转
      */
-    public String commonSubmit(String taskNo, WfCode code, SysUser user) {
+    public String commonSubmit(String taskNo, WfCode code, SysUser user, String processCondition) {
 
         LOGGERCOMMON.info("当前事务名2：{}", TransactionSynchronizationManager.getCurrentTransactionName());
 
         // 获取组装参数
-        Map<String, Object> map = this.assembleParam(taskNo, code, user);
+        Map<String, Object> map = this.assembleParam(taskNo, code, user, processCondition);
 
         // 未启动流程的，先启动流程
         if (map.get("first") != null && (Boolean) map.get("first")) {
@@ -56,7 +56,7 @@ public abstract class TaskCommon {
     }
 
     // 组装参数 交给每个角色处理
-    protected abstract Map<String, Object> assembleParam(String taskNo, WfCode code, SysUser user);
+    protected abstract Map<String, Object> assembleParam(String taskNo, WfCode code, SysUser user, String processCondition);
 
     // 修改某些字段 交给每个角色处理
     protected void updateField(String taskNo) {

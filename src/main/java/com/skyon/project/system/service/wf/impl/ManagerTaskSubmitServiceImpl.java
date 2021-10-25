@@ -52,41 +52,24 @@ public class ManagerTaskSubmitServiceImpl extends TaskCommon implements Initiali
 
     /**
      * 客户经理执行任务  第一次执行  开启流程
-     * @param seWfTaskInfo 参数
+     * @param taskNo 任务编号
+     * @param code 流程启动编号
+     * @param user 用户信息
+     * @param processCondition 流程码值
+     * @return
      */
     @Override
-    protected Map<String, Object> assembleParam(String taskNo, WfCode code, SysUser user) {
+    protected Map<String, Object> assembleParam(String taskNo, WfCode code, SysUser user, String processCondition) {
         Map<String, Object> map = new HashMap<>();
-
-//        WFTaskFlagHandle handle = new WFTaskFlagHandle(seWfTaskInfo);
-//        boolean signTask = handle.isSignTask();
-
-        map.put(WFRole.WFROLE101.getCode(), user.getUserId()); // 客户经理操作人id
+        map.put(RoleName.WF_ROLE_011.getInfo(), user.getUserId()); // 客户经理操作人id
         map.put("first", taskWFService.confirmTaskIsExit(taskNo));  // 先查询一下是否启动过流程  （有重新回到客户经理手里的情况）
 
-//        if (WarningObjectCategory.retailArr().contains()) { // 零售
-//            if (TaskTyeCode.SING_TASK.getCode().equals(taskType)) { // 签收任务
-//                map.put("processKey", "");
-//            } else if (TaskTyeCode.PRE_TASK.getCode().equals(taskType)) { // 预警认定
-//                map.put("processKey", "retail_warn_wf_2101");
-//            } else if (TaskTyeCode.DISPOSAL_TRACK.getCode().equals(taskType)) { // 处置跟踪
-//                map.put("processKey", "");
-//            } else if (TaskTyeCode.SIGNAL_OBJECTION.getCode().equals(taskType)) { // 信号异议
-//                map.put("processKey", "");
-//            } else if (TaskTyeCode.RISK_OBJECTION.getCode().equals(taskType)) { // 风险异议
-//                map.put("processKey", "");
-//            } else if (TaskTyeCode.PARTNER_FEEDBACK_PROCESS.getCode().equals(taskType)) { // 合作方
-//                map.put("processKey", "");
-//            } else {
-//                throw new RuntimeException("未匹配到合适的任务类型");
-//            }
-//
-//        } else if (WarningObjectCategory.peerArr().contains(warningObjectCategory)) { // 同业
-//
-//        } else {
-//            throw new RuntimeException("未匹配到合适的预警对象类型");
-//        }
+        if (code == WfCode.WF1101) {
 
+        } else if (code == WfCode.WF2101) { // 预警任务审核流程-自营业务
+            map.put("processKey", "retail_warn_wf_2101"); // 流程id
+            map.put(RoleName.WF_ROLE_021.getInfo(), RoleName.WF_ROLE_021.getCode()); // 支行主管 角色赋值
+        }
 
         return map;
     }

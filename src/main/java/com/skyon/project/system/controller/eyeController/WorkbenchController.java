@@ -62,7 +62,7 @@ public class WorkbenchController extends BaseController {
         List<SysRole> roles = user.getRoles();
 
         // 根据用户id查询代办任务
-        Map<String, String> mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
+        Map<String, Long> mapTask = taskWFService.taskWfUser(user);
         Set<String> owerTaskNo = mapTask.keySet(); // 任务池的 taskNo
 
         logger.info("-------个人任务池-----list: {}", mapTask.toString());

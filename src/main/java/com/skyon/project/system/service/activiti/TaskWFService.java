@@ -1,5 +1,6 @@
 package com.skyon.project.system.service.activiti;
 
+import com.skyon.project.system.domain.sys.SysUser;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Task;
 
@@ -14,7 +15,7 @@ public interface TaskWFService {
      * @param user
      * @return Map of ProcessInstance.businessKey,ProcessInstance.name
      */
-    public Map<String, String> taskWfUser(String user);
+    public Map<String, Long> taskWfUser(SysUser user);
 
     // 查询候选任务
     public List taskWfGroup(String user);
@@ -58,6 +59,7 @@ public interface TaskWFService {
     /**
      * 判断该任务是否已经在 工作流任务中
      * @param taskInfoNo
+     * @param user
      */
     public boolean confirmTaskIsExit(String taskInfoNo);
 }
