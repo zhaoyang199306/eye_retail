@@ -91,6 +91,20 @@ public class SysUser extends BaseEntity
     /** 岗位组 */
     private Long[] postIds;
 
+
+    public boolean hasRoleId (String roleId){
+        roleId = "_"+roleId+"_";
+        if (roleIds.length>0){
+            StringBuffer roles = new StringBuffer();
+            for (int a =0;a==roleIds.length-1;a++){
+                roles.append("_");
+                roles.append(roleIds[a]);
+            }
+            return roles.append("_").toString().contains(roleId);
+        }
+        return false;
+    }
+
     public SysUser()
     {
 

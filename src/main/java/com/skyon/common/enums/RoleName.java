@@ -6,6 +6,15 @@ package com.skyon.common.enums;
 public enum RoleName {
 
     /**
+     * 总行行领导
+     */
+    WF_ROLE_166("76","WF_ROLE_163"),
+    /**
+     * 分行分管风险行领导
+     */
+    WF_ROLE_165("112","WF_ROLE_162"),
+
+    /**
      * 总行风险管理部审核岗(公司)
      */
     WF_ROLE_161("80", "WF_ROLE_161"),
@@ -197,6 +206,8 @@ public enum RoleName {
      * 客户经理
      */
     WF_ROLE_011("128", "WF_ROLE_011");
+
+
 
     private final String code;
     private final String info;

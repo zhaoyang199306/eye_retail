@@ -21,6 +21,12 @@ public class WTaskInfoServiceImpl implements WTaskInfoService {
     @Autowired
     private TBondInfoMapper bondInfoMapper;
 
+    @Override
+    public List<TaskInfoListPojo> getAllTaskListByOrg(String selType ,String orgType,String orgId){
+        return taskInfoMapper.getAllTaskListByOrg(selType,orgType,orgId);
+
+    }
+
     /**
      * 根据待办箱任务编号查询任务详情集合
      *

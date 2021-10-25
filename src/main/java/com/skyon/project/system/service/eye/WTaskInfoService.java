@@ -13,6 +13,9 @@ import java.util.Set;
 
 public interface WTaskInfoService {
 
+
+    public List<TaskInfoListPojo> getAllTaskListByOrg(String selType,String orgType,String orgId);
+
     public List<TaskInfoListPojo> getWTaskInfoByList1(Set set);
 
     /**

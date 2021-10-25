@@ -221,7 +221,7 @@
     </foreach>
     group by i.task_no,o.warning_object_name,o.warning_object_cid,o.warning_object_category, i.task_status,i.task_type,
     i.sys_risk_level,  o.ADMIN_SUBBRANCH_NO, o.ADMIN_BRANCH_NO, i.TASK_CREATE_TIME, i.task_deadline ,
-    i.HANDLE_ROLE_ID ,o.warning_object_category,o.warning_object_type ,r.role_name
+    i.curr_proc_steps ,o.warning_object_type ,r.role_name
 </select>
 
         <resultMap id="TaskInfoListPojo" type="com.skyon.project.system.domain.eye.TaskInfoListPojo">
@@ -244,10 +244,10 @@
             <result property="warningObjectType" column="warning_object_type"/>
         </resultMap>
 
-<!--    <select id="getWTaskInfoListByRole" parameterType="com.skyon.project.system.domain.vo.WarningTaskListVo" resultType="TaskInfoListPojo">
+    <select id="getWTaskInfoListByRole" parameterType="com.skyon.project.system.domain.vo.WarningTaskListVo" resultType="TaskInfoListPojo">
         select  i.task_no as taskNo,o.warning_object_name as warningObjectName,o.warning_object_cid as warningObjectNo,o.warning_object_type as warningObjectType
         ,i.task_status as taskStatus,i.task_type as taskType,
-        i.sys_risk_level as riskLevel,i.handle_role_id as handleRoleId,
+        i.sys_risk_level as riskLevel,i.CURR_PROC_STEPS as handleRoleId,
         COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
         COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
         COUNT(CASE WHEN warning_level = '03' THEN 1 ELSE NULL END) AS threeLevelCount,
@@ -257,7 +257,6 @@
         left join se_wf_warning_object o on i.warning_object_id = o.warning_object_id
         left join se_wf_warning_signs s on i.task_id = s.task_id
         left join sys_dept d on o.admin_subbranch_no=d.dept_id
-
         where i.task_status = '01'
         <if test="taskHandler != null and taskHandler != ''">
             and i.handler_user_id = #{taskHandler}
@@ -291,12 +290,12 @@
 		${dataScope}
         group by i.task_no,o.warning_object_name,o.warning_object_cid,o.warning_object_category, i.task_status,i.task_type,
         i.sys_risk_level,  o.ADMIN_SUBBRANCH_NO, o.ADMIN_BRANCH_NO, i.TASK_CREATE_TIME, i.task_deadline ,
-        i.HANDLE_ROLE_ID ,o.warning_object_category,o.warning_object_type
-    </select>-->
-    <select id="getWTaskInfoListByRole" parameterType="com.skyon.project.system.domain.vo.WarningTaskListVo" resultType="TaskInfoListPojo">
+        i.curr_proc_steps ,o.warning_object_type
+    </select>
+    <select id="getAllTaskListByOrg" parameterType="String"  resultType="TaskInfoListPojo">
         select  i.task_no as taskNo,o.warning_object_name as warningObjectName,o.warning_object_cid as warningObjectNo,o.warning_object_type as warningObjectType
         ,i.task_status as taskStatus,i.task_type as taskType,
-        i.sys_risk_level as riskLevel,i.handle_role_id as handleRoleId, r.role_name as handleRoleName,
+        i.sys_risk_level as riskLevel,i.handle_role_id as handleRoleId,
         COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
         COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
         COUNT(CASE WHEN warning_level = '03' THEN 1 ELSE NULL END) AS threeLevelCount,
@@ -305,10 +304,31 @@
         from se_wf_task_info i
         left join se_wf_warning_object o on i.warning_object_id = o.warning_object_id
         left join se_wf_warning_signs s on i.task_id = s.task_id
-        left join sys_role r on r.role_id = i.handle_role_id
+        where
+        <if test="selType == '04'">
+            i.task_status != '03'
+        </if>
+        <if test="selType == '01'">
+            i.task_status = '01'
+        </if>
+        <if test="selType == '02'">
+            i.task_status = '02'
+        </if>
+        <if test="selType == '03'">
+            i.task_status = '03'
+        </if>
+        <if test="orgType == '01'">
+            and o.BUSINESS_ORG_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where BUSINESS_ORG_NO =#{orgID})
+        </if>
+        <if test="orgType == '02'">
+            and o.ADMIN_BRANCH_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where ADMIN_BRANCH_NO =#{orgID})
+        </if>
+        <if test="orgType == '03'">
+            and o.ADMIN_SUBBRANCH_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where ADMIN_SUBBRANCH_NO =#{orgID})
+        </if>
         group by i.task_no,o.warning_object_name,o.warning_object_cid,o.warning_object_category, i.task_status,i.task_type,
         i.sys_risk_level,  o.ADMIN_SUBBRANCH_NO, o.ADMIN_BRANCH_NO, i.TASK_CREATE_TIME, i.task_deadline ,
-        i.HANDLE_ROLE_ID ,o.warning_object_category,o.warning_object_type ,r.role_name
+        i.curr_proc_steps ,o.warning_object_type
     </select>
 
     <select id="selectSeWfTaskInfoByTaskNo" resultMap="SeWfTaskInfo" parameterType="String">

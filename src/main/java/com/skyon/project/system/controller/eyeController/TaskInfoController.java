@@ -20,6 +20,7 @@ import com.skyon.project.system.service.activiti.RunWFService;
 import com.skyon.project.system.service.activiti.TaskWFService;
 import com.skyon.project.system.service.eye.*;
 import com.skyon.project.system.service.wf.TaskCommon;
+import com.skyon.project.system.util.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -103,7 +104,7 @@ public class TaskInfoController extends BaseController {
     @ApiOperation(value="预警任务列表查询")
     @GetMapping("/list")
     @DataScope(deptAlias = "d")
-    public AjaxResult getSignalManualList( WarningTaskListVo warningTaskListVo) {
+    public AjaxResult getAllTaskList( WarningTaskListVo warningTaskListVo) {
         List<TaskInfoListPojo> list = new ArrayList<>();
         List<TaskInfoListPojo> listAct = new ArrayList<>();
 
@@ -122,14 +123,26 @@ public class TaskInfoController extends BaseController {
             Set setOwner = mapTask.keySet();
 
 
-
-            //还要添加机构管理员的查看sql
-
             // 查询待办箱
             if (setOwner.size() > 0)
                 listAct = taskInfoService.getWTaskInfoByList1(setOwner);
 
+
             listAct.addAll(list);
+            //添加总行管理员的查看
+            if(user != null){
+                if(user.hasRoleId(RoleName.WF_ROLE_011.getCode())){
+                    listAct.addAll(taskInfoService.getAllTaskListByOrg("04","01",user.getDeptId().toString()));
+                }
+                //添加支行管理员的查看
+                if(user.hasRoleId(RoleName.WF_ROLE_165.getCode())){
+                    listAct.addAll(taskInfoService.getAllTaskListByOrg("04","02",user.getDeptId().toString()));
+                }
+                //添加分行管理员的查看
+                if(user.hasRoleId(RoleName.WF_ROLE_166.getCode())){
+                    listAct.addAll(taskInfoService.getAllTaskListByOrg("04","03",user.getDeptId().toString()));
+                }
+            }
 
             return AjaxResult.success(listAct);
         } catch (Exception e) {
@@ -138,7 +151,56 @@ public class TaskInfoController extends BaseController {
         }
 
     }
+    /**
+     * 根据角色查询  预警业务列表
+     * 如果角色是客户经理，则根据客户经理名称查询
+     *
+     * @param warningTaskListVo
+     * @return
+     */
+    @ApiOperation(value="预警任务列表查询")
+    @GetMapping("/listTask")
+    @DataScope(deptAlias = "d")
+    public AjaxResult getHandingTaskList( WarningTaskListVo warningTaskListVo) {
+        List<TaskInfoListPojo> list = new ArrayList<>();
+        List<TaskInfoListPojo> listAct = new ArrayList<>();
 
+        SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
+        List<SysRole> roles = user.getRoles();
+
+        try {
+
+            // 其余角色包括客户经理 根据用户id查询代办任务
+            Map mapTask = taskWFService.taskWfUser(String.valueOf(user.getUserId()));
+            Set setOwner = mapTask.keySet();
+
+
+            // 查询待办箱
+            if (setOwner.size() > 0)
+                listAct = taskInfoService.getWTaskInfoByList1(setOwner);
+
+
+            listAct.addAll(list);
+            //添加总行管理员的查看
+            if(user.hasRoleId(RoleName.WF_ROLE_011.getCode())){
+                listAct.addAll(taskInfoService.getAllTaskListByOrg("02","01",user.getDeptId().toString()));
+            }
+            //添加支行管理员的查看
+            if(user.hasRoleId(RoleName.WF_ROLE_165.getCode())){
+                listAct.addAll(taskInfoService.getAllTaskListByOrg("02","02",user.getDeptId().toString()));
+            }
+            //添加分行管理员的查看
+            if(user.hasRoleId(RoleName.WF_ROLE_166.getCode())){
+                listAct.addAll(taskInfoService.getAllTaskListByOrg("02","03",user.getDeptId().toString()));
+            }
+
+            return AjaxResult.success(listAct);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return AjaxResult.error("列表查询异常！");
+        }
+
+    }
     /**
      * 预警认定-- 反馈和审批提交入口
      *
@@ -171,9 +233,167 @@ public class TaskInfoController extends BaseController {
 
         SeWfTaskInfo seWfTaskInfo = taskInfoService.selectSeWfTaskInfoByTaskNo(prjo.getTaskNo());
 
-        // 任务提交
+        if(StringUtil.isEmp(user.getDept().getAncestors()))
+            return AjaxResult.error("该用户未分配机构");
+        //对应流程判断
+        WfCode code = null ;
+        //是否人工信号录入
+        if("07".equals(seWfTaskInfo.getTaskType())){
+            //预警对象类型=’个人客户’ OR 预警对象类型=’小微客户’
+            if("03".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())||"04".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                //是否总行
+                if(StringUtil.countStr(user.getDept().getAncestors(),",")==0 && user.hasRoleId(RoleName.WF_ROLE_144.getCode()))
+                    code = WfCode.WF1103;
+                //是否分行
+                if(StringUtil.countStr(user.getDept().getAncestors(),",")==1 && user.hasRoleId(RoleName.WF_ROLE_034.getCode()))
+                    code = WfCode.WF1102;
+                //是否支行
+                if(StringUtil.countStr(user.getDept().getAncestors(),",")==2 && user.hasRoleId(RoleName.WF_ROLE_011.getCode()))
+                    code = WfCode.WF1101;
+            //预警对象类型='合作方'
+            }else if("05".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                //是否总行
+                if(StringUtil.countStr(user.getDept().getAncestors(),",")==0 && user.hasRoleId(RoleName.WF_ROLE_114.getCode()))
+                    code = WfCode.WF1104;
+                //是否分行
+                if(StringUtil.countStr(user.getDept().getAncestors(),",")==1 && user.hasRoleId(RoleName.WF_ROLE_035.getCode()))
+                    code = WfCode.WF1105;
+            //预警对象类型=’对公客户’ OR 预警对象类型=’同业主体’
+            }else if("01".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())||"02".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                //经办角色=’总行业务部门风险监测岗(金融市场部)
+                if(user.hasRoleId(RoleName.WF_ROLE_081.getCode()))
+                    code = WfCode.WF1001;
+                //经办角色=’总行业务部门风险监测岗(投行资管部)
+                if(user.hasRoleId(RoleName.WF_ROLE_082.getCode()))
+                    code = WfCode.WF1002;
+                //经办角色=’分行风险监测岗(投行资管部)
+                if(user.hasRoleId(RoleName.WF_ROLE_033.getCode()))
+                    code = WfCode.WF1003;
+            }
+        //预警认定审批流程
+        }else if("02".equals(seWfTaskInfo.getTaskType())){
+            //预警对象类型=’个人客户’ OR 预警对象类型=’小微客户’
+            if("03".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())||"04".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                code=WfCode.WF2101;
+            //预警对象类型=’零售产品’
+            }else if("08".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                code=WfCode.WF2102;
+            //预警对象类型=’合作方’
+            }else if("05".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                code=WfCode.WF2103;
+            //预警对象类型=’对公客户’
+            }else if("01".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                code=WfCode.WF2001;
+            //预警对象类型=’同业主体’
+            }else if("02".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                //经办角色=’客户经理’ AND 经办机构级别=’分行’
+                if(StringUtil.countStr(user.getDept().getAncestors(),",")==1 && user.hasRoleId(RoleName.WF_ROLE_011.getCode()))
+                    code = WfCode.WF2002;
+                //经办角色=’客户经理’ AND 经办机构级别=’总行’
+                if(StringUtil.countStr(user.getDept().getAncestors(),",")==0 && user.hasRoleId(RoleName.WF_ROLE_011.getCode()))
+                    code = WfCode.WF2003;
+            //投组
+            }else if("06".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                //经办角色=’总行业务部门风险监测岗(金融市场部)’ AND 经办机构级别=’总行’
+                if(StringUtil.countStr(user.getDept().getAncestors(),",")==0 && user.hasRoleId(RoleName.WF_ROLE_081.getCode()))
+                    code = WfCode.WF2004;
+                //经办角色=’总行业务部门风险监测岗(投行资管部))’ AND 经办机构级别=’总行’
+                if(StringUtil.countStr(user.getDept().getAncestors(),",")==0 && user.hasRoleId(RoleName.WF_ROLE_082.getCode()))
+                    code = WfCode.WF2005;
+                //经办角色=’分行风险监测岗(金融市场部)’ AND 经办机构级别=’分行’
+                if(StringUtil.countStr(user.getDept().getAncestors(),",")==0 && user.hasRoleId(RoleName.WF_ROLE_032.getCode()))
+                    code = WfCode.WF2006;
+                //经办角色=’分行风险监测岗(投行资管部)’ AND 经办机构级别=’分行’
+                if(StringUtil.countStr(user.getDept().getAncestors(),",")==0 && user.hasRoleId(RoleName.WF_ROLE_033.getCode()))
+                    code = WfCode.WF2007;
+            }
+        }else if("03".equals(seWfTaskInfo.getTaskType())){
+            //预警对象类型=’个人客户’ OR 预警对象类型=’小微客户’
+            if("03".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())||"04".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory()))
+                code=WfCode.WF2101;
+            //预警对象类型=’对公客户’
+            if("01".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory()))
+                code=WfCode.WF2011;
+            //预警对象类型=’同业客户’
+            if("02".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())) {
+                //经办角色=’客户经理’ AND 经办机构级别=’分行’
+                if (StringUtil.countStr(user.getDept().getAncestors(), ",") == 1 && user.hasRoleId(RoleName.WF_ROLE_011.getCode()))
+                    code = WfCode.WF2012;
+                //经办角色=’客户经理’ AND 经办机构级别=’总行’
+                if (StringUtil.countStr(user.getDept().getAncestors(), ",") == 0 && user.hasRoleId(RoleName.WF_ROLE_011.getCode()))
+                    code = WfCode.WF2013;
+            }
+        }else if("06".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())) {
+            //经办角色=’总行业务部门风险监测岗(金融市场部)’ AND 经办机构级别=’总行’
+            if (StringUtil.countStr(user.getDept().getAncestors(), ",") == 0 && user.hasRoleId(RoleName.WF_ROLE_081.getCode()))
+                code = WfCode.WF2014;
+            //经办角色=’总行业务部门风险监测岗(投行资管部))’ AND 经办机构级别=’总行’
+            if (StringUtil.countStr(user.getDept().getAncestors(), ",") == 0 && user.hasRoleId(RoleName.WF_ROLE_082.getCode()))
+                code = WfCode.WF2015;
+            //经办角色=’分行风险监测岗(金融市场部)’ AND 经办机构级别=’分行’
+            if (StringUtil.countStr(user.getDept().getAncestors(), ",") == 0 && user.hasRoleId(RoleName.WF_ROLE_032.getCode()))
+                code = WfCode.WF2016;
+            //经办角色=’分行风险监测岗(投行资管部)’ AND 经办机构级别=’分行’
+            if (StringUtil.countStr(user.getDept().getAncestors(), ",") == 0 && user.hasRoleId(RoleName.WF_ROLE_033.getCode()))
+                code = WfCode.WF2017;
+        //信号异议审批流程-信号异议
+        }else if("04".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+            code = WfCode.WF2104;
+        //信号异议审批流程-风险异议
+        }else if("05".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+            code = WfCode.WF2101;
+        //预警解除审批流程
+        }else if("08".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+            //预警对象类型=’个人客户’ OR 预警对象类型=’小微客户’
+            if("03".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())||"04".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory()))
+                code=WfCode.WF3101;
+            //预警对象类型=’对公客户’
+            if("01".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory()))
+                code=WfCode.WF3001;
+            //预警对象类型=’同业客户’
+            if("02".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())) {
+                //预警对象类别=’同业主体’ AND 经办机构级别=’分行’
+                if (StringUtil.countStr(user.getDept().getAncestors(), ",") == 1 && "02".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory()))
+                    code = WfCode.WF3002;
+                //预警对象类别=’同业主体’ AND 经办机构级别=’总行’
+                if (StringUtil.countStr(user.getDept().getAncestors(), ",") == 0 && "02".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory()))
+                    code = WfCode.WF3003;
+            }
+        //灰名单管理审批流程
+        }else if("08".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+            //预警对象类型=’同业客户’
+            if("02".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                code = WfCode.PEER_WF3102;
+            }else{
+                code = WfCode.RETAIL_WF3102;
+            }
+        //黑名单管理审批流程
+        }else if("08".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+            //预警对象类型=’同业客户’
+            if("02".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                code = WfCode.PEER_WF3103;
+            }else{
+                code = WfCode.RETAIL_WF3103;
+            }
+        //合作方高风险名单审批流程
+        }else if("08".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+            //预警对象类型=’同业客户’
+            if("02".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+                code = WfCode.PEER_WF3104;
+            }else{
+                code = WfCode.RETAIL_WF3104;
+            }
+        //任务改派审批流程
+        }else if("08".equals(seWfTaskInfo.getSeWfWarningObject().getWarningObjectCategory())){
+            //code = WfCode.WF4001;
+        }
+
+
+
+
+            // 任务提交
         TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-        String taskName = service.commonSubmit(seWfTaskInfo.getTaskNo(), WfCode.WF1001, user);
+        String taskName = service.commonSubmit(seWfTaskInfo.getTaskNo(), code, user);
 
         // 保存 任务执行反馈表单
         SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();

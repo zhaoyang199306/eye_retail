@@ -22,19 +22,19 @@ public class SeWfTaskInfo extends BasePojo {
     private String warningObjectId;  
     @ApiModelProperty(name = "taskNo" , value = "预警对象ID", required = false)
     private String taskNo;  
-    @ApiModelProperty(name = "taskCreateTime" , value = "任务编号", required = false)
+    @ApiModelProperty(name = "taskCreateTime" , value = "任务生成时间", required = false)
     private String taskCreateTime;  
-    @ApiModelProperty(name = "taskDeadline" , value = "任务生成时间", required = false)
+    @ApiModelProperty(name = "taskDeadline" , value = "要求任务完成截止日", required = false)
     private String taskDeadline;  
-    @ApiModelProperty(name = "taskEndDate" , value = "要求任务完成截止日", required = false)
+    @ApiModelProperty(name = "taskEndDate" , value = "任务实际完成日期", required = false)
     private String taskEndDate;  
-    @ApiModelProperty(name = "taskType" , value = "任务实际完成日期", required = false)
+    @ApiModelProperty(name = "taskType" , value = "任务类型", required = false)
     private String taskType;  
-    @ApiModelProperty(name = "taskStatus" , value = "任务类型", required = false)
+    @ApiModelProperty(name = "taskStatus" , value = "任务状态", required = false)
     private String taskStatus;  
-    @ApiModelProperty(name = "handlerUserId" , value = "任务状态", required = false)
+    @ApiModelProperty(name = "handlerUserId" , value = "经办人ID", required = false)
     private String handlerUserId;  
-    @ApiModelProperty(name = "handleRoleId" , value = "经办人ID", required = false)
+    @ApiModelProperty(name = "handleRoleId" , value = "经办角色ID", required = false)
     private String handleRoleId;  
     @ApiModelProperty(name = "taskWorking" , value = "当前任务工作", required = false)
     private String taskWorking;  
