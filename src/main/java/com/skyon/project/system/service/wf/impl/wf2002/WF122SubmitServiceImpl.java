@@ -50,6 +50,7 @@ public class WF122SubmitServiceImpl extends TaskCommon implements InitializingBe
         if (code == WfCode.WF2002) { // 预警任务审核流程-同业主体预警认定(分行)
             map.put("is_132", WFTaskCodeFlag.code12(processCondition));
             map.put(RoleName.WF_ROLE_132.getInfo(),RoleName.WF_ROLE_132.getCode()); // 总行监测主管（金融市场部） 角色赋值
+            map.put(RoleName.WF_ROLE_142.getInfo(),RoleName.WF_ROLE_142.getCode()); // 总行风险管理部监测岗（金融市场部） 角色赋值
         }
 
         return map;
