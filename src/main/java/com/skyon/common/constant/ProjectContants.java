@@ -5,4 +5,10 @@ package com.skyon.common.constant;
  */
 public class ProjectContants {
     public static final String SUBMIT_BUTTON = "提交";
+
+    public static final String CURRENT_NAME = "currentName";
+
+    public static final String CURRENT_ID = "currentId";
+
+    public static final String PROCESSIN_STANCE_ID = "processInstanceId";
 }

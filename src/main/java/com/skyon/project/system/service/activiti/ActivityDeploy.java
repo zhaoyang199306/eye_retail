@@ -27,7 +27,8 @@ public class ActivityDeploy {
         DeploymentBuilder myProcess_1 = deployment
         		.addClasspathResource("processes/EyeRetailWF.bpmn")
         		.addClasspathResource("processes/EyePeersWF.bpmn")
-                .addClasspathResource("processes/WF2002.bpmn");
+                .addClasspathResource("processes/WF2002.bpmn")
+        		.addClasspathResource("processes/retailWarnWF2101.bpmn");
 		// 完成部署
 		Deployment deploy = myProcess_1.deploy();
 		
