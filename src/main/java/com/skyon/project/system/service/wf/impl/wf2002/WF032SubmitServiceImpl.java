@@ -49,7 +49,7 @@ public class WF032SubmitServiceImpl extends TaskCommon implements InitializingBe
     @Override
     protected Map<String, Object> assembleParam(String taskNo, WfCode code, SysUser user, String processCondition) {
         Map<String, Object> map = new HashMap<>();
-        map.put(RoleName.WF_ROLE_032.getInfo(), user.getUserId()); //分行风险监测岗（金融市场部）操作人 id
+        map.put(RoleName.WF_ROLE_032.getInfo(), user.getUserId().toString()); //分行风险监测岗（金融市场部）操作人 id
         map.put("first", taskWFService.confirmTaskIsExit(taskNo));  // 先查询一下是否启动过流程  （有重新回到客户经理手里的情况）
 
         if (code == WfCode.WF2002) { // 预警任务审核流程-同业主体预警认定(分行)
