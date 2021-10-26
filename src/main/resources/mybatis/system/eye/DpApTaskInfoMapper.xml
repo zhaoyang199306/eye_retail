@@ -318,14 +318,14 @@
         <if test="selType == '03'">
             i.task_status = '03'
         </if>
-<!--        <if test="orgType == '01'">
-            and o.BUSINESS_ORG_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where BUSINESS_ORG_NO =#{orgId})
-        </if>-->
+        <if test="orgType == '01'">
+            and o.BUSINESS_ORG_NO =#{orgId}
+        </if>
         <if test="orgType == '02'">
-            and o.ADMIN_BRANCH_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where ADMIN_BRANCH_NO =#{orgId})
+            and o.ADMIN_BRANCH_NO =#{orgId}
         </if>
         <if test="orgType == '03'">
-            and o.ADMIN_SUBBRANCH_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where ADMIN_SUBBRANCH_NO =#{orgId})
+            and o.ADMIN_SUBBRANCH_NO =#{orgId}
         </if>
         group by i.task_no,o.warning_object_name,o.warning_object_cid,o.warning_object_category, i.task_status,i.task_type,
         i.sys_risk_level,  o.ADMIN_SUBBRANCH_NO, o.ADMIN_BRANCH_NO, i.TASK_CREATE_TIME, i.task_deadline ,
