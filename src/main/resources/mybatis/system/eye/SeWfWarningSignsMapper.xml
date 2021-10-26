@@ -74,6 +74,62 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getSignalDownList" parameterType="String" resultType="SeWfWarningSigns" resultMap="seWfWarningSignsResult">
         select * from SE_WF_WARNING_SIGNS  where DISTRIBUTE_STATUS=#{listType}
     </select>
+	<insert id="insertSignManual" parameterType="SeWfWarningSigns">
+		insert into SE_WF_WARNING_SIGNS(
+
+		SIGNAL_NO",
+		<if test="signalName != null and signalName != 0">SIGNAL_NAME",</if>
+		<if test="signalCreateModel != null and signalCreateModel != 0">SIGNAL_CREATE_MODEL",</if>
+		<if test="signalTriggerTime != null and signalTriggerTime != 0">SIGNAL_TRIGGER_TIME",</if>
+		<if test="signalDueDay != null and signalDueDay != 0">SIGNAL_DUE_DAY",</if>
+		<if test="warningLevel != null and warningLevel != 0">WARNING_LEVEL",</if>
+		<if test="signalType != null and signalType != 0">SIGNAL_TYPE",</if>
+		<if test="warnDsc != null and warnDsc != 0">WARN_DSC",</if>
+		<if test="warningObjectId != null and warningObjectId != 0">WARNING_OBJECT_ID",</if>
+		<if test="isWarnFlag != null and isWarnFlag != 0">IS_WARN_FLAG",</if>
+		<if test="warnNo != null and warnNo != 0">WARN_NO",</if>
+		<if test="sendPeople != null and sendPeople != 0">SEND_PEOPLE",</if>
+		<if test="recipientPeople != null and recipientPeople != 0">RECIPIENT_PEOPLE",</if>
+		<if test="opposeAdvice != null and opposeAdvice != 0">OPPOSE_ADVICE",</if>
+		<if test="attachedFile != null and attachedFile != 0">ATTACHED_FILE",</if>
+		<if test="signalDataSource != null and signalDataSource != 0">SIGNAL_DATA_SOURCE",</if>
+		<if test="signalRuleId != null and signalRuleId != 0">SIGNAL_RULE_ID",</if>
+		<if test="triggerNum != null and triggerNum != 0">TRIGGER_NUM",</if>
+		<if test="isRelaFlag != null and isRelaFlag != 0">IS_RELA_FLAG",</if>
+		<if test="relaSignalNo != null and relaSignalNo != 0">RELA_SIGNAL_NO",</if>
+		<if test="isMergeFlag != null and isMergeFlag != 0">IS_MERGE_FLAG",</if>
+		<if test="mergeSignalNo != null and mergeSignalNo != 0">MERGE_SIGNAL_NO",</if>
+		<if test="signalStatus != null and signalStatus != 0">SIGNAL_STATUS",</if>
+		<if test="distributeStatus != null and distributeStatus != 0">DISTRIBUTE_STATUS",</if>
+		<if test="distributeTime != null and distributeTime != 0">DISTRIBUTE_TIME",</if>
+		<if test="distributeModel != null and distributeModel != 0">DISTRIBUTE_MODEL",</if>
+		<if test="disposalMode != null and disposalMode != 0">DISPOSAL_MODE",</if>
+		<if test="noDistributeReason != null and noDistributeReason != 0">NO_DISTRIBUTE_REASON",</if>
+		<if test="disableReason != null and disableReason != 0">DISABLE_REASON",</if>
+		<if test="taskId != null and taskId != 0">TASK_ID",</if>
+		<if test="confirmStatus != null and confirmStatus != 0">CONFIRM_STATUS",</if>
+		<if test="feedbackStatus != null and feedbackStatus != 0">FEEDBACK_STATUS",</if>
+		<if test="feedbackDesc != null and feedbackDesc != 0">FEEDBACK_DESC",</if>
+		<if test="handlerUserId != null and handlerUserId != 0">HANDLER_USER_ID",</if>
+		<if test="handleRoleId != null and handleRoleId != 0">HANDLE_ROLE_ID",</if>
+		<if test="currHandlerId != null and currHandlerId != 0">CURR_HANDLER_ID",</if>
+		<if test="currRoleId != null and currRoleId != 0">CURR_ROLE_ID",</if>
+		<if test="approvalRulesCond != null and approvalRulesCond != 0">APPROVAL_RULES_COND",</if>
+		create_time,del_flag
+		)values(
+		SE_WF_WARNING_SIGNS_SEQUENCE.nextval,
+		<if test="parentId != null and parentId != 0">#{parentId},</if>
+		<if test="deptName != null and deptName != ''">#{deptName},</if>
+		<if test="ancestors != null and ancestors != ''">#{ancestors},</if>
+		<if test="orderNum != null and orderNum != ''">#{orderNum},</if>
+		<if test="leader != null and leader != ''">#{leader},</if>
+		<if test="phone != null and phone != ''">#{phone},</if>
+		<if test="email != null and email != ''">#{email},</if>
+		<if test="status != null">#{status},</if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
+		sysdate,0
+		)
+	</insert>
 
 
 	<update id="updateSignDownInfo" parameterType="com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns">

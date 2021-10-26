@@ -290,10 +290,11 @@
 		${dataScope}
         group by i.task_no,o.warning_object_name,o.warning_object_cid,o.warning_object_category, i.task_status,i.task_type,
         i.sys_risk_level,  o.ADMIN_SUBBRANCH_NO, o.ADMIN_BRANCH_NO, i.TASK_CREATE_TIME, i.task_deadline ,
-        i.curr_proc_steps ,o.warning_object_type
+        i.curr_proc_steps ,o.warning_object_type,i.handle_role_id
     </select>
-    <select id="getAllTaskListByOrg" parameterType="String"  resultType="TaskInfoListPojo">
-        select  i.task_no as taskNo,o.warning_object_name as warningObjectName,o.warning_object_cid as warningObjectNo,o.warning_object_type as warningObjectType
+    <select id="getAllTaskListByOrg"  resultType="TaskInfoListPojo">
+        select  i.task_no as taskNo,o.warning_object_name as warningObjectName,o.warning_object_cid as warningObjectNo,
+        o.warning_object_type as warningObjectType
         ,i.task_status as taskStatus,i.task_type as taskType,
         i.sys_risk_level as riskLevel,i.handle_role_id as handleRoleId,
         COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
@@ -317,18 +318,18 @@
         <if test="selType == '03'">
             i.task_status = '03'
         </if>
-        <if test="orgType == '01'">
-            and o.BUSINESS_ORG_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where BUSINESS_ORG_NO =#{orgID})
-        </if>
+<!--        <if test="orgType == '01'">
+            and o.BUSINESS_ORG_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where BUSINESS_ORG_NO =#{orgId})
+        </if>-->
         <if test="orgType == '02'">
-            and o.ADMIN_BRANCH_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where ADMIN_BRANCH_NO =#{orgID})
+            and o.ADMIN_BRANCH_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where ADMIN_BRANCH_NO =#{orgId})
         </if>
         <if test="orgType == '03'">
-            and o.ADMIN_SUBBRANCH_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where ADMIN_SUBBRANCH_NO =#{orgID})
+            and o.ADMIN_SUBBRANCH_NO in(select WARNING_OBJECT_ID from SE_WF_WARNING_OBJECT where ADMIN_SUBBRANCH_NO =#{orgId})
         </if>
         group by i.task_no,o.warning_object_name,o.warning_object_cid,o.warning_object_category, i.task_status,i.task_type,
         i.sys_risk_level,  o.ADMIN_SUBBRANCH_NO, o.ADMIN_BRANCH_NO, i.TASK_CREATE_TIME, i.task_deadline ,
-        i.curr_proc_steps ,o.warning_object_type
+        i.curr_proc_steps ,o.warning_object_type,i.handle_role_id
     </select>
 
     <select id="selectSeWfTaskInfoByTaskNo" resultMap="SeWfTaskInfo" parameterType="String">

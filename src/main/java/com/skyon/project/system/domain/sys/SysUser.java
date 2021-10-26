@@ -94,13 +94,13 @@ public class SysUser extends BaseEntity
 
     public boolean hasRoleId (String roleId){
         roleId = "_"+roleId+"_";
-        if (roleIds.length>0){
-            StringBuffer roles = new StringBuffer();
-            for (int a =0;a==roleIds.length-1;a++){
-                roles.append("_");
-                roles.append(roleIds[a]);
+        if (roles.size()>0){
+            StringBuffer rolesString = new StringBuffer();
+            for (SysRole role: roles) {
+                rolesString.append("_");
+                rolesString.append(role.getRoleId());
             }
-            return roles.append("_").toString().contains(roleId);
+            return rolesString.append("_").toString().contains(roleId);
         }
         return false;
     }

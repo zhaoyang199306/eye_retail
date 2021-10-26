@@ -51,9 +51,20 @@ public class SysDept extends BaseEntity
 
     /** 父部门名称 */
     private String parentName;
-    
+
+    /** 部门等级 */
+    private String deptLevel;
+
     /** 子部门 */
     private List<SysDept> children = new ArrayList<SysDept>();
+
+    public String getDeptLevel() {
+        return deptLevel;
+    }
+
+    public void setDeptLevel(String deptLevel) {
+        this.deptLevel = deptLevel;
+    }
 
     public Long getDeptId()
     {

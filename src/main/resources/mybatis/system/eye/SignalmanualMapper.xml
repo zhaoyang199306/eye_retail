@@ -4,15 +4,86 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.skyon.project.system.mapper.eye.SignalManualMapper">
 
+    <resultMap id="seWfWarningSignsResult" type="com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns">
+        <id property="signalId" column="SIGNAL_ID"/>
+        <result property="signalNo" column="SIGNAL_NO"/>
+        <result property="signalName" column="SIGNAL_NAME"/>
+        <result property="signalCreateModel" column="SIGNAL_CREATE_MODEL"/>
+        <result property="signalTriggerTime" column="SIGNAL_TRIGGER_TIME"/>
+        <result property="signalDueDay" column="SIGNAL_DUE_DAY"/>
+        <result property="warningLevel" column="WARNING_LEVEL"/>
+        <result property="signalType" column="SIGNAL_TYPE"/>
+        <result property="warnDsc" column="WARN_DSC"/>
+        <result property="warningObjectId" column="WARNING_OBJECT_ID"/>
+        <result property="isWarnFlag" column="IS_WARN_FLAG"/>
+        <result property="warnNo" column="WARN_NO"/>
+        <result property="sendPeople" column="SEND_PEOPLE"/>
+        <result property="recipientPeople" column="RECIPIENT_PEOPLE"/>
+        <result property="opposeAdvice" column="OPPOSE_ADVICE"/>
+        <result property="attachedFile" column="ATTACHED_FILE"/>
+        <result property="signalDataSource" column="SIGNAL_DATA_SOURCE"/>
+        <result property="signalRuleId" column="SIGNAL_RULE_ID"/>
+        <result property="triggerNum" column="TRIGGER_NUM"/>
+        <result property="isRelaFlag" column="IS_RELA_FLAG"/>
+        <result property="relaSignalNo" column="RELA_SIGNAL_NO"/>
+        <result property="isMergeFlag" column="IS_MERGE_FLAG"/>
+        <result property="mergeSignalNo" column="MERGE_SIGNAL_NO"/>
+        <result property="signalStatus" column="SIGNAL_STATUS"/>
+        <result property="distributeStatus" column="DISTRIBUTE_STATUS"/>
+        <result property="distributeTime" column="DISTRIBUTE_TIME"/>
+        <result property="distributeModel" column="DISTRIBUTE_MODEL"/>
+        <result property="disposalMode" column="DISPOSAL_MODE"/>
+        <result property="noDistributeReason" column="NO_DISTRIBUTE_REASON"/>
+        <result property="disableReason" column="DISABLE_REASON"/>
+        <result property="taskId" column="TASK_ID"/>
+        <result property="confirmStatus" column="CONFIRM_STATUS"/>
+        <result property="feedbackStatus" column="FEEDBACK_STATUS"/>
+        <result property="feedbackDesc" column="FEEDBACK_DESC"/>
+        <result property="handlerUserId" column="HANDLER_USER_ID"/>
+        <result property="handleRoleId" column="HANDLE_ROLE_ID"/>
+        <result property="currHandlerId" column="CURR_HANDLER_ID"/>
+        <result property="currRoleId" column="CURR_ROLE_ID"/>
+        <result property="approvalRulesCond" column="APPROVAL_RULES_COND"/>
+        <association property="seWfWarningObject"  column="WARNING_OBJECT_ID"
+                     select="getSeWfWarningObjectByWarningObjectId2"/>
+    </resultMap>
 
-    <select id="getSignalManualList" resultType="map">
-        SELECT T1.CUST_NAME,T2.ADMIN_USER_NAME,T2.ADMIN_ORG_NAME,to_char(T1.INPUT_DT,'yyyy-MM-dd') as INPUT_DT,
-        T1.IS_WARN_FLAG,T1.SIGNAL_NO,T2.ADMIN_BRANCH_NAME,
-        T1.CUST_NO,T2.IS_TOL_AUTH,T1.CREATE_NAME FROM DC_AP_SIGNAL_MANUAL T1
-		 LEFT JOIN DC_AP_CUST_INFO T2 on T1.CUST_NO=T2.CUST_NO
-		 where IS_WARN_FLAG = '1'
+    <resultMap id="seWfWarningObjectResult" type="com.skyon.project.system.domain.eye.SeWfWarningObject">
+        <id property="warningObjectId" column="WARNING_OBJECT_ID"/>
+        <result property="warningObjectCategory" column="WARNING_OBJECT_CATEGORY"/>
+        <result property="warningObjectCid" column="WARNIN_OBJECT_CID"/>
+        <result property="warningObjectName" column="WARNING_OBJECT_NAME"/>
+        <result property="warningObjectType" column="WARNING_OBJECT_TYPE"/>
+        <result property="warningObjectType" column="WARNING_OBJECT_TYPE"/>
+        <result property="warningObjectSort" column="WARNING_OBJECT_SORT"/>
+        <result property="riskLevel" column="RISK_LEVEL"/>
+        <result property="riskHighLevel" column="RISK_HIGH_LEVEL"/>
+        <result property="riskIdentify" column="RISK_IDENTIFY"/>
+        <result property="execuMgrNo" column="EXECU_MGR_NO"/>
+        <result property="execuOrgNo" column="EXECU_ORG_NO"/>
+        <result property="adminSubbranchNo" column="ADMIN_SUBBRANCH_NO"/>
+        <result property="adminBranchNo" column="ADMIN_BRANCH_NO"/>
+        <result property="businessOrgNo" column="BUSINESS_ORG_NO"/>
+        <result property="relWarningObjectId" column="REL_WARNING_OBJECT_ID"/>
+        <result property="delFlag" column="DEL_FLAG"/>
+    </resultMap>
+
+
+    <select id="getSignalManualList" resultMap="seWfWarningSignsResult">
+        SELECT *
+         FROM SE_WF_WARNING_SIGNS s
+		 where SIGNAL_CREATE_MODEL = '01'
     </select>
 
+    <select id="getSeWfWarningObjectByWarningObjectId2" parameterType="String"  resultMap="seWfWarningObjectResult">
+        select * from SE_WF_WARNING_OBJECT  where warning_object_id = #{warningObjectId}
+    </select>
+
+    <select id="getSignalManualBySignNo"   resultMap="seWfWarningSignsResult">
+        SELECT *
+         FROM SE_WF_WARNING_SIGNS s
+		 where s.SIGNAL_ID=#{signNo}
+    </select>
 
     <update id="updateSignalManualList" parameterType="java.util.List" >
         <foreach collection="list" item="bean" index="index" open="" close="" separator=";">

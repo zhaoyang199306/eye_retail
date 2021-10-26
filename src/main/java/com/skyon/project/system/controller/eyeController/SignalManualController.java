@@ -3,6 +3,8 @@ package com.skyon.project.system.controller.eyeController;
 import com.skyon.framework.web.controller.BaseController;
 import com.skyon.framework.web.domain.AjaxResult;
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
+import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
 import com.skyon.project.system.service.eye.SignalManualSevice;
 import com.skyon.project.system.service.eye.WTaskInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +31,11 @@ public class SignalManualController extends BaseController {
     //    保存form
     @PostMapping("/submitForm")
     @Transactional
-    public AjaxResult submitForm(@RequestBody DpApTaskInfo dpApTaskInfo) {
+    public AjaxResult submitForm(@RequestBody SeWfWarningSigns sign) {
 
         System.out.println("--signalManual/submitForm");
-        dpApTaskInfo.setIsManualInput("1");
-        int i = taskInfoService.insertWTaskInfo(dpApTaskInfo);
+        sign.setSignalDataSource("1");
+        int i = signalManualSevice.insertManaualSigns(sign);
         if (i > 0) {
             return AjaxResult.success("成功新增人工信号");
         }
@@ -42,20 +44,18 @@ public class SignalManualController extends BaseController {
 
 
     @GetMapping("/list")
-    public AjaxResult getSignalManualList(Object object) {
+    public AjaxResult getSignalManualList() {
 //        startPage();
-        List manuallist = signalManualSevice.getSignalManualList();
+        List<SeWfWarningSigns> manuallist = signalManualSevice.getSignalManualList();
         return AjaxResult.success(manuallist);
     }
 
-    @GetMapping("/getDetail/{custNo}")
-    public AjaxResult getSignalManualDetail(@PathVariable("custNo") String custNo) {
+    @GetMapping("/getDetail/{signNo}")
+    public AjaxResult getSignalManualDetail(@PathVariable("signNo") String signNo) {
 
-        List list = new ArrayList();
+        SeWfWarningSigns signInfo = signalManualSevice.getSignalManualBySignNo(signNo);
 
-        DpApTaskInfo taskInfo = signalManualSevice.getWTaskInfoListManualByCustNo(custNo);
-
-        return AjaxResult.success(list);
+        return AjaxResult.success(signInfo);
     }
 
 

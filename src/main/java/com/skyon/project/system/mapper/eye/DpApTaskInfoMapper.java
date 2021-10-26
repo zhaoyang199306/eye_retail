@@ -52,7 +52,7 @@ public interface DpApTaskInfoMapper {
     public int insertWTaskInfo(DpApTaskInfo dpApTaskInfo);
 
     // 查询人工录入的件
-    public List<DpApTaskInfo> getWTaskInfoListByManual();
+    public List<DpApTaskInfo> getSignalManualList();
 
     public DpApTaskInfo getWTaskInfoListManualByCustNo(String custNo);
 

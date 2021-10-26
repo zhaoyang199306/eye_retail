@@ -1,6 +1,7 @@
 package com.skyon.project.system.service.eye.impl;
 
 import com.skyon.project.system.domain.eye.DpApTaskInfo;
+import com.skyon.project.system.domain.eye.SeWfTaskInfo;
 import com.skyon.project.system.domain.eye.waringSings.SeWfWarningSigns;
 import com.skyon.project.system.mapper.eye.SignalManualMapper;
 import com.skyon.project.system.mapper.eye.DpApTaskInfoMapper;
@@ -20,8 +21,8 @@ public class SignalManualSeviceImpl implements SignalManualSevice {
     private DpApTaskInfoMapper taskInfoMapper;
 
     @Override
-    public List getSignalManualList() {
-        return taskInfoMapper.getWTaskInfoListByManual();
+    public List<SeWfWarningSigns> getSignalManualList() {
+        return signalManualMapper.getSignalManualList();
     }
 
     @Override
@@ -32,5 +33,15 @@ public class SignalManualSeviceImpl implements SignalManualSevice {
     @Override
     public int updateSignalManualList(List<SeWfWarningSigns> seWfWarningSigns) {
         return signalManualMapper.updateSignalManualList(seWfWarningSigns);
+    }
+
+    @Override
+    public SeWfWarningSigns getSignalManualBySignNo(String signNo) {
+        return signalManualMapper.getSignalManualBySignNo(signNo);
+    }
+
+    @Override
+    public int insertManaualSigns(SeWfWarningSigns seWfWarningSigns) {
+        return signalManualMapper.insertManaualSigns(seWfWarningSigns);
     }
 }

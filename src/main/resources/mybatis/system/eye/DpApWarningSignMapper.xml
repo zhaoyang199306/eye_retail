@@ -31,9 +31,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                 comf_status = #{item.comfStatus}
                 where task_info_no = #{item.taskInfoNo} and task_num = #{item.taskNum}
         </foreach>
-
     </update>
 
+    <insert id="insertSignManual">
+
+    </insert>
 
 
 
