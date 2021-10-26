@@ -242,7 +242,7 @@ public class TaskInfoController extends BaseController {
 
             // 任务提交
         TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-        String taskName = service.commonSubmit(seWfTaskInfo.getTaskNo(), WfCode.WF1001, user, "");
+        String taskName = service.commonSubmit(seWfTaskInfo.getTaskNo(), code, user, "");
 
         // 保存 任务执行反馈表单
         SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();
