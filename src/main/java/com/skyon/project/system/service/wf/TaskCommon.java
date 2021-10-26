@@ -1,5 +1,6 @@
 package com.skyon.project.system.service.wf;
 
+import com.skyon.common.constant.ProjectContants;
 import com.skyon.common.enums.WfCode;
 import com.skyon.common.utils.ServletUtils;
 import com.skyon.framework.security.service.TokenService;
@@ -32,7 +33,7 @@ public abstract class TaskCommon {
     /**
      * 保存任务流转
      */
-    public String commonSubmit(String taskNo, WfCode code, SysUser user, String processCondition) {
+    public Map<String, String> commonSubmit(String taskNo, WfCode code, SysUser user, String processCondition) {
 
         LOGGERCOMMON.info("当前事务名2：{}", TransactionSynchronizationManager.getCurrentTransactionName());
 
@@ -45,14 +46,15 @@ public abstract class TaskCommon {
         }
 
         // 根据任务编号 - taskInfoNo 执行任务
-        String taskName = taskWFService.exeTaskByTaskInfoNo(taskNo, String.valueOf(user.getUserId()), map);
+        Map<String, String> reMap = taskWFService.exeTaskByTaskInfoNo(taskNo, String.valueOf(user.getUserId()), map);
 
         // 额外操作 修改某些字段
         this.updateField(taskNo);
 
-        LOGGERCOMMON.info("{}提交,编号：{},环节：{}", user.getUserName(), taskNo, taskName);
+        LOGGERCOMMON.info("{}提交,编号：{},环节name：{}, 环节id：{}",
+                user.getUserName(), taskNo, reMap.get(ProjectContants.CURRENT_NAME), reMap.get(ProjectContants.CURRENT_ID));
 
-        return taskName;
+        return reMap;
     }
 
     // 组装参数 交给每个角色处理

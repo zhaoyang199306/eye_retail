@@ -1,5 +1,6 @@
 package com.skyon.project.system.service.activiti.impl;
 
+import com.skyon.common.constant.ProjectContants;
 import com.skyon.common.utils.StringUtils;
 import com.skyon.project.system.domain.sys.SysRole;
 import com.skyon.project.system.domain.sys.SysUser;
@@ -11,6 +12,7 @@ import org.activiti.bpmn.model.FlowNode;
 import org.activiti.bpmn.model.Process;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.identity.GroupQuery;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
@@ -37,7 +39,8 @@ public class TaskWFServiceImpl implements TaskWFService {
 
     /**
      * 执行回退
-     * @param taskId 需要回退的节点
+     *
+     * @param taskId     需要回退的节点
      * @param taskInfoNo 任务编号
      */
     public void taskBack(String taskId, String taskInfoNo) {
@@ -116,27 +119,27 @@ public class TaskWFServiceImpl implements TaskWFService {
      * @param user       用户号
      * @param map        参数
      *                   comtwoid 预警认定审批员id
-     * @return
+     * @return reMap
      */
     @Override
-    public String exeTaskByTaskInfoNo(String taskInfoNo, String user, Map map) {
-        String name = "";
-        String id = "";
+    public Map<String, String> exeTaskByTaskInfoNo(String taskInfoNo, String user, Map map) {
+        Map<String, String> reMap = new HashMap<>();
         // 获取当前任务
         Task task = taskService.createTaskQuery().processInstanceBusinessKey(taskInfoNo).singleResult();
         if (task != null) {
             String idID = task.getId();
             // 如果未分配任务的先分配任务
-            if (task.getAssignee() == null){
+            if (task.getAssignee() == null) {
                 // 分配任务
                 taskService.claim(idID, user);
             }
             // 执行任务
             taskService.complete(idID, map);
-            id = task.getId();
-            name = task.getName();
+            reMap.put(ProjectContants.CURRENT_NAME, task.getName()); // 当前处理环节名字
+            reMap.put(ProjectContants.CURRENT_ID, idID); // 当前处理环节id
+            reMap.put(ProjectContants.PROCESSIN_STANCE_ID, task.getProcessInstanceId()); // 当前环节的
         }
-        return name;
+        return reMap;
     }
 
     @Override
@@ -213,8 +216,8 @@ public class TaskWFServiceImpl implements TaskWFService {
             for (Task task : valueList) {
                 ProcessInstance pi = runtimeService.createProcessInstanceQuery().
                         processInstanceId(task.getProcessInstanceId()).singleResult();
-                System.out.println("------------"+task.getAssignee());
-                if (StringUtils.isNotEmpty(pi.getBusinessKey())) returnMap.put(pi.getBusinessKey(),key);
+                System.out.println("------------" + task.getAssignee());
+                if (StringUtils.isNotEmpty(pi.getBusinessKey())) returnMap.put(pi.getBusinessKey(), key);
             }
         }
         return returnMap;

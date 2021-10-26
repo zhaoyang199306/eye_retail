@@ -1,5 +1,6 @@
 package com.skyon.project.system.controller.eyeController;
 
+import com.skyon.common.constant.ProjectContants;
 import com.skyon.common.enums.RoleName;
 import com.skyon.common.enums.WFLink;
 import com.skyon.common.enums.WfCode;
@@ -16,6 +17,7 @@ import com.skyon.project.system.domain.eye.wf.SeWfTaskExecuteFeedback;
 import com.skyon.project.system.domain.sys.SysRole;
 import com.skyon.project.system.domain.sys.SysUser;
 import com.skyon.project.system.domain.vo.WarningTaskListVo;
+import com.skyon.project.system.service.activiti.ActivityService;
 import com.skyon.project.system.service.activiti.RunWFService;
 import com.skyon.project.system.service.activiti.TaskWFService;
 import com.skyon.project.system.service.eye.*;
@@ -63,6 +65,8 @@ public class TaskInfoController extends BaseController {
 
     @Autowired
     private SeWfWarningSignsService seWfWarningSignsService;
+    @Autowired
+    private ActivityService activityService;
 
 
     /**
@@ -240,14 +244,17 @@ public class TaskInfoController extends BaseController {
         WfCode code = TaskInfoUtil.getWfCode(seWfTaskInfo,user);
 
 
-            // 任务提交
-        TaskCommon service = WfDealRoleRegisterFactory.getService(roles.get(0).getRoleName());
-        String taskName = service.commonSubmit(seWfTaskInfo.getTaskNo(), code, user, "");
+        // 任务提交
+        TaskCommon service = WfDealRoleRegisterFactory.getService(String.valueOf(roles.get(0).getRoleId()));
+        // 返回提交当前节点 的id 和 节点名称 和 流程实例id
+        Map<String, String> reMap =  service.commonSubmit(seWfTaskInfo.getTaskNo(), code, user, "");
+        // 返回下一个节点的角色id 和 节点名称
+        Map map = activityService.selectNextNode(reMap.get(ProjectContants.PROCESSIN_STANCE_ID));
 
         // 保存 任务执行反馈表单
         SeWfTaskExecuteFeedback seWfTaskExecuteFeedback = seWfTaskInfo.getSeWfTaskExecuteFeedback();
         seWfTaskExecuteFeedback.setTaskNo(seWfTaskInfo.getTaskId());
-        seWfTaskExecuteFeedback.setCurrProcSteps(taskName);
+        seWfTaskExecuteFeedback.setCurrProcSteps(reMap.get(ProjectContants.CURRENT_NAME));
         seWfTaskExecuteFeedback.setCurrHandlerId(user.getUserName());
         seWfTaskExecuteFeedback.setCurrRoleId(roles.get(0).getRoleName());
 
@@ -265,6 +272,19 @@ public class TaskInfoController extends BaseController {
         int taskNameCnt = taskInfoService.updateHandleRoleId(roleId,prjo.getTaskNo());
 
         return AjaxResult.success("成功提交");
+    }
+
+    @GetMapping("/ttt/{code}")
+    @Transactional
+    public void ttt(@PathVariable String code){
+        System.out.println(code);
+        SysUser user = tokenService.getLoginUser(ServletUtils.getRequest()).getUser();
+        List<SysRole> roles = user.getRoles();
+        TaskCommon service = WfDealRoleRegisterFactory.getService(String.valueOf(roles.get(0).getRoleId()));
+        Map<String, String> reMap = service.commonSubmit(code, WfCode.WF2101, user,
+                "000000000000000");
+        Map map = activityService.selectNextNode(reMap.get(ProjectContants.PROCESSIN_STANCE_ID));
+        System.out.println(reMap);
     }
 
 
