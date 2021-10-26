@@ -206,7 +206,7 @@
     <select id="getWTaskInfoByList1" parameterType="com.skyon.project.system.domain.vo.WarningTaskListVo" resultType="TaskInfoListPojo">
     select  i.task_no as taskNo,o.warning_object_name as warningObjectName,o.warning_object_cid as warningObjectNo,o.warning_object_type as warningObjectType
     ,i.task_status as taskStatus,i.task_type as taskType,
-    i.sys_risk_level as riskLevel,i.handle_role_id as handleRoleId, r.role_name as handleRoleName,
+        i.sys_risk_level as riskLevel,i.HANDLE_ROLE_ID as handleRoleId,r.role_name as handleRoleName ,
     COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
     COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
     COUNT(CASE WHEN warning_level = '03' THEN 1 ELSE NULL END) AS threeLevelCount,
@@ -215,7 +215,8 @@
     from se_wf_task_info i
     left join se_wf_warning_object o on i.warning_object_id = o.warning_object_id
     left join se_wf_warning_signs s on i.task_id = s.task_id
-    where i.task_no in
+    left join sys_role r on r.role_id = i.HANDLE_ROLE_ID
+        where i.task_no in
     <foreach collection="collection" item="taskno" separator="," open="(" close=")">
         #{taskno}
     </foreach>
@@ -242,12 +243,14 @@
             <result property="taskDeadline" column="task_deadline"/>
             <result property="warningObjectCategory" column="warning_object_category"/>
             <result property="warningObjectType" column="warning_object_type"/>
+            <result property="taskWorking" column="task_Working"/>
+            <result property="workingStatus" column="working_Status"/>
         </resultMap>
 
     <select id="getWTaskInfoListByRole" parameterType="com.skyon.project.system.domain.vo.WarningTaskListVo" resultType="TaskInfoListPojo">
         select  i.task_no as taskNo,o.warning_object_name as warningObjectName,o.warning_object_cid as warningObjectNo,o.warning_object_type as warningObjectType
-        ,i.task_status as taskStatus,i.task_type as taskType,
-        i.sys_risk_level as riskLevel,i.CURR_PROC_STEPS as handleRoleId,
+        ,i.task_status as taskStatus,i.task_type as taskType,i.task_Working as taskWorking,i.working_Status as workingStatus,
+        i.sys_risk_level as riskLevel,i.HANDLE_ROLE_ID as handleRoleId,r.role_name as handleRoleName ,
         COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
         COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
         COUNT(CASE WHEN warning_level = '03' THEN 1 ELSE NULL END) AS threeLevelCount,
@@ -257,6 +260,7 @@
         left join se_wf_warning_object o on i.warning_object_id = o.warning_object_id
         left join se_wf_warning_signs s on i.task_id = s.task_id
         left join sys_dept d on o.admin_subbranch_no=d.dept_id
+        left join sys_role r on r.role_id = i.HANDLE_ROLE_ID
         where i.task_status = '01'
         <if test="taskHandler != null and taskHandler != ''">
             and i.handler_user_id = #{taskHandler}
@@ -275,11 +279,14 @@
         <if test="warningObjectName != null and warningObjectName != ''">
             AND o.warning_object_name = #{warningObjectName}
         </if>
-        <if test="adBra != null and adBra != ''">
-            AND o.ad_bra = #{adBra}
+        <if test="adminBranchNo != null and adminBranchNo != ''">
+            AND o.ADMIN_BRANCH_NO = #{adminBranchNo}
         </if>
-        <if test="adSubBra != null and adSubBra != ''">
-            AND o.ad_sub_bra = #{adSubBra}
+        <if test="adminSubbranchNo != null and adminSubbranchNo != ''">
+            AND o.ADMIN_SUBBRANCH_NO = #{adminSubbranchNo}
+        </if>
+        <if test="businessOrgNo != null and businessOrgNo != ''">
+            AND o.BUSINESS_ORG_NO = #{businessOrgNo}
         </if>
         <if test="taskType != null and taskType != ''">
             AND i.task_type = #{taskType}
@@ -290,13 +297,13 @@
 		${dataScope}
         group by i.task_no,o.warning_object_name,o.warning_object_cid,o.warning_object_category, i.task_status,i.task_type,
         i.sys_risk_level,  o.ADMIN_SUBBRANCH_NO, o.ADMIN_BRANCH_NO, i.TASK_CREATE_TIME, i.task_deadline ,
-        i.curr_proc_steps ,o.warning_object_type,i.handle_role_id
+        i.curr_proc_steps ,o.warning_object_type,i.handle_role_id,i.task_Working ,i.working_Status,r.role_name
     </select>
     <select id="getAllTaskListByOrg"  resultType="TaskInfoListPojo">
         select  i.task_no as taskNo,o.warning_object_name as warningObjectName,o.warning_object_cid as warningObjectNo,
         o.warning_object_type as warningObjectType
-        ,i.task_status as taskStatus,i.task_type as taskType,
-        i.sys_risk_level as riskLevel,i.handle_role_id as handleRoleId,
+        ,i.task_status as taskStatus,i.task_type as taskType,i.task_Working as taskWorking,i.working_Status as workingStatus,
+        i.sys_risk_level as riskLevel,i.handle_role_id as handleRoleId,r.role_name as handleRoleName ,
         COUNT(CASE WHEN s.warning_level = '01' THEN 1 ELSE NULL END) AS oneLevelCount,
         COUNT(CASE WHEN warning_level = '02' THEN 1 ELSE NULL END) AS twoLevelCount,
         COUNT(CASE WHEN warning_level = '03' THEN 1 ELSE NULL END) AS threeLevelCount,
@@ -305,6 +312,7 @@
         from se_wf_task_info i
         left join se_wf_warning_object o on i.warning_object_id = o.warning_object_id
         left join se_wf_warning_signs s on i.task_id = s.task_id
+        left join sys_role r on r.role_id = i.HANDLE_ROLE_ID
         where
         <if test="selType == '04'">
             i.task_status != '03'
@@ -329,7 +337,7 @@
         </if>
         group by i.task_no,o.warning_object_name,o.warning_object_cid,o.warning_object_category, i.task_status,i.task_type,
         i.sys_risk_level,  o.ADMIN_SUBBRANCH_NO, o.ADMIN_BRANCH_NO, i.TASK_CREATE_TIME, i.task_deadline ,
-        i.curr_proc_steps ,o.warning_object_type,i.handle_role_id
+        i.curr_proc_steps ,o.warning_object_type,i.handle_role_id,i.task_Working ,i.working_Status,r.role_name
     </select>
 
     <select id="selectSeWfTaskInfoByTaskNo" resultMap="SeWfTaskInfo" parameterType="String">

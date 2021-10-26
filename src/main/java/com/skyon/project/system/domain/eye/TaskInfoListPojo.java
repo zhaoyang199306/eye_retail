@@ -45,6 +45,10 @@ public class TaskInfoListPojo {
     private String warningObjectCategory;
     @ApiModelProperty(value = "监测主体类型", name = "warningObjectType", required = true)
     private String warningObjectType;
+    @ApiModelProperty(value = "当前任务工作", name = "taskWorking", required = true)
+    private String taskWorking;
+    @ApiModelProperty(value = "当前工作状态", name = "workingStatus", required = true)
+    private String workingStatus;
 
 
     public String getWarningObjectType() {
@@ -189,5 +193,21 @@ public class TaskInfoListPojo {
 
     public void setWarningObjectCategory(String warningObjectCategory) {
         this.warningObjectCategory = warningObjectCategory;
+    }
+
+    public String getTaskWorking() {
+        return taskWorking;
+    }
+
+    public void setTaskWorking(String taskWorking) {
+        this.taskWorking = taskWorking;
+    }
+
+    public String getWorkingStatus() {
+        return workingStatus;
+    }
+
+    public void setWorkingStatus(String workingStatus) {
+        this.workingStatus = workingStatus;
     }
 }

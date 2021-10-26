@@ -114,8 +114,8 @@ public class TaskInfoController extends BaseController {
 
         try {
             // 查询 客户经理 初始时 的 列表。
-            if (RoleName.WF_ROLE_011.getCode().equals(roles.get(0).getRoleId())) { // 后续 传页面展示的角色
-                warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
+            if (user.hasRoleId(RoleName.WF_ROLE_011.getCode())) { // 后续 传页面展示的角色
+                //warningTaskListVo.setTaskHandler(String.valueOf(user.getUserId()));
                 list = taskInfoService.getWTaskInfoListByRole(warningTaskListVo);
             }
 
@@ -132,7 +132,7 @@ public class TaskInfoController extends BaseController {
             listAct.addAll(list);
             //添加总行管理员的查看
             if(user != null){
-                if(user.hasRoleId(RoleName.WF_ROLE_011.getCode())){
+                if(user.hasRoleId(RoleName.WF_ROLE_166.getCode())){
                     listAct.addAll(taskInfoService.getAllTaskListByOrg("04","01",user.getDeptId().toString()));
                 }
                 //添加支行管理员的查看
@@ -140,7 +140,7 @@ public class TaskInfoController extends BaseController {
                     listAct.addAll(taskInfoService.getAllTaskListByOrg("04","02",user.getDeptId().toString()));
                 }
                 //添加分行管理员的查看
-                if(user.hasRoleId(RoleName.WF_ROLE_166.getCode())){
+                if(user.hasRoleId(RoleName.WF_ROLE_021.getCode())){
                     listAct.addAll(taskInfoService.getAllTaskListByOrg("04","03",user.getDeptId().toString()));
                 }
             }

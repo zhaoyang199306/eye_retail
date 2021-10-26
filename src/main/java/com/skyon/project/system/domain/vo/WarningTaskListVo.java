@@ -28,11 +28,16 @@ public class WarningTaskListVo extends BaseEntity {
     @ApiModelProperty(value = "预警对象编号", name = "warningObjectId", required = false)
     private String warningObjectId;
 
-    @ApiModelProperty(value = "管护人", name = "adBra", required = false)
-    private String adBra;
 
-    @ApiModelProperty(value = "管护机构", name = "adSubBra", required = false)
-    private String adSubBra;
+    @ApiModelProperty(value = "所属支行", name = "adSubBra", required = false)
+    private String adminSubbranchNo;
+    @ApiModelProperty(value = "所属分行", name = "adSubBra", required = false)
+    private String adminBranchNo;
+    @ApiModelProperty(value = "所属机构", name = "adSubBra", required = false)
+    private String businessOrgNo;
+
+
+
 
     @ApiModelProperty(value = "任务类型", name = "taskType", required = false)
     private String taskType;
@@ -80,20 +85,29 @@ public class WarningTaskListVo extends BaseEntity {
         this.warningObjectId = warningObjectId;
     }
 
-    public String getAdBra() {
-        return adBra;
+
+    public String getAdminSubbranchNo() {
+        return adminSubbranchNo;
     }
 
-    public void setAdBra(String adBra) {
-        this.adBra = adBra;
+    public void setAdminSubbranchNo(String adminSubbranchNo) {
+        this.adminSubbranchNo = adminSubbranchNo;
     }
 
-    public String getAdSubBra() {
-        return adSubBra;
+    public String getAdminBranchNo() {
+        return adminBranchNo;
     }
 
-    public void setAdSubBra(String adSubBra) {
-        this.adSubBra = adSubBra;
+    public void setAdminBranchNo(String adminBranchNo) {
+        this.adminBranchNo = adminBranchNo;
+    }
+
+    public String getBusinessOrgNo() {
+        return businessOrgNo;
+    }
+
+    public void setBusinessOrgNo(String businessOrgNo) {
+        this.businessOrgNo = businessOrgNo;
     }
 
     public String getTaskType() {
