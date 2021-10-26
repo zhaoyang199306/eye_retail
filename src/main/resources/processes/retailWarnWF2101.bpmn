@@ -11,11 +11,11 @@
     <exclusiveGateway gatewayDirection="Unspecified" id="_23" name="是否上报主管"/>
     <userTask activiti:candidateGroups="${WF_ROLE_054}" activiti:exclusive="true" id="_25" name="分行监测主管(零售)审核"/>
     <sequenceFlow id="_26" name="是" sourceRef="_23" targetRef="_25">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${is_054==1}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${is_054_2==1}]]></conditionExpression>
     </sequenceFlow>
     <exclusiveGateway gatewayDirection="Unspecified" id="_27" name="是否总行权限"/>
     <sequenceFlow id="_28" name="否" sourceRef="_23" targetRef="_27">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${is_054==0}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${is_054_2==0}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="_29" sourceRef="_25" targetRef="_27"/>
     <sequenceFlow id="_3" sourceRef="_5" targetRef="_8"/>
@@ -38,10 +38,14 @@
     <exclusiveGateway gatewayDirection="Unspecified" id="_20" name="是否上报主管"/>
     <sequenceFlow id="_21" sourceRef="_19" targetRef="_20"/>
     <sequenceFlow id="_22" sourceRef="_17" targetRef="_19"/>
-    <userTask activiti:exclusive="true" id="_31" name="分行监测主管(零售)审核"/>
-    <sequenceFlow id="_32" name="是" sourceRef="_20" targetRef="_31"/>
+    <userTask activiti:candidateGroups="${WF_ROLE_054}" activiti:exclusive="true" id="_31" name="分行监测主管(零售)审核"/>
+    <sequenceFlow id="_32" name="是" sourceRef="_20" targetRef="_31">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${is_054_1==1}]]></conditionExpression>
+    </sequenceFlow>
     <exclusiveGateway gatewayDirection="Unspecified" id="_33" name="是否总行权限"/>
-    <sequenceFlow id="_34" name="否" sourceRef="_20" targetRef="_33"/>
+    <sequenceFlow id="_34" name="否" sourceRef="_20" targetRef="_33">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${is_054_1==1}]]></conditionExpression>
+    </sequenceFlow>
     <sequenceFlow id="_35" name="否" sourceRef="_13" targetRef="_33">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${is_034==0}]]></conditionExpression>
     </sequenceFlow>
