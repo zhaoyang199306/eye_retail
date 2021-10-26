@@ -40,7 +40,7 @@ public abstract class TaskCommon {
         Map<String, Object> map = this.assembleParam(taskNo, code, user, processCondition);
 
         // 未启动流程的，先启动流程
-        if (map.get("first") != null && (Boolean) map.get("first")) {
+        if (map.get("first") != null && (boolean) map.get("first")) {
             runWFService.startWf(taskNo, map);
         }
 

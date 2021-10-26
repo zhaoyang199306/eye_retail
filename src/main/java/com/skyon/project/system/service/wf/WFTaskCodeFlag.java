@@ -53,7 +53,40 @@ public class WFTaskCodeFlag {
 
 
 
+    /**
+     *  分行监测主管（金融市场部）审核
+     * @param processCondition
+     * @return 1是  0否
+     */
+    public static String code10(String processCondition){
+        return processCondition.substring(5,6);
+    }
 
 
+    /**
+     *  总行业务部门监测主管（金融市场部）审核
+     * @param processCondition
+     * @return 1是  0否
+     */
+    public static String code11(String processCondition){
+        return processCondition.substring(10,11);
+    }
 
+    /**
+     *  总行监测主管（金融市场部）审核
+     * @param processCondition
+     * @return 1是  0否
+     */
+    public static String code12(String processCondition){
+        return processCondition.substring(13,14);
+    }
+
+    /**
+     *  总行风险管理部审核岗（金融市场部）审核
+     * @param processCondition
+     * @return 1是  0否
+     */
+    public static String code13(String processCondition){
+        return processCondition.substring(17,18);
+    }
 }
